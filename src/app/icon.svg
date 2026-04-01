@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a78bfa"/>
+      <stop offset="50%" stop-color="#818cf8"/>
+      <stop offset="100%" stop-color="#6D28D9"/>
+    </linearGradient>
+  </defs>
+  <text
+    font-family="monospace"
+    font-weight="700"
+    fill="url(#g)"
+    text-anchor="middle"
+    dominant-baseline="middle"
+  >
+    <tspan x="32" y="36" font-size="22">{</tspan>
+    <tspan letter-spacing="-2" font-size="22">C</tspan>
+    <tspan dy="-8" font-size="13">2</tspan>
+    <tspan dy="8" letter-spacing="-2" font-size="22">}</tspan>
+  </text>
+</svg>

@@ -55,7 +55,18 @@ export default function Navbar() {
               WebkitTextFillColor: 'transparent',
             }}
           >
-            {'{ CurleyCoder }'}
+            {'{'}<span style={{ letterSpacing: '-0.05em' }}>{'C'}</span><sup style={{ fontSize: '0.65em', WebkitTextFillColor: '#a78bfa' }}>2</sup><span style={{ letterSpacing: '-0.05em' }}>{'}'}</span>
+          </span>
+          <span
+            style={{
+              fontWeight: '400',
+              fontSize: '1rem',
+              fontFamily: "'JetBrains Mono', monospace",
+              color: '#c4c4d4',
+              marginLeft: '0.5rem',
+            }}
+          >
+            CurleyCoder
           </span>
         </Link>
 
