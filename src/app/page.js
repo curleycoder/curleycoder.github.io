@@ -164,7 +164,7 @@ function Hero() {
             </Link>
 
             <a
-              href="https://github.com/shabnamb"
+              href="https://github.com/curleycoder"
               target="_blank"
               rel="noopener noreferrer"
               className="btn-outline"
@@ -189,34 +189,33 @@ function Hero() {
               LinkedIn
             </a>
           </div>
+
+          {/* Scroll indicator */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.5, duration: 0.5 }}
+            style={{
+              marginTop: '2.5rem',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'flex-start',
+              gap: '0.4rem',
+            }}
+          >
+            <span style={{ color: 'var(--muted)', fontSize: '0.75rem', letterSpacing: '0.1em' }}>
+              SCROLL
+            </span>
+            <div
+              style={{
+                width: '1px',
+                height: '40px',
+                background: 'linear-gradient(to bottom, var(--primary), transparent)',
+              }}
+            />
+          </motion.div>
         </motion.div>
 
-        {/* Scroll indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.5, duration: 0.5 }}
-          style={{
-            position: 'absolute',
-            bottom: '-40px',
-            left: 0,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'flex-start',
-            gap: '0.4rem',
-          }}
-        >
-          <span style={{ color: 'var(--muted)', fontSize: '0.75rem', letterSpacing: '0.1em' }}>
-            SCROLL
-          </span>
-          <div
-            style={{
-              width: '1px',
-              height: '40px',
-              background: 'linear-gradient(to bottom, var(--primary), transparent)',
-            }}
-          />
-        </motion.div>
       </div>
     </section>
   );
@@ -473,7 +472,7 @@ export default function Home() {
       <Hero />
 
       {/* Projects */}
-      <section style={{ padding: '6rem 0' }}>
+      <section style={{ padding: '2rem 0 6rem' }}>
         <div className="container">
           <FadeIn>
             <p style={{ color: 'var(--accent)', fontSize: '0.85rem', fontWeight: '600', letterSpacing: '0.1em', marginBottom: '0.5rem' }}>
@@ -629,60 +628,19 @@ export default function Home() {
         </div>
       </section>
 
-      {/* GitHub Activity */}
-      <section style={{ padding: '4rem 0' }}>
-        <div className="container">
-          <FadeIn>
-            <p style={{ color: 'var(--accent)', fontSize: '0.85rem', fontWeight: '600', letterSpacing: '0.1em', marginBottom: '0.5rem' }}>
-              ACTIVITY
-            </p>
-            <h2 className="section-title">On GitHub</h2>
-          </FadeIn>
-
-          <FadeIn delay={0.1}>
-            <div
-              style={{
-                background: 'var(--card)',
-                border: '1px solid var(--card-border)',
-                borderRadius: '1rem',
-                padding: '2rem',
-                marginTop: '1.5rem',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '1rem',
-                alignItems: 'flex-start',
-              }}
-            >
-              <p style={{ color: 'var(--muted)', fontSize: '0.95rem' }}>
-                Most of my work is in private repos (client projects + school) — but you can see public work on GitHub.
-              </p>
-              <a
-                href="https://github.com/shabnamb"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-outline"
-              >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" />
-                </svg>
-                github.com/shabnamb
-              </a>
-            </div>
-          </FadeIn>
-        </div>
-      </section>
-
       {/* Contact */}
       <section id="contact" style={{ padding: '6rem 0' }}>
         <div className="container">
           <FadeIn>
-            <p style={{ color: 'var(--accent)', fontSize: '0.85rem', fontWeight: '600', letterSpacing: '0.1em', marginBottom: '0.5rem' }}>
-              CONTACT
-            </p>
-            <h2 className="section-title">Let&apos;s talk</h2>
-            <p className="section-subtitle">
-              Open to full-time roles, freelance, and interesting conversations.
-            </p>
+            <div style={{ textAlign: 'center' }}>
+              <p style={{ color: 'var(--accent)', fontSize: '0.85rem', fontWeight: '600', letterSpacing: '0.1em', marginBottom: '0.5rem' }}>
+                CONTACT
+              </p>
+              <h2 className="section-title">Let&apos;s talk</h2>
+              <p className="section-subtitle">
+                Open to full-time roles, freelance, and interesting conversations.
+              </p>
+            </div>
           </FadeIn>
 
           <FadeIn delay={0.1}>
@@ -693,6 +651,7 @@ export default function Home() {
                 borderRadius: '1rem',
                 padding: '2.5rem',
                 maxWidth: '640px',
+                margin: '0 auto',
               }}
             >
               <ContactForm />

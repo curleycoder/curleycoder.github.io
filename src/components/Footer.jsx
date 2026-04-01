@@ -27,7 +27,7 @@ export default function Footer() {
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
           <a
-            href="https://github.com/shabnamb"
+            href="https://github.com/curleycoder"
             target="_blank"
             rel="noopener noreferrer"
             style={{

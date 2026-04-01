@@ -30,6 +30,7 @@ export default function Navbar() {
   return (
     <nav
       style={{
+        fontFamily: "'JetBrains Mono', monospace",
         position: 'fixed',
         top: 0,
         left: 0,
@@ -43,23 +44,18 @@ export default function Navbar() {
     >
       <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '64px' }}>
         {/* Logo */}
-        <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', textDecoration: 'none' }}>
+        <Link href="/" style={{ textDecoration: 'none' }}>
           <span
             style={{
-              width: '36px',
-              height: '36px',
-              borderRadius: '10px',
-              background: 'linear-gradient(135deg, #6D28D9, #818cf8)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontWeight: '800',
-              fontSize: '0.9rem',
-              color: 'white',
-              letterSpacing: '-0.5px',
+              fontWeight: '700',
+              fontSize: '1rem',
+              fontFamily: "'JetBrains Mono', monospace",
+              background: 'linear-gradient(135deg, #a78bfa 0%, #818cf8 50%, #6D28D9 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
             }}
           >
-            SB
+            {'{ CurleyCoder }'}
           </span>
         </Link>
 
@@ -91,7 +87,7 @@ export default function Navbar() {
         {/* Right side: Contact */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
           <a
-            href="#contact"
+            href="/#contact"
             className="btn-primary"
             style={{ padding: '0.45rem 1.1rem', fontSize: '0.85rem' }}
           >
