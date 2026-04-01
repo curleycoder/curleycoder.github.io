@@ -100,4 +100,37 @@ export const projects = [
       '/projects/cog-2.png',
     ],
   },
+  {
+    slug: 'forge',
+    title: 'Forge',
+    shortDescription: 'A mobile simulation app introducing high school students to skilled trades through interactive career exploration.',
+    description:
+      'Forge is a mobile application that transforms trade career discovery into a guided, hands-on digital experience. Students simulate real-world workflows in electrical, plumbing, carpentry and more — powered by AI explanations and personalized recommendations.',
+    tags: ['React Native', 'TypeScript', 'Hono', 'Drizzle ORM', 'Postgres', 'Clerk', 'Redis', 'Google GenAI SDK', 'TanStack'],
+    year: 2025,
+    liveUrl: 'https://www.forgecareers.ca/',
+    githubUrl: 'https://github.com/Forge-IDSP',
+    prototypeUrl: 'https://www.figma.com/design/4bcvUcR7TsEdN3LVpessog/',
+    demoUrl: 'https://www.youtube.com/shorts/_G6BLGK4BmU',
+    rationaleProblem:
+      'Many students lack exposure to trade careers and rely on passive research methods like videos or brochures.',
+    rationaleChallenge:
+      'Present trade paths in a clear, structured format with secure auth, scalable backend, AI integration, and minimal friction for non-technical users.',
+    rationaleSolution:
+      'Delivered an interactive simulation-based experience with guided workflows, AI-driven explanations, and a structured backend — making career discovery practical and engaging.',
+    whatItDoes: [
+      'Simulates real trade workflows (electrical, plumbing, carpentry, etc.)',
+      'Provides interactive, step-by-step project scenarios',
+      'Uses AI to explain tools, safety rules, and procedures',
+      'Recommends trade paths based on user interests',
+      'Tracks progress and skill familiarity',
+    ],
+    highlights: [
+      'Mobile-first with React Native',
+      'AI-powered trade recommendations',
+      'Secure auth via Clerk',
+      'Redis-backed performance',
+    ],
+    images: [],
+  },
 ];
