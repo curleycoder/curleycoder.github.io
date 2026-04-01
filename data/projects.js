@@ -26,7 +26,14 @@ export const projects = [
       'Mobile-first responsive design',
       'Real-time availability tracking',
     ],
-    images: [],
+    images: [
+      '/projects/lenditout-home.png',
+      '/projects/lenditout-login.png',
+      '/projects/lenditout-post1.png',
+      '/projects/lenditout-post2.png',
+      '/projects/lenditout-post3.png',
+      '/projects/lendotout-post.png',
+    ],
   },
   {
     slug: 'dew',
@@ -55,7 +62,10 @@ export const projects = [
       'Handles real bookings',
       '24/7 availability',
     ],
-    images: [],
+    images: [
+      '/projects/dew-home.png',
+      '/projects/dew-chat.png',
+    ],
   },
   {
     slug: 'community-of-guardians',
@@ -84,6 +94,10 @@ export const projects = [
       'Real-time alert system',
       'Mobile responsive',
     ],
-    images: [],
+    images: [
+      '/projects/cog-home.png',
+      '/projects/cog-1.png',
+      '/projects/cog-2.png',
+    ],
   },
 ];

@@ -25,6 +25,7 @@ const activities = [
   { name: 'Road trips', caption: 'The best UI is an open highway.' },
   { name: 'Skiing', caption: 'Still learning to stop gracefully.' },
   { name: 'Paddleboarding', caption: 'Falling in counts as commitment.' },
+  { name: 'Pilates', caption: "Looks easy, but trust me it's not." },
 ];
 
 const passions = [
@@ -35,7 +36,24 @@ const passions = [
   { name: 'Snow globes', note: 'A whole world you can hold.' },
 ];
 
-const placeholders = Array.from({ length: 6 }, (_, i) => i);
+const places = [
+  { city: 'Paris', country: 'France' },
+  { city: 'Venice', country: 'Italy' },
+  { city: 'Florence', country: 'Italy' },
+  { city: 'Rome', country: 'Italy' },
+  { city: 'Milan', country: 'Italy' },
+  { city: 'Cologne', country: 'Germany' },
+  { city: 'Stuttgart', country: 'Germany' },
+  { city: 'Cancún', country: 'Mexico' },
+  { city: 'Tehran', country: 'Iran' },
+  { city: 'Toronto', country: 'Canada' },
+  { city: 'Calgary', country: 'Canada' },
+  { city: 'Banff', country: 'Canada' },
+  { city: 'Los Angeles', country: 'USA' },
+  { city: 'Seattle', country: 'USA' },
+  { city: 'Tacoma', country: 'USA' },
+  { city: 'Las Vegas', country: 'USA' },
+];
 
 export default function AboutPage() {
   return (
@@ -162,34 +180,33 @@ export default function AboutPage() {
               Places I&apos;ve Been
             </h2>
             <p style={{ color: 'var(--muted)', marginBottom: '1.75rem', fontSize: '0.9rem' }}>
-              Photos coming — add them to /public/about/
+              A few places I&apos;ve been lucky enough to see.
             </p>
           </FadeIn>
 
-          {/* Honeycomb-style grid */}
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(3, 1fr)',
-              gap: '0.75rem',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))',
+              gap: '0.6rem',
             }}
           >
-            {placeholders.map((_, i) => (
-              <FadeIn key={i} delay={i * 0.06}>
+            {places.map((place, i) => (
+              <FadeIn key={place.city} delay={i * 0.04}>
                 <div
                   style={{
-                    aspectRatio: '1 / 1',
                     background: 'var(--card)',
                     border: '1px solid var(--card-border)',
-                    borderRadius: '0.75rem',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
+                    borderRadius: '0.625rem',
+                    padding: '0.75rem 1rem',
                   }}
                 >
-                  <span style={{ color: 'var(--card-border)', fontSize: '1.5rem', userSelect: 'none' }}>
-                    +
-                  </span>
+                  <p style={{ fontWeight: '600', fontSize: '0.9rem', marginBottom: '0.15rem' }}>
+                    {place.city}
+                  </p>
+                  <p style={{ color: 'var(--muted)', fontSize: '0.75rem' }}>
+                    {place.country}
+                  </p>
                 </div>
               </FadeIn>
             ))}

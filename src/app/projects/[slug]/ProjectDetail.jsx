@@ -93,6 +93,29 @@ export default function ProjectDetail({ project }) {
         </div>
       </section>
 
+      {/* Images */}
+      {project.images && project.images.length > 0 && (
+        <section style={{ padding: '2rem 0' }}>
+          <div className="container" style={{ maxWidth: '760px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              {project.images.map((src, i) => (
+                <img
+                  key={i}
+                  src={src}
+                  alt={`${project.title} screenshot ${i + 1}`}
+                  style={{
+                    width: '100%',
+                    borderRadius: '0.75rem',
+                    border: '1px solid var(--card-border)',
+                    display: 'block',
+                  }}
+                />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Rationale */}
       <section style={{ padding: '2rem 0' }}>
         <div className="container" style={{ maxWidth: '760px' }}>
