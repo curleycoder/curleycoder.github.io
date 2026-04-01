@@ -3,6 +3,8 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { projects } from '../../../data/projects';
+import { FiExternalLink } from 'react-icons/fi';
+import { FaGithub, FaYoutube } from 'react-icons/fa';
 
 function ProjectCard({ project, index }) {
   return (
@@ -57,37 +59,36 @@ function ProjectCard({ project, index }) {
             ))}
           </div>
 
-          <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
             {project.liveUrl && (
               <span
-                style={{
-                  fontSize: '0.8rem',
-                  color: 'var(--accent)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.3rem',
-                }}
+                onClick={(e) => { e.preventDefault(); window.open(project.liveUrl, '_blank'); }}
+                style={{ width: '30px', height: '30px', borderRadius: '0.4rem', border: '1px solid var(--card-border)', background: 'rgba(255,255,255,0.04)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--accent)', cursor: 'pointer' }}
+                title="Live site"
               >
-                Live
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5">
-                  <path d="M2 2h8v8M2 10 10 2" strokeLinecap="round" />
-                </svg>
+                <FiExternalLink size={13} />
               </span>
             )}
-            <span
-              style={{
-                fontSize: '0.8rem',
-                color: 'var(--accent)',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.3rem',
-                fontWeight: '500',
-              }}
-            >
-              View details
-              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M3 8h10M9 4l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
+            {project.githubUrl && (
+              <span
+                onClick={(e) => { e.preventDefault(); window.open(project.githubUrl, '_blank'); }}
+                style={{ width: '30px', height: '30px', borderRadius: '0.4rem', border: '1px solid var(--card-border)', background: 'rgba(255,255,255,0.04)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--muted)', cursor: 'pointer' }}
+                title="GitHub"
+              >
+                <FaGithub size={14} />
+              </span>
+            )}
+            {project.demoUrl && (
+              <span
+                onClick={(e) => { e.preventDefault(); window.open(project.demoUrl, '_blank'); }}
+                style={{ width: '30px', height: '30px', borderRadius: '0.4rem', border: '1px solid var(--card-border)', background: 'rgba(255,255,255,0.04)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--muted)', cursor: 'pointer' }}
+                title="Demo"
+              >
+                <FaYoutube size={14} />
+              </span>
+            )}
+            <span style={{ marginLeft: 'auto', fontSize: '0.78rem', color: 'var(--accent)', display: 'flex', alignItems: 'center', gap: '0.3rem', fontWeight: '500' }}>
+              View details →
             </span>
           </div>
         </div>

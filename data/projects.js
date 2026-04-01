@@ -1,15 +1,17 @@
 export const projects = [
   {
     slug: 'lenditout',
+    type: 'mobile',
     title: 'LendItOut',
     shortDescription: 'A peer-to-peer lending platform for everyday items.',
     description:
       'Full-stack web app that lets users list items to lend and borrow from their community. Built with Next.js, Supabase, and Drizzle ORM.',
     tags: ['Next.js', 'Supabase', 'Drizzle ORM', 'Tailwind CSS'],
     year: 2024,
-    liveUrl: '',
-    githubUrl: '',
-    prototypeUrl: '',
+    liveUrl: 'https://lenditout.onrender.com/',
+    githubUrl: 'https://github.com/IDSP-LendItOut/LendItOut',
+    prototypeUrl: 'https://www.figma.com/proto/BbH0d5NCDlGcSfjOKpvij0/LendItOut?node-id=1-8195&t=y4crY3YEUUnpG4gp-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=1%3A8195&show-proto-sidebar=1',
+    wireframeUrl: 'https://www.figma.com/design/BbH0d5NCDlGcSfjOKpvij0/LendItOut?node-id=0-1&t=1FTBWlzQxPZsSiWy-1',
     rationaleProblem:
       'People own things they rarely use while others need them temporarily.',
     rationaleChallenge:
@@ -27,16 +29,17 @@ export const projects = [
       'Real-time availability tracking',
     ],
     images: [
-      '/projects/lenditout-home.png',
-      '/projects/lenditout-login.png',
-      '/projects/lenditout-post1.png',
-      '/projects/lenditout-post2.png',
-      '/projects/lenditout-post3.png',
-      '/projects/lendotout-post.png',
+      { src: '/projects/lenditout-home.png', caption: 'Home screen — browse available items in your community.' },
+      { src: '/projects/lenditout-login.png', caption: 'Login flow with secure authentication.' },
+      { src: '/projects/lenditout-post1.png', caption: 'Create a listing — add photos, description, and availability.' },
+      { src: '/projects/lenditout-post2.png', caption: 'Item detail page with borrowing request flow.' },
+      { src: '/projects/lenditout-post3.png', caption: 'Manage your active listings and incoming requests.' },
+      { src: '/projects/lendotout-post.png', caption: 'Request confirmation and borrower messaging.' },
     ],
   },
   {
     slug: 'dew',
+    type: 'web',
     title: 'Dew',
     shortDescription: 'Embeddable AI front-desk assistant for small businesses.',
     description:
@@ -46,6 +49,7 @@ export const projects = [
     liveUrl: 'https://ai-client-seven.vercel.app',
     githubUrl: '',
     prototypeUrl: '',
+    wireframeUrl: '',
     rationaleProblem:
       'Small businesses miss leads after hours because no one is available to respond.',
     rationaleChallenge:
@@ -63,21 +67,23 @@ export const projects = [
       '24/7 availability',
     ],
     images: [
-      '/projects/dew-home.png',
-      '/projects/dew-chat.png',
+      { src: '/projects/dew-home.png', caption: 'Dashboard — manage your AI assistant configuration and business info.' },
+      { src: '/projects/dew-chat.png', caption: 'Live chat widget embedded on a client site, handling real inquiries.' },
     ],
   },
   {
     slug: 'community-of-guardians',
+    type: 'web',
     title: 'Community of Guardians',
     shortDescription: 'A community platform for neighbourhood safety and coordination.',
     description:
       'Web platform connecting neighbours to coordinate safety, share alerts, and organize local responses.',
     tags: ['React', 'Node.js', 'MongoDB', 'Express'],
     year: 2024,
-    liveUrl: '',
+    liveUrl: 'https://www.communityofguardians.com/superheroes',
     githubUrl: '',
     prototypeUrl: '',
+    wireframeUrl: 'https://www.figma.com/design/RIPj2psTnm1ouDYSpIRUJG/COGs-Web-application-2025?node-id=0-1&t=ayvfrltFjDinIawC-1',
     rationaleProblem:
       'Neighbourhood safety apps are either too corporate or too informal (Facebook groups).',
     rationaleChallenge:
@@ -95,13 +101,14 @@ export const projects = [
       'Mobile responsive',
     ],
     images: [
-      '/projects/cog-home.png',
-      '/projects/cog-1.png',
-      '/projects/cog-2.png',
+      { src: '/projects/cog-home.png', caption: 'Home feed — neighbourhood alerts and recent activity.' },
+      { src: '/projects/cog-1.png', caption: 'Post an alert with location tagging and priority level.' },
+      { src: '/projects/cog-2.png', caption: 'Community coordination view with role-based access.' },
     ],
   },
   {
     slug: 'forge',
+    type: 'mobile',
     title: 'Forge',
     shortDescription: 'A mobile simulation app introducing high school students to skilled trades through interactive career exploration.',
     description:
@@ -111,7 +118,7 @@ export const projects = [
     liveUrl: 'https://www.forgecareers.ca/',
     githubUrl: 'https://github.com/Forge-IDSP',
     prototypeUrl: 'https://www.figma.com/design/4bcvUcR7TsEdN3LVpessog/',
-    demoUrl: 'https://www.youtube.com/shorts/_G6BLGK4BmU',
+    demoUrl: 'https://www.youtube.com/shorts/_G6BLGK4BmU?themeRefresh=1',
     rationaleProblem:
       'Many students lack exposure to trade careers and rely on passive research methods like videos or brochures.',
     rationaleChallenge:
@@ -131,6 +138,8 @@ export const projects = [
       'Secure auth via Clerk',
       'Redis-backed performance',
     ],
-    images: [],
+    images: [
+      // { src: '/projects/forge-1.png', caption: 'Add screenshots here.' },
+    ],
   },
 ];

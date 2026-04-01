@@ -153,3 +153,9 @@ h1, h2, h3 {
   margin: 0 auto;
   padding: 0 1.5rem;
 }
+
+@media (max-width: 768px) {
+  .project-hero-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
