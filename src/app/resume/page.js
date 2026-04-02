@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { FiMail, FiGithub, FiLinkedin, FiGlobe, FiDownload } from 'react-icons/fi';
+import { FiMail, FiGithub, FiLinkedin, FiDownload } from 'react-icons/fi';
 
 function Section({ title, children, delay = 0 }) {
   return (
@@ -91,16 +91,22 @@ export default function ResumePage() {
               </div>
             </div>
 
+            {/* Summary */}
+            <Section title="Summary" delay={0.1}>
+              <p style={{ color: 'var(--muted)', fontSize: '0.9rem', lineHeight: 1.75 }}>
+                Full-stack developer with a background in architectural engineering, applying structured design principles to build reliable, user-focused web applications. Experienced in developing and maintaining production systems.
+              </p>
+            </Section>
+
             {/* Experience */}
-            <Section title="Experience" delay={0.1}>
+            <Section title="Experience" delay={0.15}>
               <ExperienceItem
                 title="Frontend Developer"
                 company="Community of Guardians"
                 period="JAN 2026 – Present"
                 bullets={[
-                  'Improved UI consistency across the platform by delivering weekly ticket-based updates aligned with the Figma design system',
-                  'Transformed static designs into responsive, reusable components, improving maintainability and development speed',
-                  'Strengthened team delivery by collaborating in Agile workflows (Git, Taiga, code reviews), contributing to smoother releases and clearer progress tracking',
+                  'Deliver UI updates aligned with Figma design system, improving consistency',
+                  'Build reusable responsive components and support Agile team workflows',
                 ]}
               />
               <ExperienceItem
@@ -108,9 +114,10 @@ export default function ResumePage() {
                 company="Elika Beauty"
                 period="JUN 2025 – Present"
                 bullets={[
-                  'Replaced manual booking and scheduling processes by designing and maintaining a full-stack platform used in daily business operations',
-                  'Built core features (online booking, scheduling logic, admin dashboard), improving appointment management and reducing operational friction',
-                  'Led end-to-end delivery (architecture, APIs, deployment on Vercel/Render), ensuring reliable performance and continuous system improvements',
+                  'Design and deploy a full-stack booking platform used in daily business operations',
+                  'Build REST APIs and scheduling logic with conflict prevention and time-slot validation',
+                  'Develop responsive React frontend optimized for real user interactions',
+                  'Manage deployment (Vercel, Render), ensuring system reliability and performance',
                 ]}
               />
               <ExperienceItem
@@ -118,9 +125,8 @@ export default function ResumePage() {
                 company="Lordco Auto Parts"
                 period="NOV 2019 – MAR 2025"
                 bullets={[
-                  'Handled ~100 daily customers, improving service speed through accurate problem diagnosis',
-                  'Coordinated a team of 4 cashiers, ensuring smooth operations in a high-volume environment',
-                  'Managed high-volume transactions, maintaining accurate reconciliation',
+                  'Managed high-volume customer interactions (~100/day) in fast-paced environment',
+                  'Coordinated team operations and ensured accuracy in transactions',
                 ]}
               />
             </Section>
@@ -128,35 +134,52 @@ export default function ResumePage() {
             {/* Projects */}
             <Section title="Projects" delay={0.2}>
               <ExperienceItem
-                title="Full Stack Developer & Technical Project Manager"
-                company="Forge"
-                period="SEP 2025 – DEC 2025"
+                title="DEW AI Chatbot — Customer Interaction Tool"
+                company=""
+                period="December 2025"
                 bullets={[
-                  'Built a mobile application in an 8-person cross-disciplinary team to help high-school students explore skilled-trade career pathways',
+                  'Built and deployed AI chatbot integrated into business websites',
+                  'Automated customer inquiries, improving response time and reducing manual workload',
                 ]}
               />
               <ExperienceItem
-                title="Full Stack Developer & Scrum Master"
-                company="LendItOut"
-                period="APR 2025 – MAY 2025"
+                title="Forge (Mobile Application)"
+                company="Team Project"
+                period="September 2025"
                 bullets={[
-                  'Developed a responsive web application in a 3-person team, translating high-fidelity Figma designs into a functional production-ready UI',
+                  'Collaborated in cross-functional team to develop mobile application',
+                  'Contributed to frontend features and Agile delivery',
                 ]}
               />
+              <ExperienceItem
+                title="LendItOut — Full Stack Web Application"
+                company=""
+                period="April 2025"
+                bullets={[
+                  'Developed responsive UI from Figma designs using React',
+                  'Built reusable components and improved user interaction flow',
+                ]}
+              />
+            </Section>
+
+            {/* Technical Skills */}
+            <Section title="Technical Skills" delay={0.25}>
+              <p style={{ color: 'var(--muted)', fontSize: '0.88rem', lineHeight: 1.8, fontFamily: "'JetBrains Mono', monospace" }}>
+                JavaScript · TypeScript · React · Next.js · Node.js · Express · MongoDB · SQL · Git · Vercel · Render
+              </p>
             </Section>
 
             {/* Education */}
             <Section title="Education" delay={0.3}>
               {[
-                { school: 'British Columbia Institute of Technology (BCIT)', program: 'Diploma of Full Stack Development', year: '2024 – 2025' },
-                { school: 'Islamic Azad University', program: 'Bachelor of Architectural Engineering', year: '2017 – 2022' },
+                { school: 'British Columbia Institute of Technology (BCIT)', program: 'Diploma of Full Stack Development' },
+                { school: 'Islamic Azad University', program: 'Bachelor of Architectural Engineering' },
               ].map((edu) => (
                 <div key={edu.school} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.4rem', marginBottom: '0.875rem' }}>
                   <div>
                     <p style={{ fontWeight: '600', fontSize: '0.925rem' }}>{edu.school}</p>
                     <p style={{ color: 'var(--muted)', fontSize: '0.85rem' }}>{edu.program}</p>
                   </div>
-                  <span style={{ color: 'var(--muted)', fontSize: '0.78rem', fontFamily: "'JetBrains Mono', monospace" }}>{edu.year}</span>
                 </div>
               ))}
             </Section>
@@ -172,24 +195,17 @@ export default function ResumePage() {
               </div>
             </Section>
 
-            {/* Skills */}
-            <Section title="Technical Skills" delay={0.4}>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.875rem' }}>
-                {[
-                  { label: 'Languages & Frameworks', items: ['HTML5', 'CSS3', 'JavaScript', 'TypeScript', 'React', 'Next.js', 'Node.js', 'Hono', 'PHP', '.NET', 'Python', 'C#'] },
-                  { label: 'Databases & Backend', items: ['MongoDB', 'MySQL', 'PostgreSQL', 'SQL', 'Prisma'] },
-                  { label: 'Tools & Platforms', items: ['Git', 'GitHub', 'VS Code', 'Vercel', 'Render', 'Jira', 'Trello', 'Slack', 'AWS S3', 'CI/CD', 'RESTful APIs', 'UI/UX', 'Agile', 'OOP', 'Xcode'] },
-                ].map(({ label, items }) => (
-                  <div key={label} style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'baseline' }}>
-                    <span style={{ color: 'var(--muted)', fontSize: '0.75rem', fontWeight: '600', letterSpacing: '0.05em', minWidth: '160px', fontFamily: "'JetBrains Mono', monospace", flexShrink: 0 }}>
-                      {label}
-                    </span>
-                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
-                      {items.map(item => <span key={item} className="tag">{item}</span>)}
-                    </div>
-                  </div>
-                ))}
-              </div>
+            {/* Awards */}
+            <Section title="Awards" delay={0.4}>
+              {[
+                { title: 'Pam and Jerry Bastien Bursary; BCIT Special Bursaries', period: 'March 2025' },
+                { title: 'PBCIT Legacy of Leadership Bursary', period: 'March 2026' },
+              ].map((award) => (
+                <div key={award.title} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.4rem', marginBottom: '0.75rem' }}>
+                  <span style={{ fontWeight: '600', fontSize: '0.925rem' }}>{award.title}</span>
+                  <span style={{ color: 'var(--muted)', fontSize: '0.78rem', fontFamily: "'JetBrains Mono', monospace", flexShrink: 0 }}>{award.period}</span>
+                </div>
+              ))}
             </Section>
 
           </motion.div>
