@@ -1,6 +1,7 @@
 import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import Script from 'next/script';
 
 export const metadata = {
   title: 'Shabnam Beiraghian — Full-Stack Developer',
@@ -20,6 +21,10 @@ export default function RootLayout({ children }) {
         <Navbar />
         <main>{children}</main>
         <Footer />
+        <Script
+          src="https://your-dew-app.vercel.app/embed.js?biz=beiraghian"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );
