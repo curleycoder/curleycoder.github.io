@@ -22,7 +22,7 @@ export default function RootLayout({ children }) {
         <main>{children}</main>
         <Footer />
         <Script
-          src="https://your-dew-app.vercel.app/embed.js?biz=beiraghian"
+          src="https://dew-rho-ten.vercel.app/embed.js?biz=beiraghian"
           strategy="afterInteractive"
         />
       </body>
