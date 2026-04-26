@@ -143,21 +143,24 @@ export default function ResumePage() {
                 ]}
               />
               <ExperienceItem
-                title="Forge (Mobile Application)"
-                company="Team Project"
+                title="Forge — Mobile Trade Career App"
+                company="Technical Manager & Full-Stack Developer · Team of 4"
                 period="September 2025"
                 bullets={[
-                  'Collaborated in cross-functional team to develop mobile application',
-                  'Contributed to frontend features and Agile delivery',
+                  'Led technical direction as Technical Manager — translated Figma specs into engineering requirements and reviewed all pull requests before merge',
+                  'Built My Pathways and Explore Careers screens end-to-end, including AI-powered trade recommendations using Google GenAI SDK',
+                  'Owned the deployment pipeline and coordinated the final demo presentation across the team',
+                  'Backend built with Hono + Bun for high-speed performance; Redis-backed caching for mobile responsiveness',
                 ]}
               />
               <ExperienceItem
-                title="LendItOut — Full Stack Web Application"
-                company=""
+                title="LendItOut — Peer-to-Peer Lending Platform"
+                company="Scrum Master & Full-Stack Developer · Team of 4"
                 period="April 2025"
                 bullets={[
-                  'Developed responsive UI from Figma designs using React',
-                  'Built reusable components and improved user interaction flow',
+                  'Acted as Scrum Master — ran sprints, daily standups, and unblocked team throughout the project lifecycle',
+                  'Owned homepage, chat system, notifications, and product detail pages — handling frontend, backend, and database design for each feature',
+                  'Introduced a branching strategy mid-project that eliminated merge conflicts and taught the team professional collaboration on shared code',
                 ]}
               />
             </Section>
@@ -165,7 +168,7 @@ export default function ResumePage() {
             {/* Technical Skills */}
             <Section title="Technical Skills" delay={0.25}>
               <p style={{ color: 'var(--muted)', fontSize: '0.88rem', lineHeight: 1.8, fontFamily: "'JetBrains Mono', monospace" }}>
-                JavaScript · TypeScript · React · Next.js · Node.js · Express · MongoDB · SQL · Git · Vercel · Render
+                JavaScript · TypeScript · React · Next.js · React Native · Node.js · Express · Hono · Bun · MongoDB · PostgreSQL · Supabase · Drizzle ORM · Redis · Clerk · Auth0 · Tailwind CSS · Framer Motion · Git · Vercel · Render · AWS S3 · CI/CD · Figma · Accessibility (WCAG)
               </p>
             </Section>
 

@@ -86,7 +86,7 @@ export default function CaseStudyDetail({ study }) {
 
             <p
               style={{
-                color: '#c4c4d4',
+                color: 'var(--foreground)',
                 fontSize: '1.1rem',
                 lineHeight: 1.7,
                 maxWidth: '620px',
@@ -119,7 +119,7 @@ export default function CaseStudyDetail({ study }) {
                     {m.value}
                   </p>
                   <p style={{ fontSize: '0.7rem', color: 'var(--muted)', marginTop: '0.3rem' }}>{m.sub}</p>
-                  <p style={{ fontSize: '0.72rem', color: '#6b6b88', marginTop: '0.15rem' }}>{m.label}</p>
+                  <p style={{ fontSize: '0.72rem', color: 'var(--muted)', marginTop: '0.15rem' }}>{m.label}</p>
                 </div>
               ))}
             </div>
@@ -263,7 +263,7 @@ export default function CaseStudyDetail({ study }) {
                 style={{
                   fontSize: '1.05rem',
                   lineHeight: 1.75,
-                  color: '#d4d4e8',
+                  color: 'var(--foreground)',
                   fontStyle: 'italic',
                   marginBottom: '1rem',
                 }}

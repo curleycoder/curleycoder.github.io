@@ -61,31 +61,40 @@ function ProjectCard({ project, index }) {
 
           <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
             {project.liveUrl && (
-              <span
-                onClick={(e) => { e.preventDefault(); window.open(project.liveUrl, '_blank'); }}
-                style={{ width: '30px', height: '30px', borderRadius: '0.4rem', border: '1px solid var(--card-border)', background: 'rgba(255,255,255,0.04)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--accent)', cursor: 'pointer' }}
-                title="Live site"
+              <a
+                href={project.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                aria-label={`${project.title} live site`}
+                style={{ width: '30px', height: '30px', borderRadius: '0.4rem', border: '1px solid var(--card-border)', background: 'rgba(255,255,255,0.04)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--accent)', textDecoration: 'none' }}
               >
                 <FiExternalLink size={13} />
-              </span>
+              </a>
             )}
             {project.githubUrl && (
-              <span
-                onClick={(e) => { e.preventDefault(); window.open(project.githubUrl, '_blank'); }}
-                style={{ width: '30px', height: '30px', borderRadius: '0.4rem', border: '1px solid var(--card-border)', background: 'rgba(255,255,255,0.04)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--muted)', cursor: 'pointer' }}
-                title="GitHub"
+              <a
+                href={project.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                aria-label={`${project.title} GitHub repository`}
+                style={{ width: '30px', height: '30px', borderRadius: '0.4rem', border: '1px solid var(--card-border)', background: 'rgba(255,255,255,0.04)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--muted)', textDecoration: 'none' }}
               >
                 <FaGithub size={14} />
-              </span>
+              </a>
             )}
             {project.demoUrl && (
-              <span
-                onClick={(e) => { e.preventDefault(); window.open(project.demoUrl, '_blank'); }}
-                style={{ width: '30px', height: '30px', borderRadius: '0.4rem', border: '1px solid var(--card-border)', background: 'rgba(255,255,255,0.04)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--muted)', cursor: 'pointer' }}
-                title="Demo"
+              <a
+                href={project.demoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                aria-label={`${project.title} demo video`}
+                style={{ width: '30px', height: '30px', borderRadius: '0.4rem', border: '1px solid var(--card-border)', background: 'rgba(255,255,255,0.04)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--muted)', textDecoration: 'none' }}
               >
                 <FaYoutube size={14} />
-              </span>
+              </a>
             )}
             <span style={{ marginLeft: 'auto', fontSize: '0.78rem', color: 'var(--accent)', display: 'flex', alignItems: 'center', gap: '0.3rem', fontWeight: '500' }}>
               View details →

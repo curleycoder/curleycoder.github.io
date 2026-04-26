@@ -15,7 +15,21 @@ const navLinks = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [theme, setTheme] = useState('dark');
   const pathname = usePathname();
+
+  useEffect(() => {
+    const saved = localStorage.getItem('theme') || 'dark';
+    setTheme(saved);
+    document.documentElement.dataset.theme = saved;
+  }, []);
+
+  const toggleTheme = () => {
+    const next = theme === 'dark' ? 'light' : 'dark';
+    setTheme(next);
+    localStorage.setItem('theme', next);
+    document.documentElement.dataset.theme = next;
+  };
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -37,9 +51,9 @@ export default function Navbar() {
         right: 0,
         zIndex: 100,
         transition: 'background 0.3s ease, border-color 0.3s ease, backdrop-filter 0.3s ease',
-        background: scrolled ? 'rgba(15, 15, 26, 0.92)' : 'transparent',
+        background: scrolled ? 'var(--nav-bg-scrolled)' : 'transparent',
         backdropFilter: scrolled ? 'blur(12px)' : 'none',
-        borderBottom: scrolled ? '1px solid rgba(42, 42, 69, 0.8)' : '1px solid transparent',
+        borderBottom: scrolled ? '1px solid var(--nav-border-color)' : '1px solid transparent',
       }}
     >
       <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '64px' }}>
@@ -59,14 +73,33 @@ export default function Navbar() {
           </span>
           <span
             style={{
-              fontWeight: '400',
-              fontSize: '1rem',
-              fontFamily: "'JetBrains Mono', monospace",
-              color: '#c4c4d4',
+              display: 'inline-flex',
+              flexDirection: 'column',
               marginLeft: '0.5rem',
+              lineHeight: 1.15,
             }}
           >
-            CurleyCoder
+            <span
+              style={{
+                fontWeight: '500',
+                fontSize: '0.9rem',
+                fontFamily: "'JetBrains Mono', monospace",
+                color: 'var(--foreground)',
+              }}
+            >
+              Shabnam Beiraghian
+            </span>
+            <span
+              style={{
+                fontWeight: '400',
+                fontSize: '0.65rem',
+                fontFamily: "'JetBrains Mono', monospace",
+                color: '#8b7ec8',
+                letterSpacing: '0.03em',
+              }}
+            >
+              aka CurleyCoder
+            </span>
           </span>
         </Link>
 
@@ -83,8 +116,8 @@ export default function Navbar() {
                   borderRadius: '0.5rem',
                   fontSize: '0.875rem',
                   fontWeight: isActive ? '600' : '400',
-                  color: isActive ? '#a78bfa' : '#c4c4d4',
-                  background: isActive ? 'rgba(109, 40, 217, 0.12)' : 'transparent',
+                  color: isActive ? 'var(--accent)' : 'var(--nav-link-color)',
+                  background: isActive ? 'var(--nav-link-active-bg)' : 'transparent',
                   transition: 'color 0.15s, background 0.15s',
                   textDecoration: 'none',
                 }}
@@ -95,8 +128,46 @@ export default function Navbar() {
           })}
         </div>
 
-        {/* Right side: Contact */}
+        {/* Right side: Theme toggle + Contact */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+          {/* Day/Night toggle */}
+          <button
+            onClick={toggleTheme}
+            aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+            style={{
+              background: 'none',
+              border: '1px solid var(--nav-border-color)',
+              borderRadius: '0.5rem',
+              cursor: 'pointer',
+              color: 'var(--nav-link-color)',
+              padding: '0.35rem 0.45rem',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              transition: 'color 0.2s, border-color 0.2s, background 0.2s',
+            }}
+          >
+            {theme === 'dark' ? (
+              /* Sun icon — click to go light */
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="5" />
+                <line x1="12" y1="1" x2="12" y2="3" />
+                <line x1="12" y1="21" x2="12" y2="23" />
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                <line x1="1" y1="12" x2="3" y2="12" />
+                <line x1="21" y1="12" x2="23" y2="12" />
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+              </svg>
+            ) : (
+              /* Moon icon — click to go dark */
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+              </svg>
+            )}
+          </button>
+
           <a
             href="/#contact"
             className="btn-primary"
@@ -113,7 +184,7 @@ export default function Navbar() {
               background: 'none',
               border: 'none',
               cursor: 'pointer',
-              color: '#c4c4d4',
+              color: 'var(--nav-link-color)',
               padding: '0.25rem',
               display: 'none',
             }}
@@ -141,8 +212,8 @@ export default function Navbar() {
       {mobileOpen && (
         <div
           style={{
-            background: 'rgba(15, 15, 26, 0.98)',
-            borderTop: '1px solid rgba(42, 42, 69, 0.8)',
+            background: 'var(--nav-mobile-bg)',
+            borderTop: '1px solid var(--nav-border-color)',
             padding: '1rem 1.5rem',
           }}
           className="mobile-nav"
@@ -158,8 +229,8 @@ export default function Navbar() {
                   padding: '0.75rem 0',
                   fontSize: '1rem',
                   fontWeight: isActive ? '600' : '400',
-                  color: isActive ? '#a78bfa' : '#c4c4d4',
-                  borderBottom: '1px solid rgba(42, 42, 69, 0.4)',
+                  color: isActive ? 'var(--accent)' : 'var(--nav-link-color)',
+                  borderBottom: '1px solid var(--nav-mobile-border)',
                   textDecoration: 'none',
                 }}
               >

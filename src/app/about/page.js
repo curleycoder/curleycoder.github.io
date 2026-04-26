@@ -3,6 +3,10 @@
 import { motion } from 'framer-motion';
 import { useRef } from 'react';
 import { useInView } from 'framer-motion';
+import {
+  FaTableTennis, FaBicycle, FaCar, FaSkiing, FaSwimmer, FaDumbbell,
+} from 'react-icons/fa';
+import ReactCountryFlag from "react-country-flag";
 
 function FadeIn({ children, delay = 0 }) {
   const ref = useRef(null);
@@ -20,246 +24,216 @@ function FadeIn({ children, delay = 0 }) {
 }
 
 const activities = [
-  { name: 'Tennis', caption: 'I serve. Sometimes it goes in.' },
-  { name: 'Stanley Park biking', caption: 'Seawall laps. One speed: fast enough.' },
-  { name: 'Road trips', caption: 'The best UI is an open highway.' },
-  { name: 'Skiing', caption: 'Still learning to stop gracefully.' },
-  { name: 'Paddleboarding', caption: 'Falling in counts as commitment.' },
-  { name: 'Pilates', caption: "Looks easy, but trust me it's not." },
+  { icon: FaTableTennis, name: 'Tennis', caption: 'I serve. Sometimes it goes in.' },
+  { icon: FaBicycle, name: 'Stanley Park biking', caption: 'Seawall laps. One speed: fast enough.' },
+  { icon: FaCar, name: 'Road trips', caption: 'The best UI is an open highway.' },
+  { icon: FaSkiing, name: 'Skiing', caption: 'Still learning to stop gracefully.' },
+  { icon: FaSwimmer, name: 'Paddleboarding', caption: 'Falling in counts as commitment.' },
+  { icon: FaDumbbell, name: 'Pilates', caption: "Looks easy. Trust me, it's not." },
 ];
 
 const passions = [
-  { name: 'Cinema', note: 'Three-hour films that feel like thirty minutes.' },
-  { name: 'Giraffes', note: "The most impractical animal. I respect that." },
-  { name: 'Whales', note: 'Largest brain on the planet. I relate.' },
-  { name: 'Moon watching', note: 'Same moon, different city, different year.' },
-  { name: 'Snow globes', note: 'A whole world you can hold.' },
+  { name: '3D Printing', note: 'Turning an idea into something you can actually hold.' },
+  { name: 'Cinema', note: 'A good film makes time disappear.' },
+  { name: 'Giraffes', note: 'Unusual, calm, and completely unapologetic.' },
+  { name: 'Whales', note: 'Quiet power. They don’t try hard, they just are.' },
+  { name: 'Moon watching', note: 'Same moon, different phase of life.' },
+  { name: 'Snow globes', note: 'Tiny worlds that feel oddly complete.' },
 ];
 
 const places = [
-  { city: 'Paris', country: 'France' },
-  { city: 'Venice', country: 'Italy' },
-  { city: 'Florence', country: 'Italy' },
-  { city: 'Rome', country: 'Italy' },
-  { city: 'Milan', country: 'Italy' },
-  { city: 'Cologne', country: 'Germany' },
-  { city: 'Stuttgart', country: 'Germany' },
-  { city: 'Cancún', country: 'Mexico' },
-  { city: 'Tehran', country: 'Iran' },
-  { city: 'Toronto', country: 'Canada' },
-  { city: 'Calgary', country: 'Canada' },
-  { city: 'Banff', country: 'Canada' },
-  { city: 'Los Angeles', country: 'USA' },
-  { city: 'Seattle', country: 'USA' },
-  { city: 'Tacoma', country: 'USA' },
-  { city: 'Las Vegas', country: 'USA' },
+  { city: 'Paris', country: 'France', code: 'FR' },
+  { city: 'Venice', country: 'Italy', code: 'IT' },
+  { city: 'Florence', country: 'Italy', code: 'IT' },
+  { city: 'Rome', country: 'Italy', code: 'IT' },
+  { city: 'Milan', country: 'Italy', code: 'IT' },
+  { city: 'Cologne', country: 'Germany', code: 'DE' },
+  { city: 'Stuttgart', country: 'Germany', code: 'DE' },
+  { city: 'Cancun', country: 'Mexico', code: 'MX' },
+  { city: 'Los Angeles', country: 'USA', code: 'US' },
+  { city: 'Las Vegas', country: 'USA', code: 'US' },
+  { city: 'Seattle', country: 'USA', code: 'US' },
+  { city: 'Calgary', country: 'Canada', code: 'CA' },
+  { city: 'Toronto', country: 'Canada', code: 'CA' },
+  { city: 'Banff', country: 'Canada', code: 'CA' },
+  { city: 'Istanbul', country: 'Turkey', code: 'TR' },
 ];
+const uniqueCountries = [...new Set(places.map(p => p.country))];
+
+const sectionLabel = {
+  color: 'var(--accent)',
+  fontSize: '0.72rem',
+  fontWeight: '700',
+  letterSpacing: '0.12em',
+  fontFamily: "'JetBrains Mono', monospace",
+  textTransform: 'uppercase',
+  marginBottom: '1.5rem',
+  display: 'block',
+};
+
+const iconBox = {
+  width: '32px',
+  height: '32px',
+  borderRadius: '0.5rem',
+  background: 'rgba(109,40,217,0.1)',
+  border: '1px solid rgba(109,40,217,0.18)',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  flexShrink: 0,
+  color: 'var(--accent)',
+};
 
 export default function AboutPage() {
   return (
     <div style={{ paddingTop: '80px' }}>
-      {/* Header */}
-      <section
-        style={{
-          padding: '5rem 0 3rem',
-          background: 'linear-gradient(180deg, rgba(109,40,217,0.05) 0%, transparent 100%)',
-        }}
-      >
-        <div className="container" style={{ maxWidth: '720px' }}>
+
+      {/* Bio */}
+      <section style={{ padding: '4rem 0 2.5rem', background: 'linear-gradient(180deg, rgba(109,40,217,0.05) 0%, transparent 100%)' }}>
+        <div className="container" style={{ maxWidth: '680px' }}>
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           >
-            <p style={{ color: 'var(--accent)', fontSize: '0.85rem', fontWeight: '600', letterSpacing: '0.1em', marginBottom: '0.75rem' }}>
-              ABOUT
+            <p style={{ color: 'var(--accent)', fontSize: '0.72rem', fontWeight: '700', letterSpacing: '0.12em', fontFamily: "'JetBrains Mono', monospace", textTransform: 'uppercase', marginBottom: '0.75rem' }}>
+              About
             </p>
-            <h1
-              style={{
-                fontSize: 'clamp(2rem, 5vw, 3rem)',
-                fontWeight: '800',
-                letterSpacing: '-0.02em',
-                marginBottom: '0.5rem',
-              }}
-            >
-              Hi, I&apos;m{' '}
-              <span className="gradient-text">Shabnam</span>
+            <h1 style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: '800', letterSpacing: '-0.02em', marginBottom: '0.4rem' }}>
+              Hi, I&apos;m <span className="gradient-text">Shabnam</span>
             </h1>
-            <p style={{ color: 'var(--muted)', fontStyle: 'italic', marginBottom: '1.75rem', fontSize: '0.9rem' }}>
-              [ʃæb.nǽm] — An Iranian name that means morning dew
+            <p style={{ color: 'var(--muted)', fontStyle: 'italic', marginBottom: '1.75rem', fontSize: '0.88rem' }}>
+              [&#643;&#230;b.n&#230;&#769;m] &#8212; An Iranian name that means morning dew
             </p>
-
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '1rem',
-                color: '#c8c8dc',
-                fontSize: '1.025rem',
-                lineHeight: 1.8,
-              }}
-            >
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.9rem', fontSize: '1rem', lineHeight: 1.8, color: 'var(--foreground)' }}>
               <p>
-                I studied Architectural Engineering in northern Iran, then moved to Vancouver after
-                graduating — missed my own ceremony, but traded it for a fresh start.
+                I studied Architectural Engineering and learned how complex systems are designed and built to work under pressure. Alongside my degree, I completed 490+ hours of training in design software and IT &#8212; which gave me a strong base in problem-solving and technology.
               </p>
               <p>
-                Computing was always pulling at me, so I went back to school at BCIT and got my
-                diploma. Turns out designing buildings and designing software aren&apos;t that
-                different — both start with a problem, a blank page, and the pressure to make
-                something that actually holds up.
+                In 2019 I moved to Vancouver, a city with a strong tech industry. Being in that environment motivated me to shift careers. I kept the same problem-solving mindset, but started applying it through code.
+              </p>
+              <p>
+                Since 2022 I&apos;ve been building full-stack applications &#8212; real projects, team collaboration, and AI tools for businesses.
+              </p>
+              <p style={{ color: 'var(--muted)', fontStyle: 'italic' }}>
+                Engineering taught me how to think. Development helps me build.
               </p>
             </div>
           </motion.div>
         </div>
       </section>
 
-      {/* How I Move */}
-      <section style={{ padding: '4rem 0' }}>
-        <div className="container" style={{ maxWidth: '720px' }}>
-          <FadeIn>
-            <h2
-              style={{
-                fontSize: '1.5rem',
-                fontWeight: '700',
-                marginBottom: '0.5rem',
-                paddingBottom: '0.75rem',
-                borderBottom: '1px solid var(--card-border)',
-              }}
-            >
-              How I Move
-            </h2>
-            <p style={{ color: 'var(--muted)', marginBottom: '1.75rem', fontSize: '0.9rem' }}>
-              What I&apos;m doing when I&apos;m not at a desk.
-            </p>
-          </FadeIn>
+      {/* Outside the code */}
+      <section style={{ padding: '2.5rem 0' }}>
+      <div className="container" style={{ maxWidth: '680px' }}>
+        
+        <FadeIn>
+          <span style={sectionLabel}>Outside the code</span>
+        </FadeIn>
 
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
-              gap: '1rem',
-            }}
-          >
-            {activities.map((activity, i) => (
-              <FadeIn key={activity.name} delay={i * 0.07}>
-                <div
-                  style={{
-                    background: 'var(--card)',
-                    border: '1px solid var(--card-border)',
-                    borderRadius: '0.875rem',
-                    padding: '1.25rem 1.5rem',
-                  }}
-                >
-                  <p style={{ fontWeight: '600', marginBottom: '0.35rem', fontSize: '0.95rem' }}>
-                    {activity.name}
-                  </p>
-                  <p style={{ color: 'var(--muted)', fontSize: '0.82rem', lineHeight: 1.55 }}>
-                    {activity.caption}
-                  </p>
-                </div>
-              </FadeIn>
-            ))}
-          </div>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          {activities.map((activity, i) => (
+            <FadeIn key={activity.name} delay={i * 0.05}>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                gap: '1rem',
+                padding: '0.875rem 0',
+                borderBottom: i < activities.length - 1 ? '1px solid var(--card-border)' : 'none',
+              }}>
+                <p style={{ fontWeight: '600', fontSize: '0.9rem' }}>
+                  {activity.name}
+                </p>
+                <p style={{
+                  color: 'var(--muted)',
+                  fontSize: '0.82rem',
+                  fontStyle: 'italic',
+                  textAlign: 'right',
+                  maxWidth: '340px'
+                }}>
+                  {activity.caption}
+                </p>
+              </div>
+            </FadeIn>
+          ))}
+        </div>
+
+      </div>
+    </section>
+
+      {/* Things I love */}
+      <section style={{ padding: '2.5rem 0 5rem' }}>
+        <div className="container" style={{ maxWidth: '680px' }}>
+          <FadeIn>
+            <span style={sectionLabel}>Things I love</span>
+          </FadeIn>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+          {passions.map((p, i) => (
+            <FadeIn key={p.name} delay={i * 0.05}>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                gap: '1rem',
+                padding: '0.875rem 0',
+                borderBottom: i < passions.length - 1 ? '1px solid var(--card-border)' : 'none',
+              }}>
+                <p style={{ fontWeight: '600', fontSize: '0.9rem' }}>
+                  {p.name}
+                </p>
+                <p style={{
+                  color: 'var(--muted)',
+                  fontSize: '0.82rem',
+                  fontStyle: 'italic',
+                  textAlign: 'right',
+                  maxWidth: '340px'
+                }}>
+                  {p.note}
+                </p>
+              </div>
+            </FadeIn>
+          ))}
+        </div>
         </div>
       </section>
 
-      {/* Places */}
-      <section style={{ padding: '4rem 0' }}>
-        <div className="container" style={{ maxWidth: '720px' }}>
-          <FadeIn>
-            <h2
-              style={{
-                fontSize: '1.5rem',
-                fontWeight: '700',
-                marginBottom: '0.5rem',
-                paddingBottom: '0.75rem',
-                borderBottom: '1px solid var(--card-border)',
-              }}
-            >
-              Places I&apos;ve Been
-            </h2>
-            <p style={{ color: 'var(--muted)', marginBottom: '1.75rem', fontSize: '0.9rem' }}>
-              A few places I&apos;ve been lucky enough to see.
-            </p>
-          </FadeIn>
+      {/* World so far */}
+<section style={{ padding: '2.5rem 0' }}>
+  <div className="container" style={{ maxWidth: '680px' }}>
+    
+    <FadeIn>
+      <span style={sectionLabel}>
+        The world so far — {places.length} cities, {uniqueCountries.length} countries
+      </span>
+    </FadeIn>
 
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))',
-              gap: '0.6rem',
-            }}
-          >
-            {places.map((place, i) => (
-              <FadeIn key={place.city} delay={i * 0.04}>
-                <div
-                  style={{
-                    background: 'var(--card)',
-                    border: '1px solid var(--card-border)',
-                    borderRadius: '0.625rem',
-                    padding: '0.75rem 1rem',
-                  }}
-                >
-                  <p style={{ fontWeight: '600', fontSize: '0.9rem', marginBottom: '0.15rem' }}>
-                    {place.city}
-                  </p>
-                  <p style={{ color: 'var(--muted)', fontSize: '0.75rem' }}>
-                    {place.country}
-                  </p>
-                </div>
-              </FadeIn>
-            ))}
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.6rem', marginTop: '1rem' }}>
+      {places.map((place, i) => (
+        <FadeIn key={place.city} delay={i * 0.02}>
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.4rem',
+            padding: '0.35rem 0.6rem',
+            border: '1px solid var(--card-border)',
+            borderRadius: '999px',
+            fontSize: '0.75rem',
+            color: 'var(--muted)'
+          }}>
+            <ReactCountryFlag
+              countryCode={place.code}
+              svg
+              style={{ width: '1em', height: '1em' }}
+            />
+            {place.city}
           </div>
-        </div>
-      </section>
+        </FadeIn>
+      ))}
+    </div>
 
-      {/* Random Passions */}
-      <section style={{ padding: '4rem 0 6rem' }}>
-        <div className="container" style={{ maxWidth: '720px' }}>
-          <FadeIn>
-            <h2
-              style={{
-                fontSize: '1.5rem',
-                fontWeight: '700',
-                marginBottom: '0.5rem',
-                paddingBottom: '0.75rem',
-                borderBottom: '1px solid var(--card-border)',
-              }}
-            >
-              Random Passions
-            </h2>
-            <p style={{ color: 'var(--muted)', marginBottom: '1.75rem', fontSize: '0.9rem' }}>
-              The things that make me interesting at parties.
-            </p>
-          </FadeIn>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-            {passions.map((p, i) => (
-              <FadeIn key={p.name} delay={i * 0.07}>
-                <div
-                  style={{
-                    background: 'var(--card)',
-                    border: '1px solid var(--card-border)',
-                    borderRadius: '0.875rem',
-                    padding: '1.25rem 1.5rem',
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    gap: '1rem',
-                    flexWrap: 'wrap',
-                  }}
-                >
-                  <p style={{ fontWeight: '600', fontSize: '0.95rem' }}>{p.name}</p>
-                  <p style={{ color: 'var(--muted)', fontSize: '0.85rem', fontStyle: 'italic' }}>
-                    {p.note}
-                  </p>
-                </div>
-              </FadeIn>
-            ))}
-          </div>
-        </div>
-      </section>
+  </div>
+</section>
     </div>
   );
 }

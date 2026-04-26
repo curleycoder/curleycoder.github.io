@@ -25,11 +25,123 @@ function FadeIn({ children, delay = 0, y = 24, style = {} }) {
   );
 }
 
+// ─── Story Timeline ───────────────────────────────────────────────────────────
+
+const storyMilestones = [
+  {
+    period: '2014 – 2019',
+    title: 'Architectural Engineering',
+    tag: 'Origin',
+    desc: 'Studied how complex systems are designed and built to work under pressure. Completed 490+ hours of training in design software and IT — building a strong base in problem-solving and technology.',
+  },
+  {
+    period: '2019',
+    title: 'Moving to Canada',
+    tag: 'Pivot',
+    desc: 'Moved to Vancouver — a city with a strong tech industry. The environment pushed me toward tech. Same problem-solving mindset, applied through code.',
+  },
+  {
+    period: '2022 – Now',
+    title: 'Full-Stack Development',
+    tag: 'Now',
+    desc: 'Building full-stack applications from frontend to backend — real projects, team collaboration, and AI tools for businesses. Engineering taught me how to think. Development helps me build.',
+  },
+];
+
+function StoryTimeline() {
+  return (
+    <div className="hero-timeline">
+      <p
+        style={{
+          color: 'var(--accent)',
+          fontSize: '0.72rem',
+          fontWeight: '700',
+          letterSpacing: '0.12em',
+          marginBottom: '1.75rem',
+          fontFamily: "'JetBrains Mono', monospace",
+          textTransform: 'uppercase',
+        }}
+      >
+        My Story
+      </p>
+
+      <div style={{ position: 'relative', paddingLeft: '1.75rem' }}>
+        {/* Vertical line */}
+        <div
+          style={{
+            position: 'absolute',
+            left: 0,
+            top: '8px',
+            bottom: '8px',
+            width: '1px',
+            background: 'linear-gradient(to bottom, var(--primary), rgba(109,40,217,0.08))',
+          }}
+        />
+
+        {storyMilestones.map((m, i) => (
+          <div
+            key={i}
+            style={{ position: 'relative', marginBottom: i < storyMilestones.length - 1 ? '2.25rem' : 0 }}
+          >
+            {/* Dot */}
+            <div
+              style={{
+                position: 'absolute',
+                left: '-1.75rem',
+                top: '5px',
+                width: '9px',
+                height: '9px',
+                borderRadius: '50%',
+                background: i === storyMilestones.length - 1 ? 'var(--primary)' : 'var(--background)',
+                border: '2px solid var(--primary)',
+                transform: 'translateX(-4px)',
+                boxShadow: i === storyMilestones.length - 1 ? '0 0 10px var(--primary-glow)' : 'none',
+              }}
+            />
+
+            <span
+              style={{
+                fontSize: '0.68rem',
+                color: 'var(--muted)',
+                fontFamily: "'JetBrains Mono', monospace",
+                letterSpacing: '0.05em',
+              }}
+            >
+              {m.period}
+            </span>
+
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', margin: '0.25rem 0 0.4rem' }}>
+              <h3
+                style={{
+                  fontSize: '0.92rem',
+                  fontWeight: '700',
+                  color: 'var(--foreground)',
+                  fontFamily: "'JetBrains Mono', monospace",
+                }}
+              >
+                {m.title}
+              </h3>
+              <span className="tag" style={{ fontSize: '0.6rem', padding: '0.1rem 0.45rem' }}>
+                {m.tag}
+              </span>
+            </div>
+
+            <p style={{ color: 'var(--muted)', fontSize: '0.82rem', lineHeight: 1.65 }}>
+              {m.desc}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 // ─── Hero ─────────────────────────────────────────────────────────────────────
 
 const roles = [
   'Full-Stack Developer',
   'UI/UX Thinker',
+  'Accessibility Advocate',
   'Systems Builder',
   'Problem Solver',
 ];
@@ -75,6 +187,10 @@ function Hero() {
       />
 
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
+        <div
+          className="hero-grid"
+          style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '5rem', alignItems: 'center' }}
+        >
         <motion.div
           initial={{ opacity: 0, y: 32 }}
           animate={{ opacity: 1, y: 0 }}
@@ -96,7 +212,7 @@ function Hero() {
           {/* Name */}
           <h1
             style={{
-              fontSize: 'clamp(2.8rem, 7vw, 5rem)',
+              fontSize: 'clamp(2rem, 4.5vw, 3.2rem)',
               fontWeight: '800',
               lineHeight: 1.1,
               marginBottom: '0.5rem',
@@ -129,10 +245,12 @@ function Hero() {
             }}
           >
             <span
+              aria-live="polite"
+              aria-atomic="true"
               style={{
                 fontSize: 'clamp(1.2rem, 2.5vw, 1.6rem)',
                 fontWeight: '600',
-                color: '#c4c4d4',
+                color: 'var(--foreground)',
                 transition: 'opacity 0.35s ease',
                 opacity: visible ? 1 : 0,
               }}
@@ -144,31 +262,41 @@ function Hero() {
           {/* Sub-tagline */}
           <p
             style={{
-              color: 'var(--muted)',
+              color: 'var(--foreground)',
               fontSize: '1.05rem',
               maxWidth: '520px',
               lineHeight: 1.7,
+              marginBottom: '0.75rem',
+            }}
+          >
+            I design and build full-stack applications that solve real business problems — from UI to backend to deployment.
+          </p>
+          <p
+            style={{
+              color: 'var(--muted)',
+              fontSize: '0.92rem',
+              maxWidth: '480px',
+              lineHeight: 1.65,
               marginBottom: '2.5rem',
             }}
           >
-            I build thoughtful web experiences — from elegant UIs to the infrastructure behind them.
-            Based in Vancouver.
+            I focus on performance, clean architecture, and accessibility — building products that work for everyone and actually get used.
           </p>
 
           {/* CTAs */}
-          <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'center' }}>
-            <Link href="/projects" className="btn-primary">
+          <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'nowrap', alignItems: 'center' }}>
+            <Link href="/projects" className="btn-primary" style={{ padding: '0.55rem 1rem' }}>
               View Projects
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M3 8h10M9 4l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </Link>
 
-            <a href="https://github.com/curleycoder" target="_blank" rel="noopener noreferrer" className="btn-outline" aria-label="GitHub">
+            <a href="https://github.com/curleycoder" target="_blank" rel="noopener noreferrer" className="btn-outline" style={{ padding: '0.55rem 1rem' }} aria-label="GitHub">
               <FiGithub size={17} /> GitHub
             </a>
 
-            <a href="https://linkedin.com/in/shabnam-beiraghian" target="_blank" rel="noopener noreferrer" className="btn-outline" aria-label="LinkedIn">
+            <a href="https://linkedin.com/in/shabnam-beiraghian" target="_blank" rel="noopener noreferrer" className="btn-outline" style={{ padding: '0.55rem 1rem' }} aria-label="LinkedIn">
               <FiLinkedin size={17} /> LinkedIn
             </a>
           </div>
@@ -199,6 +327,11 @@ function Hero() {
           </motion.div>
         </motion.div>
 
+        <FadeIn delay={0.35}>
+          <StoryTimeline />
+        </FadeIn>
+
+        </div>{/* end hero-grid */}
       </div>
     </section>
   );
@@ -352,7 +485,7 @@ function ContactForm() {
             placeholder="Your name"
             style={{
               width: '100%',
-              background: 'rgba(255,255,255,0.04)',
+              background: 'var(--input-bg)',
               border: '1px solid var(--card-border)',
               borderRadius: '0.5rem',
               padding: '0.65rem 1rem',
@@ -380,7 +513,7 @@ function ContactForm() {
             placeholder="your@email.com"
             style={{
               width: '100%',
-              background: 'rgba(255,255,255,0.04)',
+              background: 'var(--input-bg)',
               border: '1px solid var(--card-border)',
               borderRadius: '0.5rem',
               padding: '0.65rem 1rem',
@@ -410,7 +543,7 @@ function ContactForm() {
           placeholder="What are you working on?"
           style={{
             width: '100%',
-            background: 'rgba(255,255,255,0.04)',
+            background: 'var(--input-bg)',
             border: '1px solid var(--card-border)',
             borderRadius: '0.5rem',
             padding: '0.65rem 1rem',

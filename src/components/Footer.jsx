@@ -6,7 +6,7 @@ export default function Footer() {
   return (
     <footer
       style={{
-        borderTop: '1px solid rgba(42, 42, 69, 0.6)',
+        borderTop: '1px solid var(--card-border)',
         padding: '2rem 0',
         marginTop: '4rem',
       }}
