@@ -50,11 +50,11 @@ export const projects = [
   {
     slug: 'dew',
     type: 'web',
-    title: 'Dew',
-    shortDescription: 'Embeddable AI front-desk assistant for small businesses.',
+    title: 'Meet Dew',
+    shortDescription: 'An embeddable AI front-desk assistant for small businesses and portfolios.',
     description:
-      'An AI-powered assistant that handles client FAQs, bookings, and inquiries. Embeds on any site via a script tag.',
-    tags: ['Next.js', 'OpenAI', 'Supabase', 'Auth0'],
+      'An embeddable AI front-desk assistant for small businesses and portfolios. Drop one script tag on any website and your visitors get instant answers.',
+    tags: ['Next.js 16', 'React 19', 'Neon Postgres', 'Groq', 'Google Gemini', 'Vercel'],
     year: 2025,
     liveUrl: 'https://ai-client-seven.vercel.app',
     githubUrl: '',
@@ -64,22 +64,32 @@ export const projects = [
     team: 'Solo project',
     contribution: 'I designed and built Dew entirely solo — from the AI context system and multi-tenant backend to the embeddable widget and business dashboard. The goal was to make it so simple that any small business could deploy it with one line of HTML, and so smart that it could handle real client questions without a human in the loop.',
     rationaleProblem:
-      'Small businesses miss leads after hours because no one is available to respond.',
+      'Every project deserves a voice. Most websites make visitors hunt for basic information — hours, services, how to book. I wanted a way to give any project or business an instant, always-on assistant that answers questions in plain language, without requiring a support team or a complex setup.',
     rationaleChallenge:
-      'Built a context-aware AI that serves multiple businesses from one system — each with isolated context, zero config for the client, and no CSS conflicts with their existing site.',
+      'Each business gets a plain-text knowledge file describing their services, hours, and FAQs. That file becomes the system prompt context for every conversation. No model training, no database of embeddings — just a well-structured prompt and Google Gemini doing the rest. New business? Add two files and embed the script. Done in minutes.',
     rationaleSolution:
       'Deployed for Elika Beauty — 40% traffic increase, zero manual confirmations, handles FAQs 24/7 with one script tag.',
     whatItDoes: [
       'Answers business-specific FAQs instantly using a plain-text knowledge file injected into the system prompt',
       'Handles booking requests and inquiries without any human intervention',
-      'Embeds on any site — Next.js, Webflow, Squarespace, plain HTML — via a single script tag',
+      'Embeds on any site — Next.js, plain HTML, Webflow, Squarespace — with a single script tag',
       'Renders as a sandboxed iframe so it never conflicts with the client\'s existing styles',
       'Routes each request to the correct business context using a biz query parameter',
+      'Admin dashboard captures every lead — name, phone, email, and the full conversation that led to it — with CSV export in one click',
+      'Browse full chat histories to understand what visitors are asking and where they drop off',
     ],
     technicalDecisions: [
       {
-        choice: 'Prompt engineering + plain-text knowledge file instead of a vector DB',
+        choice: 'Knowledge files, not fine-tuning',
         reason: 'Each business gets a .txt file with their services, prices, hours, and policies. That file is injected into the system prompt on every conversation start. No fine-tuning, no embeddings, no infrastructure cost — just fast, accurate answers from a well-structured context.',
+      },
+      {
+        choice: 'Groq for speed, Gemini as fallback',
+        reason: 'Groq powers near-instant AI replies — latency matters in a chat widget. Google Gemini serves as fallback to keep the service up even if one provider has an outage.',
+      },
+      {
+        choice: 'Built-in admin dashboard — every lead, every conversation in one place',
+        reason: 'Business owners need visibility into what\'s happening. The dashboard shows every lead captured across all businesses — name, phone, email, and the conversation that led to it. Full chat histories reveal what visitors ask and where they drop off. Leads export to CSV in one click. The whole thing is password-protected and built for the business owner, not the end user.',
       },
       {
         choice: 'Sandboxed iframe for the embed widget',
@@ -98,6 +108,9 @@ export const projects = [
       'Zero manual confirmations',
       'One script tag embed — zero dependencies',
       'Multi-tenant with full context isolation',
+      'Lead capture — name, phone, email',
+      'CSV export',
+      'Password-protected dashboard',
     ],
     images: [
       { src: '/projects/dew-home.png', caption: 'Dashboard — manage your AI assistant configuration and business info.' },
