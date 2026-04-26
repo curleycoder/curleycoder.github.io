@@ -56,7 +56,7 @@ export const projects = [
       'An embeddable AI front-desk assistant for small businesses and portfolios. Drop one script tag on any website and your visitors get instant answers.',
     tags: ['Next.js 16', 'React 19', 'Neon Postgres', 'Groq', 'Google Gemini', 'Vercel'],
     year: 2025,
-    liveUrl: 'https://ai-client-seven.vercel.app',
+    liveUrl: 'https://dew-rho-ten.vercel.app/',
     githubUrl: '',
     prototypeUrl: '',
     wireframeUrl: '',
