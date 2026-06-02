@@ -23,6 +23,27 @@ function FadeIn({ children, delay = 0 }) {
   );
 }
 
+const storyMilestones = [
+  {
+    period: '2014 – 2019',
+    title: 'Architectural Engineering',
+    tag: 'Origin',
+    desc: 'Studied how complex systems are designed and built to work under pressure. Completed 490+ hours of training in design software and IT — building a strong base in problem-solving and technology.',
+  },
+  {
+    period: '2019',
+    title: 'Moving to Canada',
+    tag: 'Pivot',
+    desc: 'Moved to Vancouver — a city with a strong tech industry. The environment pushed me toward tech. Same problem-solving mindset, applied through code.',
+  },
+  {
+    period: '2022 – Now',
+    title: 'Full-Stack Development',
+    tag: 'Now',
+    desc: 'Building full-stack applications from frontend to backend — real projects, team collaboration, and AI tools for businesses. Engineering taught me how to think. Development helps me build.',
+  },
+];
+
 const activities = [
   { icon: FaTableTennis, name: 'Tennis', caption: 'I serve. Sometimes it goes in.' },
   { icon: FaBicycle, name: 'Stanley Park biking', caption: 'Seawall laps. One speed: fast enough.' },
@@ -71,18 +92,6 @@ const sectionLabel = {
   display: 'block',
 };
 
-const iconBox = {
-  width: '32px',
-  height: '32px',
-  borderRadius: '0.5rem',
-  background: 'rgba(109,40,217,0.1)',
-  border: '1px solid rgba(109,40,217,0.18)',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  flexShrink: 0,
-  color: 'var(--accent)',
-};
 
 export default function AboutPage() {
   return (
@@ -120,6 +129,75 @@ export default function AboutPage() {
               </p>
             </div>
           </motion.div>
+        </div>
+      </section>
+
+      {/* Story Timeline */}
+      <section style={{ padding: '2.5rem 0' }}>
+        <div className="container" style={{ maxWidth: '680px' }}>
+          <FadeIn>
+            <span style={sectionLabel}>My Story</span>
+          </FadeIn>
+          <div style={{ position: 'relative', paddingLeft: '1.75rem' }}>
+            <div
+              style={{
+                position: 'absolute',
+                left: 0,
+                top: '8px',
+                bottom: '8px',
+                width: '1px',
+                background: 'linear-gradient(to bottom, var(--primary), rgba(109,40,217,0.08))',
+              }}
+            />
+            {storyMilestones.map((m, i) => (
+              <FadeIn key={i} delay={i * 0.07}>
+                <div style={{ position: 'relative', marginBottom: i < storyMilestones.length - 1 ? '2.25rem' : 0 }}>
+                  <div
+                    style={{
+                      position: 'absolute',
+                      left: '-1.75rem',
+                      top: '5px',
+                      width: '9px',
+                      height: '9px',
+                      borderRadius: '50%',
+                      background: i === storyMilestones.length - 1 ? 'var(--primary)' : 'var(--background)',
+                      border: '2px solid var(--primary)',
+                      transform: 'translateX(-4px)',
+                      boxShadow: i === storyMilestones.length - 1 ? '0 0 10px var(--primary-glow)' : 'none',
+                    }}
+                  />
+                  <span
+                    style={{
+                      fontSize: '0.68rem',
+                      color: 'var(--muted)',
+                      fontFamily: "'JetBrains Mono', monospace",
+                      letterSpacing: '0.05em',
+                    }}
+                  >
+                    {m.period}
+                  </span>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', margin: '0.25rem 0 0.4rem' }}>
+                    <h3
+                      style={{
+                        fontSize: '0.92rem',
+                        fontWeight: '700',
+                        color: 'var(--foreground)',
+                        fontFamily: "'JetBrains Mono', monospace",
+                      }}
+                    >
+                      {m.title}
+                    </h3>
+                    <span className="tag" style={{ fontSize: '0.6rem', padding: '0.1rem 0.45rem' }}>
+                      {m.tag}
+                    </span>
+                  </div>
+                  <p style={{ color: 'var(--muted)', fontSize: '0.82rem', lineHeight: 1.65 }}>
+                    {m.desc}
+                  </p>
+                </div>
+              </FadeIn>
+            ))}
+          </div>
         </div>
       </section>
 

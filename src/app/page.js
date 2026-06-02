@@ -1,780 +1,1076 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
-import { motion, useInView } from 'framer-motion';
-import { projects } from '../../data/projects';
-import { caseStudies } from '../../data/case-studies';
-import { FiGithub, FiLinkedin } from 'react-icons/fi';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FiGithub, FiLinkedin, FiMail, FiArrowRight, FiExternalLink } from 'react-icons/fi';
 
-// ─── Animation helpers ───────────────────────────────────────────────────────
+const YELLOW = '#ffffff';
+const DARK_TEXT = '#46505C';
+const WHITE = '#000000';
 
-function FadeIn({ children, delay = 0, y = 24, style = {} }) {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: '-60px' });
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.55, delay, ease: [0.22, 1, 0.36, 1] }}
-      style={style}
-    >
-      {children}
-    </motion.div>
-  );
-}
+const SECTION_LABELS = ['Home', 'Accessibility', 'Theme', 'UX & UI'];
 
-// ─── Story Timeline ───────────────────────────────────────────────────────────
-
-const storyMilestones = [
+const SKILLS = [
   {
-    period: '2014 – 2019',
-    title: 'Architectural Engineering',
-    tag: 'Origin',
-    desc: 'Studied how complex systems are designed and built to work under pressure. Completed 490+ hours of training in design software and IT — building a strong base in problem-solving and technology.',
+    title: 'AI Agents',
+    desc: 'AI assistant flows that help users ask better questions, understand options, and take action.',
   },
   {
-    period: '2019',
-    title: 'Moving to Canada',
-    tag: 'Pivot',
-    desc: 'Moved to Vancouver — a city with a strong tech industry. The environment pushed me toward tech. Same problem-solving mindset, applied through code.',
+    title: 'Chatbots',
+    desc: 'Business chatbots for FAQs, lead capture, service guidance, and booking support.',
   },
   {
-    period: '2022 – Now',
-    title: 'Full-Stack Development',
-    tag: 'Now',
-    desc: 'Building full-stack applications from frontend to backend — real projects, team collaboration, and AI tools for businesses. Engineering taught me how to think. Development helps me build.',
+    title: 'Frontend',
+    desc: 'Polished, responsive interfaces with strong UI detail and clean user interaction.',
+  },
+  {
+    title: 'Accessibility',
+    desc: 'Semantic HTML, keyboard support, focus states, contrast, forms, and reduced motion.',
   },
 ];
 
-function StoryTimeline() {
-  return (
-    <div className="hero-timeline">
-      <p
-        style={{
-          color: 'var(--accent)',
-          fontSize: '0.72rem',
-          fontWeight: '700',
-          letterSpacing: '0.12em',
-          marginBottom: '1.75rem',
-          fontFamily: "'JetBrains Mono', monospace",
-          textTransform: 'uppercase',
-        }}
-      >
-        My Story
-      </p>
+const PROJECTS = [
+  {
+    name: 'Navly',
+    desc: 'AI-powered Canadian immigration guidance platform that turns complex pathways into clearer user journeys.',
+    stack: 'Next.js · Supabase · AI Assistant · UX Flow',
+    href: '/projects/navly',
+  },
+  {
+    name: 'Dew AI Assistant',
+    desc: 'AI chatbot system for service businesses — answers questions, guides users, and captures leads.',
+    stack: 'React · Node.js · AI API · Lead Capture',
+    href: '/projects/dew',
+  },
+  {
+    name: 'Elika Beauty',
+    desc: 'Booking-focused business website with service pages, SEO, mobile UX, and clear conversion flow.',
+    stack: 'React · Tailwind · Booking UX · SEO',
+    href: '/case-studies/elika-beauty',
+  },
+];
 
-      <div style={{ position: 'relative', paddingLeft: '1.75rem' }}>
-        {/* Vertical line */}
-        <div
+function BottomDots({ current, total, onGo }) {
+  return (
+    <div
+      aria-label="Section navigation"
+      style={{
+        marginTop: '4rem',
+        display: 'flex',
+        justifyContent: 'center',
+        gap: '0.85rem',
+      }}
+    >
+      {Array.from({ length: total }).map((_, i) => (
+        <button
+          key={i}
+          onClick={() => onGo(i)}
+          aria-label={`Go to ${SECTION_LABELS[i]} section`}
           style={{
-            position: 'absolute',
-            left: 0,
-            top: '8px',
-            bottom: '8px',
-            width: '1px',
-            background: 'linear-gradient(to bottom, var(--primary), rgba(109,40,217,0.08))',
+            width: i === current ? '18px' : '18px',
+            height: '18px',
+            borderRadius: '999px',
+            border: `2px solid ${i === current ? '#BE00B5' : '#828282'}`,
+            background: i === current ? '#BE00B5' : 'transparent',
+            cursor: 'pointer',
+            padding: 0,
+            backgroundImage: 'none',
           }}
         />
-
-        {storyMilestones.map((m, i) => (
-          <div
-            key={i}
-            style={{ position: 'relative', marginBottom: i < storyMilestones.length - 1 ? '2.25rem' : 0 }}
-          >
-            {/* Dot */}
-            <div
-              style={{
-                position: 'absolute',
-                left: '-1.75rem',
-                top: '5px',
-                width: '9px',
-                height: '9px',
-                borderRadius: '50%',
-                background: i === storyMilestones.length - 1 ? 'var(--primary)' : 'var(--background)',
-                border: '2px solid var(--primary)',
-                transform: 'translateX(-4px)',
-                boxShadow: i === storyMilestones.length - 1 ? '0 0 10px var(--primary-glow)' : 'none',
-              }}
-            />
-
-            <span
-              style={{
-                fontSize: '0.68rem',
-                color: 'var(--muted)',
-                fontFamily: "'JetBrains Mono', monospace",
-                letterSpacing: '0.05em',
-              }}
-            >
-              {m.period}
-            </span>
-
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', margin: '0.25rem 0 0.4rem' }}>
-              <h3
-                style={{
-                  fontSize: '0.92rem',
-                  fontWeight: '700',
-                  color: 'var(--foreground)',
-                  fontFamily: "'JetBrains Mono', monospace",
-                }}
-              >
-                {m.title}
-              </h3>
-              <span className="tag" style={{ fontSize: '0.6rem', padding: '0.1rem 0.45rem' }}>
-                {m.tag}
-              </span>
-            </div>
-
-            <p style={{ color: 'var(--muted)', fontSize: '0.82rem', lineHeight: 1.65 }}>
-              {m.desc}
-            </p>
-          </div>
-        ))}
-      </div>
+      ))}
     </div>
   );
 }
 
-// ─── Hero ─────────────────────────────────────────────────────────────────────
+function CornerSymbols() {
+  return (
+    <>
+      <div
+        aria-hidden="true"
+        style={{
+          position: 'fixed',
+          bottom: '1.25rem',
+          left: '1.25rem',
+          zIndex: 20,
+          color: '#000000',
+          fontSize: '1.25rem',
+          fontFamily: "'JetBrains Mono', monospace",
+          letterSpacing: '-0.2em',
+        }}
+      >
+        △○□
+      </div>
 
-const roles = [
-  'Full-Stack Developer',
-  'UI/UX Thinker',
-  'Accessibility Advocate',
-  'Systems Builder',
-  'Problem Solver',
-];
+      <button
+        aria-label="Portfolio information"
+        style={{
+          position: 'fixed',
+          bottom: '1.15rem',
+          right: '1.15rem',
+          zIndex: 20,
+          width: '30px',
+          height: '30px',
+          borderRadius: '50%',
+          border: '2px solid #000000',
+          background: 'transparent',
+          color: '#000000',
+          display: 'grid',
+          placeItems: 'center',
+          fontFamily: 'Georgia, serif',
+          fontStyle: 'italic',
+          fontWeight: 700,
+          cursor: 'pointer',
+        }}
+      >
+        i
+      </button>
+    </>
+  );
+}
 
-function Hero() {
-  const [roleIdx, setRoleIdx] = useState(0);
-  const [visible, setVisible] = useState(true);
+function TextureLayer() {
+  return (
+    <div
+      aria-hidden="true"
+      style={{
+        position: 'absolute',
+        inset: 0,
+        backgroundImage: 'radial-gradient(rgba(255,255,255,0.2) 1px, transparent 1px)',
+        backgroundSize: '5px 5px',
+        opacity: 0.14,
+        pointerEvents: 'none',
+      }}
+    />
+  );
+}
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setVisible(false);
-      setTimeout(() => {
-        setRoleIdx((i) => (i + 1) % roles.length);
-        setVisible(true);
-      }, 350);
-    }, 2800);
-    return () => clearInterval(interval);
-  }, []);
+function HeroSection({ current, total, onGo }) {
+  const [helloHovered, setHelloHovered] = useState(false);
 
   return (
     <section
       style={{
         minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        paddingTop: '80px',
+        width: '100%',
+        background: YELLOW,
         position: 'relative',
         overflow: 'hidden',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        textAlign: 'center',
+        color: WHITE,
       }}
     >
-      {/* Background glow */}
-      <div
+      <TextureLayer />
+
+      <motion.div
+        initial={{ opacity: 0, y: 26 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
         style={{
-          position: 'absolute',
-          top: '20%',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          width: '600px',
-          height: '600px',
-          background: 'radial-gradient(circle, rgba(109,40,217,0.12) 0%, transparent 70%)',
-          pointerEvents: 'none',
+          position: 'relative',
+          zIndex: 2,
+          padding: '0 1.5rem',
+          maxWidth: '1120px',
         }}
-      />
-
-      <div className="container" style={{ position: 'relative', zIndex: 1 }}>
-        <div
-          className="hero-grid"
-          style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '5rem', alignItems: 'center' }}
+      >
+        <p
+          onMouseEnter={() => setHelloHovered(true)}
+          onMouseLeave={() => setHelloHovered(false)}
+          style={{
+            fontFamily: "'JetBrains Mono', monospace",
+            fontweight: 700,
+            fontSize: '2rem',
+            letterSpacing: '0.08em',
+            margin: '0 0 1rem',
+            cursor: 'default',
+            transition: 'opacity 0.15s ease',
+          }}
         >
-        <motion.div
-          initial={{ opacity: 0, y: 32 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          {helloHovered ? (
+            <>
+              <span style={{ color: '#BE00B5' }}>print</span>
+              <span style={{ color: '#000000' }}>(&#34;Hello, world!&#34;);</span>
+            </>
+          ) : (
+            <span style={{ color: '#BE00B5' }}>Hello, world!</span>
+          )}
+        </p>
+
+        <h1
+          style={{
+            fontFamily: "'Bebas Neue', 'Arial Narrow', sans-serif",
+            fontSize: 'clamp(3.5rem, 12vw, 10.5rem)',
+            lineHeight: 0.9,
+            fontWeight: 900,
+            margin: 0,
+            color: WHITE,
+            textTransform: 'uppercase',
+          }}
         >
-          {/* Greeting */}
-          <p
+          I&#39;m Shabnam
+        </h1>
+
+        <p
+          style={{
+            fontFamily: "'JetBrains Mono', monospace",
+            fontSize: 'clamp(0.75rem, 1.2vw, 0.875rem)',
+            color: 'rgba(70,80,92,0.75)',
+            margin: '0.6rem 0 0',
+            letterSpacing: '0.04em',
+          }}
+        >
+          /ʃəbˈnæm/ a Persian name meaning "morning dew"
+        </p>
+
+        <p
+          style={{
+            fontFamily: "sans-serif",
+            fontSize: 'clamp(1.35rem, 3vw, 2.65rem)',
+            lineHeight: 1.05,
+            color: DARK_TEXT,
+            margin: '2rem auto 3rem',
+            maxWidth: '840px',
+          }}
+        >
+          I'm a Full-Stack Developer
+        </p>
+        <div style={{ display: 'flex', gap: '1rem', marginTop: '0.15rem', justifyContent: 'center' }}>
+          <button
+            onClick={() => onGo(1)}
+            onMouseEnter={e => { e.currentTarget.style.border = '2px solid #000000'; e.currentTarget.style.color = '#000000'; }}
+            onMouseLeave={e => { e.currentTarget.style.border = '2px solid #BE00B5'; e.currentTarget.style.color = '#BE00B5'; }}
             style={{
-              color: 'var(--accent)',
-              fontWeight: '500',
-              fontSize: '1rem',
-              marginBottom: '1rem',
-              letterSpacing: '0.04em',
+              padding: '0.5rem 1.15rem',
+              borderRadius: '7px',
+              border: '2px solid #BE00B5',
+              background: 'transparent',
+              color: '#BE00B5',
+              fontFamily: "'JetBrains Mono', monospace",
+              fontSize: '1.35rem',
+              lineHeight: 1,
+              cursor: 'pointer',
+              transition: 'border-color 0.2s ease, color 0.2s ease',
             }}
           >
-            Hey there —
-          </p>
-
-          {/* Name */}
-          <h1
+            View Projects
+          </button>
+          <button
+            onClick={() => onGo(1)}
+            onMouseEnter={e => { e.currentTarget.style.background = '#000000'; e.currentTarget.style.borderColor = '#000000'; }}
+            onMouseLeave={e => { e.currentTarget.style.background = '#BE00B5'; e.currentTarget.style.borderColor = '#BE00B5'; }}
             style={{
-              fontSize: 'clamp(2rem, 4.5vw, 3.2rem)',
-              fontWeight: '800',
-              lineHeight: 1.1,
-              marginBottom: '0.5rem',
-              letterSpacing: '-0.02em',
+              padding: '0.8rem 1.15rem',
+              borderRadius: '7px',
+              border: '2px solid #BE00B5',
+              background: '#BE00B5',
+              color: '#ffffff',
+              fontFamily: "'JetBrains Mono', monospace",
+              fontSize: '1.35rem',
+              lineHeight: 1,
+              cursor: 'pointer',
+              transition: 'background 0.2s ease, border-color 0.2s ease',
             }}
           >
-            I&apos;m{' '}
-            <span className="gradient-text">Shabnam</span>
-          </h1>
+            Resume
+          </button>
+        </div>
 
-          {/* Pronunciation */}
-          <p
-            style={{
-              color: 'var(--muted)',
-              fontSize: '0.9rem',
-              marginBottom: '1.5rem',
-              fontStyle: 'italic',
-            }}
-          >
-            [ʃæb.nǽm] — An Iranian name that means morning dew
-          </p>
-
-          {/* Cycling role */}
-          <div
-            style={{
-              height: '2.5rem',
-              marginBottom: '2rem',
-              display: 'flex',
-              alignItems: 'center',
-            }}
-          >
-            <span
-              aria-live="polite"
-              aria-atomic="true"
-              style={{
-                fontSize: 'clamp(1.2rem, 2.5vw, 1.6rem)',
-                fontWeight: '600',
-                color: 'var(--foreground)',
-                transition: 'opacity 0.35s ease',
-                opacity: visible ? 1 : 0,
-              }}
-            >
-              {roles[roleIdx]}
-            </span>
-          </div>
-
-          {/* Sub-tagline */}
-          <p
-            style={{
-              color: 'var(--foreground)',
-              fontSize: '1.05rem',
-              maxWidth: '520px',
-              lineHeight: 1.7,
-              marginBottom: '0.75rem',
-            }}
-          >
-            I design and build full-stack applications that solve real business problems — from UI to backend to deployment.
-          </p>
-          <p
-            style={{
-              color: 'var(--muted)',
-              fontSize: '0.92rem',
-              maxWidth: '480px',
-              lineHeight: 1.65,
-              marginBottom: '2.5rem',
-            }}
-          >
-            I focus on performance, clean architecture, and accessibility — building products that work for everyone and actually get used.
-          </p>
-
-          {/* CTAs */}
-          <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'nowrap', alignItems: 'center' }}>
-            <Link href="/projects" className="btn-primary" style={{ padding: '0.55rem 1rem' }}>
-              View Projects
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M3 8h10M9 4l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </Link>
-
-            <a href="https://github.com/curleycoder" target="_blank" rel="noopener noreferrer" className="btn-outline" style={{ padding: '0.55rem 1rem' }} aria-label="GitHub">
-              <FiGithub size={17} /> GitHub
-            </a>
-
-            <a href="https://linkedin.com/in/shabnam-beiraghian" target="_blank" rel="noopener noreferrer" className="btn-outline" style={{ padding: '0.55rem 1rem' }} aria-label="LinkedIn">
-              <FiLinkedin size={17} /> LinkedIn
-            </a>
-          </div>
-
-          {/* Scroll indicator */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.5, duration: 0.5 }}
-            style={{
-              marginTop: '2.5rem',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'flex-start',
-              gap: '0.4rem',
-            }}
-          >
-            <span style={{ color: 'var(--muted)', fontSize: '0.75rem', letterSpacing: '0.1em' }}>
-              SCROLL
-            </span>
-            <div
-              style={{
-                width: '1px',
-                height: '40px',
-                background: 'linear-gradient(to bottom, var(--primary), transparent)',
-              }}
-            />
-          </motion.div>
-        </motion.div>
-
-        <FadeIn delay={0.35}>
-          <StoryTimeline />
-        </FadeIn>
-
-        </div>{/* end hero-grid */}
-      </div>
+        <BottomDots current={current} total={total} onGo={onGo} />
+      </motion.div>
     </section>
   );
 }
 
-// ─── Project Card ─────────────────────────────────────────────────────────────
-
-function ProjectCard({ project, index }) {
+function AccessibilitySection({ current, total, onGo }) {
+  const items = [
+    { label: 'Keyboard Navigation', desc: 'Every interaction reachable without a mouse.' },
+    { label: 'Screen Reader Support', desc: 'Semantic HTML and ARIA labels done right.' },
+    { label: 'Colour Contrast', desc: 'WCAG AA/AAA contrast on every text element.' },
+    { label: 'Reduced Motion', desc: 'Animations respect prefers-reduced-motion.' },
+  ];
   return (
-    <FadeIn delay={index * 0.1}>
-      <Link
-        href={`/projects/${project.slug}`}
-        style={{ display: 'block', textDecoration: 'none' }}
+    <section
+      style={{
+        minHeight: '100vh',
+        width: '100%',
+        background: YELLOW,
+        position: 'relative',
+        overflow: 'hidden',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        textAlign: 'center',
+        color: WHITE,
+      }}
+    >
+      <TextureLayer />
+      <motion.div
+        initial={{ opacity: 0, y: 26 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
+        style={{ position: 'relative', zIndex: 2, padding: '0 1.5rem', maxWidth: '900px', width: '100%' }}
       >
-        <div
-          className="card-hover"
-          style={{
-            background: 'var(--card)',
-            border: '1px solid var(--card-border)',
-            borderRadius: '1rem',
-            padding: '1.75rem',
-            height: '100%',
-            cursor: 'pointer',
-          }}
-        >
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'flex-start',
-              marginBottom: '0.75rem',
-            }}
-          >
-            <h3 style={{ fontSize: '1.15rem', fontWeight: '700', color: 'var(--foreground)' }}>
-              {project.title}
-            </h3>
-            <span style={{ color: 'var(--muted)', fontSize: '0.8rem' }}>{project.year}</span>
-          </div>
-
-          <p
-            style={{
-              color: 'var(--muted)',
-              fontSize: '0.9rem',
-              lineHeight: 1.65,
-              marginBottom: '1.25rem',
-            }}
-          >
-            {project.shortDescription}
-          </p>
-
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', marginBottom: '1.25rem' }}>
-            {project.tags.map((tag) => (
-              <span key={tag} className="tag">
-                {tag}
-              </span>
-            ))}
-          </div>
-
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.35rem',
-              color: 'var(--accent)',
-              fontSize: '0.85rem',
-              fontWeight: '500',
-            }}
-          >
-            View project
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M3 8h10M9 4l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </div>
-        </div>
-      </Link>
-    </FadeIn>
-  );
-}
-
-// ─── Tech Stack ───────────────────────────────────────────────────────────────
-
-const techStack = [
-  {
-    category: 'Frontend',
-    items: ['React', 'Next.js App Router', 'Tailwind CSS v4', 'shadcn/ui', 'Framer Motion', 'Accessibility'],
-  },
-  {
-    category: 'Backend',
-    items: ['Node.js', 'REST APIs', 'Auth0', 'Supabase · PostgreSQL', 'Drizzle ORM', 'Resend'],
-  },
-  {
-    category: 'Mobile',
-    items: ['React Native', 'Expo', 'Xcode', 'Swift'],
-  },
-  {
-    category: 'Dev',
-    items: ['Git · GitHub', 'Vercel · Render', 'AWS S3', 'CI/CD'],
-  },
-  {
-    category: 'Tools',
-    items: ['Figma', 'Postman', 'VS Code', 'Jira · Taiga'],
-  },
-  {
-    category: 'Leadership',
-    items: ['Agile · Scrum', 'Scrum Master', 'Sprint Planning'],
-  },
-];
-
-// ─── Contact Form ─────────────────────────────────────────────────────────────
-
-function ContactForm() {
-  const [status, setStatus] = useState('idle');
-
-  async function handleSubmit(e) {
-    e.preventDefault();
-    setStatus('sending');
-    const form = e.target;
-    const data = new FormData(form);
-    try {
-      const res = await fetch('https://formspree.io/f/meepzeve', {
-        method: 'POST',
-        body: data,
-        headers: { Accept: 'application/json' },
-      });
-      if (res.ok) {
-        setStatus('sent');
-        form.reset();
-      } else {
-        setStatus('error');
-      }
-    } catch {
-      setStatus('error');
-    }
-  }
-
-  return (
-    <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-        <div>
-          <label
-            htmlFor="name"
-            style={{ display: 'block', marginBottom: '0.4rem', fontSize: '0.85rem', color: 'var(--muted)' }}
-          >
-            Name
-          </label>
-          <input
-            id="name"
-            name="name"
-            type="text"
-            required
-            placeholder="Your name"
-            style={{
-              width: '100%',
-              background: 'var(--input-bg)',
-              border: '1px solid var(--card-border)',
-              borderRadius: '0.5rem',
-              padding: '0.65rem 1rem',
-              color: 'var(--foreground)',
-              fontSize: '0.9rem',
-              outline: 'none',
-              transition: 'border-color 0.2s',
-            }}
-            onFocus={(e) => (e.target.style.borderColor = 'var(--primary)')}
-            onBlur={(e) => (e.target.style.borderColor = 'var(--card-border)')}
-          />
-        </div>
-        <div>
-          <label
-            htmlFor="email"
-            style={{ display: 'block', marginBottom: '0.4rem', fontSize: '0.85rem', color: 'var(--muted)' }}
-          >
-            Email
-          </label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            required
-            placeholder="your@email.com"
-            style={{
-              width: '100%',
-              background: 'var(--input-bg)',
-              border: '1px solid var(--card-border)',
-              borderRadius: '0.5rem',
-              padding: '0.65rem 1rem',
-              color: 'var(--foreground)',
-              fontSize: '0.9rem',
-              outline: 'none',
-              transition: 'border-color 0.2s',
-            }}
-            onFocus={(e) => (e.target.style.borderColor = 'var(--primary)')}
-            onBlur={(e) => (e.target.style.borderColor = 'var(--card-border)')}
-          />
-        </div>
-      </div>
-
-      <div>
-        <label
-          htmlFor="message"
-          style={{ display: 'block', marginBottom: '0.4rem', fontSize: '0.85rem', color: 'var(--muted)' }}
-        >
-          Message
-        </label>
-        <textarea
-          id="message"
-          name="message"
-          required
-          rows={5}
-          placeholder="What are you working on?"
-          style={{
-            width: '100%',
-            background: 'var(--input-bg)',
-            border: '1px solid var(--card-border)',
-            borderRadius: '0.5rem',
-            padding: '0.65rem 1rem',
-            color: 'var(--foreground)',
-            fontSize: '0.9rem',
-            outline: 'none',
-            resize: 'vertical',
-            transition: 'border-color 0.2s',
-            fontFamily: 'inherit',
-          }}
-          onFocus={(e) => (e.target.style.borderColor = 'var(--primary)')}
-          onBlur={(e) => (e.target.style.borderColor = 'var(--card-border)')}
-        />
-      </div>
-
-      <button
-        type="submit"
-        disabled={status === 'sending' || status === 'sent'}
-        className="btn-primary"
-        style={{ alignSelf: 'flex-start' }}
-      >
-        {status === 'sending' ? 'Sending...' : status === 'sent' ? 'Message sent!' : 'Send message'}
-      </button>
-
-      {status === 'error' && (
-        <p style={{ color: '#f87171', fontSize: '0.85rem' }}>
-          Something went wrong. Try emailing directly.
+        <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.85rem', letterSpacing: '0.1em', color: '#BE00B5', margin: '0 0 0.75rem', textTransform: 'uppercase' }}>
+          What I bring to the table
         </p>
-      )}
-    </form>
+        <h2 style={{ fontFamily: "'Bebas Neue', 'Arial Narrow', sans-serif", fontSize: 'clamp(3.5rem, 10vw, 8rem)', lineHeight: 0.9, fontWeight: 900, margin: '0 0 1rem', color: WHITE, textTransform: 'uppercase' }}>
+          Accessibility First
+        </h2>
+        <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.95rem', color: DARK_TEXT, margin: '0 auto 2rem', maxWidth: '560px', lineHeight: 1.7 }}>
+          I build for everyone — not just the average user. Accessibility is baked in from the start, not bolted on at the end.
+        </p>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1rem', textAlign: 'left' }}>
+          {items.map((item) => (
+            <div key={item.label} style={{ border: '1.5px solid rgba(0,0,0,0.12)', borderRadius: '10px', padding: '1.25rem 1.4rem', background: 'rgba(0,0,0,0.03)' }}>
+              <p style={{ fontFamily: "'Bebas Neue', 'Arial Narrow', sans-serif", fontSize: '1.4rem', letterSpacing: '0.04em', color: '#BE00B5', margin: '0 0 0.35rem' }}>{item.label}</p>
+              <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.82rem', color: DARK_TEXT, margin: 0, lineHeight: 1.6 }}>{item.desc}</p>
+            </div>
+          ))}
+        </div>
+        <BottomDots current={current} total={total} onGo={onGo} />
+      </motion.div>
+    </section>
   );
 }
 
-// ─── Page ─────────────────────────────────────────────────────────────────────
-
-export default function Home() {
-  const caseStudy = caseStudies[0];
-
+function ThemeSection({ current, total, onGo }) {
+  const [dark, setDark] = useState(false);
+  const bg = dark ? '#0a0a0a' : '#ffffff';
+  const fg = dark ? '#ffffff' : '#000000';
+  const sub = dark ? 'rgba(255,255,255,0.55)' : '#46505C';
   return (
-    <>
-      {/* Hero */}
-      <Hero />
+    <section
+      style={{
+        minHeight: '100vh',
+        width: '100%',
+        background: bg,
+        position: 'relative',
+        overflow: 'hidden',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        textAlign: 'center',
+        transition: 'background 0.5s ease',
+      }}
+    >
+      <motion.div
+        initial={{ opacity: 0, y: 26 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
+        style={{ position: 'relative', zIndex: 2, padding: '0 1.5rem', maxWidth: '700px', width: '100%' }}
+      >
+        <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.85rem', letterSpacing: '0.1em', color: '#BE00B5', margin: '0 0 0.75rem', textTransform: 'uppercase', transition: 'color 0.5s' }}>
+          What I bring to the table
+        </p>
+        <h2 style={{ fontFamily: "'Bebas Neue', 'Arial Narrow', sans-serif", fontSize: 'clamp(3.5rem, 10vw, 8rem)', lineHeight: 0.9, fontWeight: 900, margin: '0 0 1rem', color: fg, textTransform: 'uppercase', transition: 'color 0.5s ease' }}>
+          {dark ? 'Dark Mode' : 'Light Mode'}
+        </h2>
+        <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.95rem', color: sub, margin: '0 auto 2.5rem', maxWidth: '480px', lineHeight: 1.7, transition: 'color 0.5s ease' }}>
+          I design and build for both. Click the toggle to switch — every interface I make works beautifully in either context.
+        </p>
+        <button
+          onClick={() => setDark(d => !d)}
+          aria-label="Toggle theme"
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '0.75rem',
+            padding: '0.75rem 1.75rem',
+            borderRadius: '999px',
+            border: `2px solid ${dark ? '#ffffff' : '#000000'}`,
+            background: 'transparent',
+            color: fg,
+            fontFamily: "'JetBrains Mono', monospace",
+            fontSize: '1rem',
+            cursor: 'pointer',
+            transition: 'border-color 0.4s ease, color 0.4s ease',
+          }}
+        >
+          <span style={{ fontSize: '1.4rem' }}>{dark ? '☀️' : '🌙'}</span>
+          {dark ? 'Switch to Light' : 'Switch to Dark'}
+        </button>
+        <BottomDots current={current} total={total} onGo={onGo} />
+      </motion.div>
+    </section>
+  );
+}
 
-      {/* Projects */}
-      <section style={{ padding: '2rem 0 6rem' }}>
-        <div className="container">
-          <FadeIn>
-            <p style={{ color: 'var(--accent)', fontSize: '0.85rem', fontWeight: '600', letterSpacing: '0.1em', marginBottom: '0.5rem' }}>
-              WORK
-            </p>
-            <h2 className="section-title">Selected Projects</h2>
-            <p className="section-subtitle">
-              Things I&apos;ve built — solo and shipped.
-            </p>
-          </FadeIn>
-
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
-              gap: '1.25rem',
-              marginBottom: '2rem',
-            }}
-          >
-            {projects.map((project, i) => (
-              <ProjectCard key={project.slug} project={project} index={i} />
-            ))}
+function UXSection({ current, total, onGo }) {
+  const [revealed, setRevealed] = useState(false);
+  return (
+    <section
+      style={{
+        minHeight: '100vh',
+        width: '100%',
+        background: YELLOW,
+        position: 'relative',
+        overflow: 'hidden',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        textAlign: 'center',
+        color: WHITE,
+      }}
+    >
+      <TextureLayer />
+      <motion.div
+        initial={{ opacity: 0, y: 26 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
+        style={{ position: 'relative', zIndex: 2, padding: '0 1.5rem', maxWidth: '900px', width: '100%' }}
+      >
+        <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.85rem', letterSpacing: '0.1em', color: '#BE00B5', margin: '0 0 0.75rem', textTransform: 'uppercase' }}>
+          What I bring to the table
+        </p>
+        <h2 style={{ fontFamily: "'Bebas Neue', 'Arial Narrow', sans-serif", fontSize: 'clamp(3.5rem, 10vw, 8rem)', lineHeight: 0.9, fontWeight: 900, margin: '0 0 1rem', color: WHITE, textTransform: 'uppercase' }}>
+          UX & UI Design
+        </h2>
+        <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.95rem', color: DARK_TEXT, margin: '0 auto 2rem', maxWidth: '540px', lineHeight: 1.7 }}>
+          Good UX is invisible. Bad UX is unforgettable. Click the button to see the difference.
+        </p>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem', textAlign: 'left', marginBottom: '1.5rem' }}>
+          {/* Bad UX card */}
+          <div style={{ border: '1.5px solid rgba(0,0,0,0.12)', borderRadius: '10px', padding: '1.25rem', background: 'rgba(0,0,0,0.03)', opacity: revealed ? 0.35 : 1, transition: 'opacity 0.4s ease' }}>
+            <p style={{ fontFamily: 'Arial', fontSize: '0.65rem', color: '#aaa', margin: '0 0 0.5rem' }}>SIGN UP NOW!!!</p>
+            <p style={{ fontFamily: 'Comic Sans MS, cursive', fontSize: '0.7rem', color: '#bbb', margin: '0 0 1rem', lineHeight: 1.3 }}>Enter your details below to get access to our amazing platform with all the features you need and more!</p>
+            <button style={{ background: '#e00', color: '#ff0', fontFamily: 'Impact', fontSize: '0.65rem', border: 'none', padding: '0.2rem 0.5rem', cursor: 'pointer', borderRadius: '2px' }}>CLICK HERE NOW</button>
+            <p style={{ fontFamily: 'Arial', fontSize: '0.55rem', color: '#ccc', marginTop: '0.5rem' }}>❌ Bad UX</p>
           </div>
-
-          <FadeIn>
-            <Link href="/projects" className="btn-outline">
-              All projects
-              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M3 8h10M9 4l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </Link>
-          </FadeIn>
+          {/* Good UX card */}
+          <div style={{ border: `1.5px solid ${revealed ? '#BE00B5' : 'rgba(0,0,0,0.12)'}`, borderRadius: '10px', padding: '1.25rem', background: revealed ? 'rgba(190,0,181,0.05)' : 'rgba(0,0,0,0.03)', transition: 'border-color 0.4s ease, background 0.4s ease' }}>
+            <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.7rem', color: '#BE00B5', margin: '0 0 0.5rem', letterSpacing: '0.06em', textTransform: 'uppercase' }}>Get started</p>
+            <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.78rem', color: DARK_TEXT, margin: '0 0 1rem', lineHeight: 1.6 }}>Create your account in seconds. No credit card required.</p>
+            <button style={{ background: '#BE00B5', color: '#fff', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.75rem', border: 'none', padding: '0.45rem 1rem', cursor: 'pointer', borderRadius: '6px' }}>Create account</button>
+            <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.6rem', color: '#BE00B5', marginTop: '0.5rem' }}>✓ Good UX</p>
+          </div>
         </div>
-      </section>
+        <button
+          onClick={() => setRevealed(r => !r)}
+          onMouseEnter={e => { e.currentTarget.style.background = '#BE00B5'; e.currentTarget.style.color = '#fff'; e.currentTarget.style.borderColor = '#BE00B5'; }}
+          onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#000000'; e.currentTarget.style.borderColor = '#000000'; }}
+          style={{ padding: '0.5rem 1.4rem', border: '2px solid #000000', borderRadius: '7px', background: 'transparent', color: '#000000', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.9rem', cursor: 'pointer', transition: 'background 0.2s ease, color 0.2s ease, border-color 0.2s ease' }}
+        >
+          {revealed ? 'Reset' : 'Show me why it matters →'}
+        </button>
+        <BottomDots current={current} total={total} onGo={onGo} />
+      </motion.div>
+    </section>
+  );
+}
 
-      {/* Case Study teaser */}
-      <section style={{ padding: '4rem 0', background: 'rgba(109,40,217,0.04)' }}>
-        <div className="container">
-          <FadeIn>
-            <p style={{ color: 'var(--accent)', fontSize: '0.85rem', fontWeight: '600', letterSpacing: '0.1em', marginBottom: '0.5rem' }}>
-              CASE STUDY
-            </p>
-            <h2 className="section-title">Elika Beauty</h2>
-          </FadeIn>
+function OldCreateSection({ current, total, onGo }) {
+  return (
+    <section
+      style={{
+        minHeight: '100vh',
+        width: '100%',
+        background: YELLOW,
+        position: 'relative',
+        overflow: 'hidden',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        textAlign: 'center',
+        color: WHITE,
+      }}
+    >
+      <TextureLayer />
 
-          <FadeIn delay={0.1}>
-            <div
-              className="card-hover"
+      <motion.div
+        initial={{ opacity: 0, y: 26 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
+        style={{
+          position: 'relative',
+          zIndex: 2,
+          padding: '0 1.5rem',
+          maxWidth: '980px',
+          width: '100%',
+        }}
+      >
+        <p
+          style={{
+            fontFamily: "'JetBrains Mono', monospace",
+            fontSize: 'clamp(1.4rem, 2.5vw, 2rem)',
+            color: DARK_TEXT,
+            margin: '0 0 0.5rem',
+            letterSpacing: '0.04em',
+            textTransform: 'uppercase',
+          }}
+        >
+          User-first product thinking
+        </p>
+
+        <h2
+          style={{
+            fontFamily: "'JetBrains Mono', monospace",
+            fontSize: 'clamp(4rem, 9vw, 8rem)',
+            lineHeight: 0.9,
+            letterSpacing: '0.02em',
+            fontWeight: 900,
+            margin: '0 0 1.6rem',
+            color: WHITE,
+            textTransform: 'uppercase',
+          }}
+        >
+          I build useful systems
+        </h2>
+
+        <div
+          className="skill-grid"
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(4, 1fr)',
+            gap: '1rem',
+            marginTop: '1.5rem',
+          }}
+        >
+          {SKILLS.map((item, i) => (
+            <motion.div
+              key={item.title}
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.15 + i * 0.08, duration: 0.45 }}
+              whileHover={{ y: -6, scale: 1.02 }}
               style={{
-                background: 'var(--card)',
-                border: '1px solid var(--card-border)',
-                borderRadius: '1rem',
-                padding: '2rem',
-                display: 'grid',
-                gridTemplateColumns: '1fr auto',
-                gap: '2rem',
-                alignItems: 'center',
-                marginTop: '1.5rem',
+                minHeight: '170px',
+                padding: '1.1rem',
+                border: '2px solid rgba(255,255,255,0.85)',
+                borderRadius: '12px',
+                background: 'rgba(255,255,255,0.08)',
+                backdropFilter: 'blur(8px)',
+                textAlign: 'left',
               }}
             >
-              <div>
-                <h3 style={{ fontSize: '1.3rem', fontWeight: '700', marginBottom: '0.75rem' }}>
-                  {caseStudy.title}
-                </h3>
-                <p style={{ color: 'var(--muted)', lineHeight: 1.7, marginBottom: '1.5rem', maxWidth: '560px' }}>
-                  {caseStudy.tagline}
-                </p>
-                <div style={{ display: 'flex', gap: '2rem', flexWrap: 'wrap', marginBottom: '1.5rem' }}>
-                  {caseStudy.metrics.map((m) => (
-                    <div key={m.label}>
-                      <p style={{ fontSize: '1.5rem', fontWeight: '800', color: 'var(--accent)' }}>
-                        {m.value}
-                      </p>
-                      <p style={{ fontSize: '0.75rem', color: 'var(--muted)' }}>{m.sub}</p>
-                    </div>
-                  ))}
-                </div>
-                <Link href="/case-studies/elika-beauty" className="btn-primary">
-                  Read case study
-                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M3 8h10M9 4l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </Link>
-              </div>
-
-              <div
+              <h3
                 style={{
-                  textAlign: 'right',
-                  color: 'var(--muted)',
-                  fontSize: '0.8rem',
-                  whiteSpace: 'nowrap',
+                  margin: '0 0 0.6rem',
+                  fontFamily: "'Bebas Neue', 'Arial Narrow', sans-serif",
+                  color: '#000000',
+                  fontSize: '1.8rem',
+                  letterSpacing: '0.04em',
                 }}
               >
-                <p>{caseStudy.role}</p>
-                <p style={{ marginTop: '0.25rem' }}>{caseStudy.timeline}</p>
-              </div>
-            </div>
-          </FadeIn>
+                {item.title}
+              </h3>
+              <p
+                style={{
+                  margin: 0,
+                  color: 'rgba(70,80,92,0.9)',
+                  fontSize: '0.82rem',
+                  lineHeight: 1.65,
+                  fontFamily: "'JetBrains Mono', monospace",
+                }}
+              >
+                {item.desc}
+              </p>
+            </motion.div>
+          ))}
         </div>
-      </section>
 
-      {/* Tech Stack */}
-      <section style={{ padding: '6rem 0' }}>
-        <div className="container">
-          <FadeIn>
-            <p style={{ color: 'var(--accent)', fontSize: '0.85rem', fontWeight: '600', letterSpacing: '0.1em', marginBottom: '0.5rem' }}>
-              SKILLS
-            </p>
-            <h2 className="section-title">Tech Stack</h2>
-            <p className="section-subtitle">Tools I reach for and trust.</p>
-          </FadeIn>
+        <BottomDots current={current} total={total} onGo={onGo} />
+      </motion.div>
+    </section>
+  );
+}
 
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))',
-              gap: '1.25rem',
-            }}
-          >
-            {techStack.map((group, i) => (
-              <FadeIn key={group.category} delay={i * 0.07}>
-                <div
-                  style={{
-                    background: 'var(--card)',
-                    border: '1px solid var(--card-border)',
-                    borderRadius: '0.875rem',
-                    padding: '1.5rem',
-                  }}
-                >
-                  <p
+function ProjectsSection({ current, total, onGo }) {
+  return (
+    <section
+      style={{
+        minHeight: '100vh',
+        width: '100%',
+        background: YELLOW,
+        position: 'relative',
+        overflow: 'hidden',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: WHITE,
+      }}
+    >
+      <TextureLayer />
+
+      <motion.div
+        initial={{ opacity: 0, y: 26 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
+        style={{
+          position: 'relative',
+          zIndex: 2,
+          padding: '0 1.5rem',
+          maxWidth: '920px',
+          width: '100%',
+          textAlign: 'center',
+        }}
+      >
+        <p
+          style={{
+            fontFamily: "'Bebas Neue', 'Arial Narrow', sans-serif",
+            fontSize: 'clamp(1.4rem, 2.5vw, 2rem)',
+            color: DARK_TEXT,
+            margin: '0 0 0.5rem',
+            letterSpacing: '0.04em',
+            textTransform: 'uppercase',
+          }}
+        >
+          Selected work
+        </p>
+
+        <h2
+          style={{
+            fontFamily: "'Bebas Neue', 'Arial Narrow', sans-serif",
+            fontSize: 'clamp(4rem, 9vw, 8rem)',
+            lineHeight: 0.9,
+            letterSpacing: '0.02em',
+            fontWeight: 900,
+            margin: '0 0 1.3rem',
+            color: WHITE,
+            textTransform: 'uppercase',
+          }}
+        >
+          Work & AI
+        </h2>
+
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: '1fr',
+            gap: '0.8rem',
+            textAlign: 'left',
+            marginTop: '1.25rem',
+          }}
+        >
+          {PROJECTS.map((project, i) => (
+            <motion.div
+              key={project.name}
+              initial={{ opacity: 0, x: -18 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.12 + i * 0.08, duration: 0.45 }}
+            >
+              <Link
+                href={project.href}
+                style={{
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  justifyContent: 'space-between',
+                  gap: '1rem',
+                  padding: '1rem 1.15rem',
+                  border: '2px solid rgba(255,255,255,0.86)',
+                  borderRadius: '12px',
+                  background: 'rgba(255,255,255,0.09)',
+                  color: '#000000',
+                  textDecoration: 'none',
+                  backdropFilter: 'blur(8px)',
+                }}
+              >
+                <div>
+                  <h3
                     style={{
-                      color: 'var(--accent)',
-                      fontSize: '0.75rem',
-                      fontWeight: '700',
-                      letterSpacing: '0.08em',
-                      marginBottom: '0.875rem',
-                      textTransform: 'uppercase',
+                      margin: '0 0 0.25rem',
+                      fontFamily: "'Bebas Neue', 'Arial Narrow', sans-serif",
+                      fontSize: '1.65rem',
+                      letterSpacing: '0.04em',
+                      color: '#000000',
                     }}
                   >
-                    {group.category}
+                    {project.name}
+                  </h3>
+                  <p
+                    style={{
+                      margin: '0 0 0.45rem',
+                      color: DARK_TEXT,
+                      fontFamily: "'JetBrains Mono', monospace",
+                      fontSize: '0.82rem',
+                      lineHeight: 1.55,
+                    }}
+                  >
+                    {project.desc}
                   </p>
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
-                    {group.items.map((item) => (
-                      <span key={item} className="tag">
-                        {item}
-                      </span>
-                    ))}
-                  </div>
+                  <span
+                    style={{
+                      color: 'rgba(255,255,255,0.9)',
+                      fontFamily: "'JetBrains Mono', monospace",
+                      fontSize: '0.68rem',
+                    }}
+                  >
+                    {project.stack}
+                  </span>
                 </div>
-              </FadeIn>
-            ))}
-          </div>
+                <FiArrowRight size={18} style={{ flexShrink: 0, marginTop: '0.45rem' }} />
+              </Link>
+            </motion.div>
+          ))}
         </div>
-      </section>
 
-      {/* Contact */}
-      <section id="contact" style={{ padding: '6rem 0' }}>
-        <div className="container">
-          <FadeIn>
-            <div style={{ textAlign: 'center' }}>
-              <p style={{ color: 'var(--accent)', fontSize: '0.85rem', fontWeight: '600', letterSpacing: '0.1em', marginBottom: '0.5rem' }}>
-                CONTACT
-              </p>
-              <h2 className="section-title">Let&apos;s talk</h2>
-              <p className="section-subtitle">
-                Open to full-time roles, freelance, and interesting conversations.
-              </p>
-            </div>
-          </FadeIn>
+        <Link
+          href="/projects"
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '0.4rem',
+            marginTop: '1rem',
+            color: '#000000',
+            fontFamily: "'Bebas Neue', 'Arial Narrow', sans-serif",
+            fontSize: '1.25rem',
+            letterSpacing: '0.04em',
+            textDecoration: 'underline',
+            textUnderlineOffset: '5px',
+          }}
+        >
+          See all work <FiExternalLink size={14} />
+        </Link>
 
-          <FadeIn delay={0.1}>
-            <div
-              style={{
-                background: 'var(--card)',
-                border: '1px solid var(--card-border)',
-                borderRadius: '1rem',
-                padding: '2.5rem',
-                maxWidth: '640px',
-                margin: '0 auto',
-              }}
-            >
-              <ContactForm />
-            </div>
-          </FadeIn>
+        <BottomDots current={current} total={total} onGo={onGo} />
+      </motion.div>
+    </section>
+  );
+}
+
+function ContactSection({ current, total, onGo }) {
+  return (
+    <section
+      id="contact"
+      style={{
+        minHeight: '100vh',
+        width: '100%',
+        background: YELLOW,
+        position: 'relative',
+        overflow: 'hidden',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        textAlign: 'center',
+        color: WHITE,
+      }}
+    >
+      <TextureLayer />
+
+      <motion.div
+        initial={{ opacity: 0, y: 26 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
+        style={{
+          position: 'relative',
+          zIndex: 2,
+          padding: '0 1.5rem',
+          maxWidth: '900px',
+        }}
+      >
+        <p
+          style={{
+            fontFamily: "'Bebas Neue', 'Arial Narrow', sans-serif",
+            fontSize: 'clamp(1.4rem, 2.5vw, 2rem)',
+            color: DARK_TEXT,
+            margin: '0 0 0.5rem',
+            letterSpacing: '0.04em',
+            textTransform: 'uppercase',
+          }}
+        >
+          Let's connect
+        </p>
+
+        <h2
+          style={{
+            fontFamily: "'Bebas Neue', 'Arial Narrow', sans-serif",
+            fontSize: 'clamp(4rem, 9vw, 8rem)',
+            lineHeight: 0.9,
+            letterSpacing: '0.02em',
+            fontWeight: 900,
+            margin: '0 0 1rem',
+            color: WHITE,
+            textTransform: 'uppercase',
+          }}
+        >
+          Build useful tech
+        </h2>
+
+        <p
+          style={{
+            maxWidth: '680px',
+            margin: '0 auto 1.5rem',
+            color: DARK_TEXT,
+            fontSize: '0.95rem',
+            lineHeight: 1.75,
+            fontFamily: "'JetBrains Mono', monospace",
+          }}
+        >
+          I'm looking for frontend, full-stack, and AI product opportunities where I can build
+          accessible, user-first experiences.
+        </p>
+
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            gap: '0.9rem',
+            flexWrap: 'wrap',
+          }}
+        >
+          <a
+            href="mailto:hello@shabnam.dev"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.45rem',
+              padding: '0.52rem 1.15rem',
+              border: '2px solid #000000',
+              borderRadius: '8px',
+              color: '#000000',
+              textDecoration: 'none',
+              fontFamily: "'Bebas Neue', 'Arial Narrow', sans-serif",
+              fontSize: '1.25rem',
+              letterSpacing: '0.04em',
+            }}
+          >
+            <FiMail size={15} /> Email
+          </a>
+
+          <a
+            href="https://linkedin.com/in/shabnam-beiraghian"
+            target="_blank"
+            rel="noreferrer"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.45rem',
+              padding: '0.52rem 1.15rem',
+              border: '2px solid #000000',
+              borderRadius: '8px',
+              color: '#000000',
+              textDecoration: 'none',
+              fontFamily: "'Bebas Neue', 'Arial Narrow', sans-serif",
+              fontSize: '1.25rem',
+              letterSpacing: '0.04em',
+            }}
+          >
+            <FiLinkedin size={15} /> LinkedIn
+          </a>
+
+          <a
+            href="https://github.com/curleycoder"
+            target="_blank"
+            rel="noreferrer"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.45rem',
+              padding: '0.52rem 1.15rem',
+              border: '2px solid #000000',
+              borderRadius: '8px',
+              color: '#000000',
+              textDecoration: 'none',
+              fontFamily: "'Bebas Neue', 'Arial Narrow', sans-serif",
+              fontSize: '1.25rem',
+              letterSpacing: '0.04em',
+            }}
+          >
+            <FiGithub size={15} /> GitHub
+          </a>
         </div>
-      </section>
-    </>
+
+        <BottomDots current={current} total={total} onGo={onGo} />
+      </motion.div>
+    </section>
+  );
+}
+
+const SECTION_COMPONENTS = [HeroSection, CreateSection, ProjectsSection, ContactSection];
+
+const pageVariants = {
+  enter: { opacity: 0 },
+  center: { opacity: 1 },
+  exit: { opacity: 0 },
+};
+
+export default function HomePage() {
+  const [current, setCurrent] = useState(0);
+  const isAnimating = useRef(false);
+  const lastWheelTime = useRef(0);
+  const touchStartY = useRef(null);
+
+  const goTo = useCallback(
+    (next) => {
+      if (next === current || isAnimating.current) return;
+      if (next < 0 || next >= SECTION_COMPONENTS.length) return;
+
+      setCurrent(next);
+      isAnimating.current = true;
+
+      setTimeout(() => {
+        isAnimating.current = false;
+      }, 750);
+    },
+    [current]
+  );
+
+  const goNext = useCallback(() => goTo(current + 1), [current, goTo]);
+  const goPrev = useCallback(() => goTo(current - 1), [current, goTo]);
+
+  useEffect(() => {
+    const onWheel = (e) => {
+      const now = Date.now();
+      if (now - lastWheelTime.current < 850) return;
+
+      lastWheelTime.current = now;
+
+      if (e.deltaY > 30) goNext();
+      if (e.deltaY < -30) goPrev();
+    };
+
+    window.addEventListener('wheel', onWheel, { passive: true });
+    return () => window.removeEventListener('wheel', onWheel);
+  }, [goNext, goPrev]);
+
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key === 'ArrowDown' || e.key === 'PageDown') goNext();
+      if (e.key === 'ArrowUp' || e.key === 'PageUp') goPrev();
+
+      if (e.key === 'Home') goTo(0);
+      if (e.key === 'End') goTo(SECTION_COMPONENTS.length - 1);
+    };
+
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [goNext, goPrev, goTo]);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrent(prev => (prev + 1) % SECTION_COMPONENTS.length);
+    }, 3000);
+    return () => clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    const onTouchStart = (e) => {
+      touchStartY.current = e.touches[0].clientY;
+    };
+
+    const onTouchEnd = (e) => {
+      if (touchStartY.current === null) return;
+
+      const diff = touchStartY.current - e.changedTouches[0].clientY;
+
+      if (Math.abs(diff) > 50) {
+        if (diff > 0) goNext();
+        else goPrev();
+      }
+
+      touchStartY.current = null;
+    };
+
+    window.addEventListener('touchstart', onTouchStart, { passive: true });
+    window.addEventListener('touchend', onTouchEnd, { passive: true });
+
+    return () => {
+      window.removeEventListener('touchstart', onTouchStart);
+      window.removeEventListener('touchend', onTouchEnd);
+    };
+  }, [goNext, goPrev]);
+
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.background = YELLOW;
+
+    return () => {
+      document.body.style.overflow = '';
+      document.documentElement.style.background = '';
+    };
+  }, []);
+
+  const CurrentSection = SECTION_COMPONENTS[current];
+
+  return (
+    <main
+      style={{
+        height: '100vh',
+        overflow: 'hidden',
+        background: YELLOW,
+        position: 'relative',
+      }}
+    >
+      <AnimatePresence>
+        <motion.div
+          key={current}
+          variants={pageVariants}
+          initial="enter"
+          animate="center"
+          exit="exit"
+          transition={{ duration: 0.3, ease: 'easeInOut' }}
+          style={{
+            position: 'absolute',
+            inset: 0,
+          }}
+        >
+          <CurrentSection current={current} total={SECTION_COMPONENTS.length} onGo={goTo} />
+        </motion.div>
+      </AnimatePresence>
+
+      <CornerSymbols />
+
+      <div
+        style={{
+          position: 'fixed',
+          bottom: '1.55rem',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          zIndex: 20,
+          color: 'rgba(255,255,255,0.78)',
+          fontFamily: "'JetBrains Mono', monospace",
+          fontSize: '0.68rem',
+          letterSpacing: '0.12em',
+          textTransform: 'uppercase',
+          userSelect: 'none',
+          pointerEvents: 'none',
+        }}
+      >
+        <AnimatePresence mode="wait">
+          <motion.span
+            key={current}
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.25 }}
+            style={{ display: 'block' }}
+          >
+            {String(current + 1).padStart(2, '0')} / {String(SECTION_COMPONENTS.length).padStart(2, '0')} —{' '}
+            {SECTION_LABELS[current]}
+          </motion.span>
+        </AnimatePresence>
+      </div>
+
+      <style jsx global>{`
+        @media (max-width: 900px) {
+          .skill-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
+          }
+        }
+
+        @media (max-width: 620px) {
+          .skill-grid {
+            grid-template-columns: 1fr !important;
+          }
+
+          h1,
+          h2 {
+            word-break: normal;
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          *,
+          *::before,
+          *::after {
+            animation: none !important;
+            transition: none !important;
+            scroll-behavior: auto !important;
+          }
+        }
+      `}</style>
+    </main>
   );
 }
