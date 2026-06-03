@@ -6,22 +6,15 @@ import { usePathname } from 'next/navigation';
 
 const navLinks = [
   { href: '/', label: 'HOME' },
-  { href: '/about', label: 'ABOUT' },
   { href: '/projects', label: 'PROJECTS' },
   { href: '/resume', label: 'RESUME' },
+  { href: '/about', label: 'ABOUT' },
   { href: '/#contact', label: 'CONTACT' },
 ];
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', onScroll);
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
 
   useEffect(() => {
     setMobileOpen(false);
@@ -36,10 +29,10 @@ export default function Navbar() {
         right: 0,
         zIndex: 100,
         fontFamily: "'JetBrains Mono', monospace",
-        background: scrolled ? 'rgba(255, 255, 255, 0.92)' : 'transparent',
-        backdropFilter: scrolled ? 'blur(10px)' : 'none',
-        borderBottom: scrolled ? '1px solid rgba(0,0,0,0.15)' : '1px solid transparent',
-        transition: 'background 0.25s ease, border-color 0.25s ease, backdrop-filter 0.25s ease',
+        background: 'var(--nav-bg-scrolled)',
+        backdropFilter: 'blur(10px)',
+        borderBottom: '1px solid var(--nav-border-color)',
+        transition: 'background 0.5s ease, border-color 0.5s ease, backdrop-filter 0.25s ease',
       }}
     >
       <div
@@ -53,7 +46,6 @@ export default function Navbar() {
           justifyContent: 'space-between',
         }}
       >
-        {/* Logo — kept from your original version */}
         <Link
           href="/"
           aria-label="Go to homepage"
@@ -75,51 +67,31 @@ export default function Navbar() {
           >
             {'{'}
             <span style={{ letterSpacing: '-0.08em' }}>C</span>
-            <sup
-              style={{
-                fontSize: '0.65em',
-                position: 'relative',
-                top: '-0.7em',
-                marginLeft: '1px',
-              }}
-            >
-              2
-            </sup>
+            <sup style={{ fontSize: '0.65em', position: 'relative', top: '-0.7em', marginLeft: '1px' }}>2</sup>
             {'}'}
           </span>
-
           <span
             className="logo-text"
-            style={{
-              display: 'inline-flex',
-              flexDirection: 'column',
-              marginLeft: '0.55rem',
-              lineHeight: 1.05,
-            }}
+            style={{ display: 'inline-flex', flexDirection: 'column', marginLeft: '0.55rem', lineHeight: 1.05 }}
           >
             <span
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                fontWeight: 600,
-                fontSize: '1.25rem',
-                color: '#000000',
+                fontWeight: 400,
+                fontSize: '1rem',
+                color: 'var(--nav-link-color)',
+                transition: 'color 0.5s ease',
               }}
             >
               CurleyCoder
             </span>
-            
           </span>
         </Link>
 
         {/* Desktop nav */}
         <div
           className="desktop-nav"
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '1.75rem',
-            color: '#000000',
-          }}
+          style={{ display: 'flex', alignItems: 'center', gap: '1.75rem' }}
         >
           {navLinks.map((link) => {
             const isActive =
@@ -132,7 +104,7 @@ export default function Navbar() {
                 key={link.href}
                 href={link.href}
                 style={{
-                  color: isActive ? '#BE00B5' : '#000000',
+                  color: isActive ? '#BE00B5' : 'var(--nav-link-color)',
                   textDecoration: 'none',
                   fontSize: '1rem',
                   lineHeight: 1,
@@ -146,7 +118,7 @@ export default function Navbar() {
                   e.currentTarget.style.transform = 'translateY(-3px)';
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.color = isActive ? '#BE00B5' : '#000000';
+                  e.currentTarget.style.color = isActive ? '#BE00B5' : 'var(--nav-link-color)';
                   e.currentTarget.style.transform = 'translateY(0)';
                 }}
               >
@@ -165,23 +137,17 @@ export default function Navbar() {
           style={{
             display: 'none',
             background: 'transparent',
-            color: '#000000',
+            border: 'none',
+            color: 'var(--nav-link-color)',
             width: '38px',
             height: '38px',
             cursor: 'pointer',
             alignItems: 'center',
             justifyContent: 'center',
+            transition: 'color 0.5s ease',
           }}
         >
-          <svg
-            width="30"
-            height="30"
-            viewBox="0 0 22 22"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-          >
+          <svg width="30" height="30" viewBox="0 0 22 22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
             {mobileOpen ? (
               <>
                 <line x1="5" y1="5" x2="17" y2="17" />
@@ -203,9 +169,10 @@ export default function Navbar() {
         <div
           className="mobile-nav"
           style={{
-            background: 'rgba(255, 255, 255, 0.98)',
-            borderTop: '1px solid rgba(0,0,0,0.15)',
+            background: 'var(--nav-mobile-bg)',
+            borderTop: '1px solid var(--nav-mobile-border)',
             padding: '1rem 1.75rem 1.25rem',
+            transition: 'background 0.5s ease',
           }}
         >
           {navLinks.map((link) => {
@@ -221,13 +188,14 @@ export default function Navbar() {
                 style={{
                   display: 'block',
                   padding: '0.85rem 0',
-                  color: isActive ? '#BE00B5' : '#000000',
+                  color: isActive ? '#BE00B5' : 'var(--nav-link-color)',
                   textDecoration: 'none',
                   fontSize: '0.9rem',
                   fontFamily: "'JetBrains Mono', monospace",
                   letterSpacing: '0.06em',
                   fontWeight: isActive ? 600 : 400,
-                  borderBottom: '1px solid rgba(0,0,0,0.12)',
+                  borderBottom: '1px solid var(--nav-mobile-border)',
+                  transition: 'color 0.5s ease',
                 }}
               >
                 {link.label}
@@ -242,17 +210,14 @@ export default function Navbar() {
           .desktop-nav {
             display: none !important;
           }
-
           .mobile-menu-btn {
             display: inline-flex !important;
           }
         }
-
         @media (max-width: 520px) {
           .portfolio-nav-inner {
             padding: 0 1rem !important;
           }
-
           .logo-text {
             display: none !important;
           }
