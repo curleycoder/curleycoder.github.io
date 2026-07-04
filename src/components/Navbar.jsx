@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { FiSun, FiMoon } from 'react-icons/fi';
 
 const navLinks = [
   { href: '/', label: 'HOME' },
@@ -13,11 +14,27 @@ const navLinks = [
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [isDark, setIsDark] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
     setMobileOpen(false);
   }, [pathname]);
+
+  useEffect(() => {
+    setIsDark(document.documentElement.classList.contains('dark'));
+    const observer = new MutationObserver(() => {
+      setIsDark(document.documentElement.classList.contains('dark'));
+    });
+    observer.observe(document.documentElement, { attributeFilter: ['class'] });
+    return () => observer.disconnect();
+  }, []);
+
+  const toggleDark = () => {
+    const next = !isDark;
+    document.documentElement.classList.toggle('dark', next);
+    setIsDark(next);
+  };
 
   return (
     <nav
@@ -93,6 +110,7 @@ export default function Navbar() {
           style={{ display: 'flex', alignItems: 'center', gap: '1.75rem' }}
         >
           {navLinks.map((link) => {
+
             const isActive =
               link.href === '/'
                 ? pathname === '/'
@@ -125,6 +143,22 @@ export default function Navbar() {
               </Link>
             );
           })}
+
+          <button
+            onClick={toggleDark}
+            aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+            style={{
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              width: '32px', height: '32px', borderRadius: '6px',
+              border: '1.5px solid var(--nav-border-color)',
+              background: 'transparent', color: 'var(--nav-link-color)',
+              cursor: 'pointer', transition: 'border-color 0.2s, color 0.2s',
+            }}
+            onMouseEnter={e => { e.currentTarget.style.borderColor = '#BE00B5'; e.currentTarget.style.color = '#BE00B5'; }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--nav-border-color)'; e.currentTarget.style.color = 'var(--nav-link-color)'; }}
+          >
+            {isDark ? <FiSun size={14} /> : <FiMoon size={14} />}
+          </button>
         </div>
 
         {/* Mobile button */}

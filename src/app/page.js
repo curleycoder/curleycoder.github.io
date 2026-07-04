@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiArrowRight, FiMoon, FiSun, FiCheck, FiGithub, FiLinkedin, FiDownload } from 'react-icons/fi';
+import Footer from '@/components/Footer';
 
 const ACCENT = '#BE00B5';
 const SECTION_LABELS = ['Intro', 'AI & Chatbots', 'Accessibility', 'Connect'];
@@ -18,16 +19,6 @@ function useC() {
     border: 'var(--card-border)',
     card:   'var(--card)',
   };
-}
-
-// ─── Section tag ─────────────────────────────────────────────────────────────
-function Tag({ n, label, c }) {
-  return (
-    <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.68rem', letterSpacing: '0.14em', color: c.muted, margin: '0 0 2.5rem', display: 'flex', gap: '0.5rem', transition: 'color 0.5s ease' }}>
-      <span style={{ color: ACCENT }}>//</span>
-      <span>{n} — {label}</span>
-    </p>
-  );
 }
 
 // ─── Side nav ─────────────────────────────────────────────────────────────────
@@ -50,6 +41,38 @@ function SideNav({ current, total, onGo }) {
         />
       ))}
     </div>
+  );
+}
+
+// ─── Cycling role title ────────────────────────────────────────────────────────
+const ROLES = ['Full-Stack Developer', 'AI Builder', 'React Engineer', 'Product Builder'];
+
+function CyclingRole() {
+  const [text, setText] = useState('');
+  const [roleIdx, setRoleIdx] = useState(0);
+  const [deleting, setDeleting] = useState(false);
+
+  useEffect(() => {
+    const target = ROLES[roleIdx];
+    let timeout;
+    if (!deleting && text === target) {
+      timeout = setTimeout(() => setDeleting(true), 1800);
+    } else if (deleting && text === '') {
+      setDeleting(false);
+      setRoleIdx(i => (i + 1) % ROLES.length);
+    } else if (deleting) {
+      timeout = setTimeout(() => setText(t => t.slice(0, -1)), 45);
+    } else {
+      timeout = setTimeout(() => setText(target.slice(0, text.length + 1)), 85);
+    }
+    return () => clearTimeout(timeout);
+  }, [text, deleting, roleIdx]);
+
+  return (
+    <span>
+      {text}
+      <span style={{ display: 'inline-block', width: '2px', height: '0.85em', background: ACCENT, marginLeft: '2px', verticalAlign: 'middle', animation: 'blink 1s step-end infinite' }} />
+    </span>
   );
 }
 
@@ -80,7 +103,7 @@ function IntroSection() {
   const c = useC();
 
   return (
-    <section style={{ minHeight: '100vh', width: '100%', background: c.bg, color: c.fg, display: 'flex', flexDirection: 'column', transition: 'background 0.5s ease, color 0.5s ease' }}>
+    <section style={{ height: '100%', width: '100%', background: c.bg, color: c.fg, display: 'flex', flexDirection: 'column', transition: 'background 0.5s ease, color 0.5s ease' }}>
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '7rem max(2rem, 7vw) 2.5rem', maxWidth: '1200px', margin: '0 auto', width: '100%' }}>
 
         <motion.p
@@ -89,7 +112,7 @@ function IntroSection() {
           transition={{ delay: 0.08, duration: 0.55 }}
           style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.95rem', color: ACCENT, margin: '0 0 1.25rem', cursor: 'default', letterSpacing: '0.04em' }}
         >
-          // Full-Stack Developer
+          // <CyclingRole />
         </motion.p>
 
         <div style={{ overflow: 'hidden' }}>
@@ -133,7 +156,7 @@ function IntroSection() {
             </p>
           </div>
 
-          {/* Primary CTAs */}
+          {/* Primary CTA */}
           <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', alignItems: 'center' }}>
             <Link
               href="/case-studies/elika-beauty"
@@ -143,45 +166,47 @@ function IntroSection() {
             >
               View Elika Beauty <FiArrowRight size={13} />
             </Link>
-            <Link
-              href="/resume"
-              style={{ display: 'inline-flex', alignItems: 'center', gap: '0.45rem', padding: '0.7rem 1.5rem', background: 'transparent', color: c.fg, border: `2px solid ${c.border}`, borderRadius: '4px', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.85rem', textDecoration: 'none', transition: 'border-color 0.2s, color 0.5s ease' }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = c.fg; }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = c.border; }}
-            >
-              <FiDownload size={13} /> Download Resume
-            </Link>
           </div>
 
-          {/* Social links */}
-          <div style={{ display: 'flex', gap: '0.65rem', flexWrap: 'wrap' }}>
-            <a
-              href="https://github.com/curleycoder"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.45rem 0.9rem', border: `1.5px solid ${c.border}`, borderRadius: '4px', color: c.sub, fontFamily: "'JetBrains Mono', monospace", fontSize: '0.76rem', textDecoration: 'none', letterSpacing: '0.06em', transition: 'border-color 0.2s, color 0.2s' }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = ACCENT; e.currentTarget.style.color = ACCENT; }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = c.border; e.currentTarget.style.color = c.sub; }}
-            >
-              <FiGithub size={13} /> GitHub
-            </a>
-            <a
-              href="https://linkedin.com/in/shabnam-beiraghian"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.45rem 0.9rem', border: `1.5px solid ${c.border}`, borderRadius: '4px', color: c.sub, fontFamily: "'JetBrains Mono', monospace", fontSize: '0.76rem', textDecoration: 'none', letterSpacing: '0.06em', transition: 'border-color 0.2s, color 0.2s' }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = ACCENT; e.currentTarget.style.color = ACCENT; }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = c.border; e.currentTarget.style.color = c.sub; }}
-            >
-              <FiLinkedin size={13} /> LinkedIn
-            </a>
+          {/* Social links + Download Resume */}
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.65rem', flexWrap: 'wrap' }}>
+            <div style={{ display: 'flex', gap: '0.65rem', flexWrap: 'wrap' }}>
+              <a
+                href="https://github.com/curleycoder"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.45rem 0.9rem', border: `1.5px solid ${c.border}`, borderRadius: '4px', color: c.sub, fontFamily: "'JetBrains Mono', monospace", fontSize: '0.76rem', textDecoration: 'none', letterSpacing: '0.06em', transition: 'border-color 0.2s, color 0.2s' }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = ACCENT; e.currentTarget.style.color = ACCENT; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = c.border; e.currentTarget.style.color = c.sub; }}
+              >
+                <FiGithub size={13} /> GitHub
+              </a>
+              <a
+                href="https://linkedin.com/in/shabnam-beiraghian"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.45rem 0.9rem', border: `1.5px solid ${c.border}`, borderRadius: '4px', color: c.sub, fontFamily: "'JetBrains Mono', monospace", fontSize: '0.76rem', textDecoration: 'none', letterSpacing: '0.06em', transition: 'border-color 0.2s, color 0.2s' }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = ACCENT; e.currentTarget.style.color = ACCENT; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = c.border; e.currentTarget.style.color = c.sub; }}
+              >
+                <FiLinkedin size={13} /> LinkedIn
+              </a>
+              <Link
+                href="/projects"
+                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.45rem 0.9rem', border: `1.5px solid ${c.border}`, borderRadius: '4px', color: c.sub, fontFamily: "'JetBrains Mono', monospace", fontSize: '0.76rem', textDecoration: 'none', letterSpacing: '0.06em', transition: 'border-color 0.2s, color 0.2s' }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = ACCENT; e.currentTarget.style.color = ACCENT; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = c.border; e.currentTarget.style.color = c.sub; }}
+              >
+                All projects <FiArrowRight size={12} />
+              </Link>
+            </div>
             <Link
-              href="/projects"
-              style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.45rem 0.9rem', border: `1.5px solid ${c.border}`, borderRadius: '4px', color: c.sub, fontFamily: "'JetBrains Mono', monospace", fontSize: '0.76rem', textDecoration: 'none', letterSpacing: '0.06em', transition: 'border-color 0.2s, color 0.2s' }}
+              href="/resume"
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '0.45rem', padding: '0.45rem 0.9rem', background: 'transparent', color: c.sub, border: `1.5px solid ${c.border}`, borderRadius: '4px', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.76rem', textDecoration: 'none', letterSpacing: '0.06em', transition: 'border-color 0.2s, color 0.2s' }}
               onMouseEnter={e => { e.currentTarget.style.borderColor = ACCENT; e.currentTarget.style.color = ACCENT; }}
               onMouseLeave={e => { e.currentTarget.style.borderColor = c.border; e.currentTarget.style.color = c.sub; }}
             >
-              All projects <FiArrowRight size={12} />
+              <FiDownload size={13} /> Download Resume
             </Link>
           </div>
         </motion.div>
@@ -190,6 +215,7 @@ function IntroSection() {
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.85, duration: 0.6 }}>
         <Marquee />
       </motion.div>
+      <Footer />
     </section>
   );
 }
@@ -228,7 +254,6 @@ function ChatSection() {
       <div className="chat-grid" style={{ maxWidth: '1100px', width: '100%', margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6rem', alignItems: 'center' }}>
 
         <div>
-          <Tag n="02" label="AI & CHATBOTS" c={c} />
           <h2 style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 800, fontSize: 'clamp(2rem, 5vw, 4rem)', lineHeight: 1.05, color: c.fg, textTransform: 'uppercase', letterSpacing: '-0.02em', margin: '0 0 1.75rem', transition: 'color 0.5s ease' }}>
             Embedded<br /><span style={{ color: ACCENT }}>AI</span>
           </h2>
@@ -300,8 +325,6 @@ function A11ySection({ isDark, toggleDark }) {
   return (
     <section style={{ minHeight: '100vh', width: '100%', background: c.bg, color: c.fg, display: 'flex', alignItems: 'center', padding: '5rem max(2rem, 7vw)', transition: 'background 0.5s ease, color 0.5s ease' }}>
       <div style={{ maxWidth: '1100px', width: '100%', margin: '0 auto' }}>
-        <Tag n="03" label="ACCESSIBILITY" c={c} />
-
         <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: '3rem', flexWrap: 'wrap', gap: '2rem' }}>
           <h2 style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 800, fontSize: 'clamp(2rem, 5.5vw, 4.5rem)', lineHeight: 1.05, color: c.fg, textTransform: 'uppercase', letterSpacing: '-0.02em', margin: 0, transition: 'color 0.5s ease' }}>
             Built for<br /><span style={{ color: ACCENT }}>everyone.</span>
@@ -359,8 +382,6 @@ function ConnectSection() {
   return (
     <section style={{ minHeight: '100vh', width: '100%', background: c.bg, color: c.fg, display: 'flex', alignItems: 'center', padding: '5rem max(2rem, 7vw)', transition: 'background 0.5s ease, color 0.5s ease' }}>
       <div style={{ maxWidth: '1100px', width: '100%', margin: '0 auto' }}>
-        <Tag n="04" label="CONNECT" c={c} />
-
         <h2 style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 800, fontSize: 'clamp(2.5rem, 6vw, 5rem)', lineHeight: 1.05, color: c.fg, textTransform: 'uppercase', letterSpacing: '-0.02em', margin: '0 0 2rem', transition: 'color 0.5s ease' }}>
           Open for<br /><span style={{ color: ACCENT }}>new roles.</span>
         </h2>
@@ -480,7 +501,28 @@ export default function HomePage() {
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';
-    return () => { document.body.style.overflow = ''; };
+    document.documentElement.style.overflow = 'hidden';
+    const globalFooter = document.querySelector('body > main + footer');
+    if (globalFooter) globalFooter.style.display = 'none';
+    return () => {
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+      if (globalFooter) globalFooter.style.display = '';
+    };
+  }, []);
+
+  // Auto-advance sections
+  useEffect(() => {
+    const timer = setInterval(() => {
+      if (animating.current) return;
+      setCurrent(c => {
+        const next = (c + 1) % SECTIONS.length;
+        animating.current = true;
+        setTimeout(() => { animating.current = false; }, 700);
+        return next;
+      });
+    }, 12000);
+    return () => clearInterval(timer);
   }, []);
 
   const Cur = SECTIONS[current];
@@ -506,24 +548,14 @@ export default function HomePage() {
         <SideNav current={current} total={SECTIONS.length} onGo={goTo} />
       </div>
 
-      {/* Bottom-center label */}
-      <div style={{ position: 'fixed', bottom: '3.5rem', left: '50%', transform: 'translateX(-50%)', zIndex: 20, pointerEvents: 'none', userSelect: 'none' }}>
-        <AnimatePresence mode="wait">
-          <motion.span
-            key={current}
-            initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -4 }}
-            transition={{ duration: 0.2 }}
-            style={{ display: 'block', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.6rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--counter-color)', transition: 'color 0.5s ease', whiteSpace: 'nowrap' }}
-          >
-            {String(current + 1).padStart(2, '0')} — {SECTION_LABELS[current]}
-          </motion.span>
-        </AnimatePresence>
-      </div>
-
-      <style jsx global>{`
+<style jsx global>{`
         @keyframes tickerMove {
           from { transform: translateX(0); }
           to   { transform: translateX(-50%); }
+        }
+        @keyframes blink {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0; }
         }
         @media (max-width: 760px) {
           .chat-grid  { grid-template-columns: 1fr !important; gap: 2.5rem !important; }

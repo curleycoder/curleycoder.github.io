@@ -61,13 +61,17 @@ export const projects = [
       'Full brand identity + local SEO setup',
     ],
     images: [
-      { src: '/projects/elika.png', caption: 'Elika Beauty — booking platform homepage.' },
+      { src: '/projects/elika-home.png', caption: 'Homepage — hero section with book an appointment CTA.' },
+      { src: '/projects/elika-booking.png', caption: 'Booking flow — service selection with categories and pricing.' },
+      { src: '/projects/elika-booking1.png', caption: 'Booking flow — date and time picker with availability.' },
+      { src: '/projects/elika-booking2.png', caption: 'Booking flow — client details and additional questions.' },
+      { src: '/projects/elika-booking3.png', caption: 'Booking flow — confirmation dialog before finalising.' },
     ],
     caseStudySlug: 'elika-beauty',
   },
   {
     slug: 'navly',
-    type: 'web',
+    type: 'mobile',
     title: 'Navly',
     shortDescription: 'A Canadian PR pathway planner that gives immigrants a personalized CRS score estimate and matching pathways — without asking for sensitive documents.',
     description:

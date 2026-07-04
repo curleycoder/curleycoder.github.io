@@ -2,11 +2,37 @@
 
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
+import { FiArrowRight, FiArrowLeft, FiExternalLink, FiGithub } from 'react-icons/fi';
 import { projects } from '@/data/projects';
 
+const ACCENT = '#BE00B5';
+
+function ArrowBtn({ onClick, disabled, dir }) {
+  return (
+    <button
+      onClick={onClick}
+      disabled={disabled}
+      aria-label={dir === 'left' ? 'Previous image' : 'Next image'}
+      style={{
+        width: '36px', height: '36px', borderRadius: '50%', flexShrink: 0,
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        background: disabled ? 'transparent' : 'var(--background)',
+        border: `1.5px solid ${disabled ? 'transparent' : 'var(--card-border)'}`,
+        color: disabled ? 'transparent' : 'var(--foreground)',
+        cursor: disabled ? 'default' : 'pointer',
+        transition: 'border-color 0.2s, color 0.2s',
+      }}
+      onMouseEnter={e => { if (!disabled) { e.currentTarget.style.borderColor = ACCENT; e.currentTarget.style.color = ACCENT; } }}
+      onMouseLeave={e => { if (!disabled) { e.currentTarget.style.borderColor = 'var(--card-border)'; e.currentTarget.style.color = 'var(--foreground)'; } }}
+    >
+      {dir === 'left' ? <FiArrowLeft size={14} /> : <FiArrowRight size={14} />}
+    </button>
+  );
+}
+
 export default function ProjectsShowcase() {
-  const [activeType, setActiveType]       = useState('all');
-  const [activeSlug, setActiveSlug]       = useState(projects[0].slug);
+  const [activeType, setActiveType]             = useState('all');
+  const [activeSlug, setActiveSlug]             = useState(projects[0].slug);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
 
   const filteredProjects = useMemo(() => {
@@ -19,276 +45,369 @@ export default function ProjectsShowcase() {
     filteredProjects[0] ||
     projects[0];
 
-  const isMobileProject = activeProject.type === 'mobile';
-
-  // Web project images
-  const desktopImage =
-    activeProject.images?.[activeImageIndex]?.src ||
-    activeProject.images?.[0]?.src;
-  const cornerPhoneImage =
-    activeProject.images?.[activeImageIndex + 1]?.src ||
-    activeProject.images?.[1]?.src ||
-    activeProject.images?.[0]?.src;
-
-  // Mobile project images — two phones side by side
-  const phoneImage1 = activeProject.images?.[activeImageIndex]?.src;
-  const phoneImage2 =
-    activeProject.images?.[activeImageIndex + 1]?.src ||
-    activeProject.images?.[0]?.src;
-
-  const liveUrlDisplay = activeProject.liveUrl
-    ? activeProject.liveUrl
-        .replace('https://', '')
-        .replace('http://', '')
-        .replace(/\/$/, '')
-    : activeProject.title;
+  const isMobile     = (activeProject.displayType || activeProject.type) === 'mobile';
+  const images       = activeProject.images || [];
+  const currentImage = images[activeImageIndex];
+  const hasPrev      = activeImageIndex > 0;
+  const hasNext      = activeImageIndex < images.length - 1;
 
   function handleFilter(type) {
-    const next =
-      type === 'all' ? projects : projects.filter((p) => p.type === type);
+    const next = type === 'all' ? projects : projects.filter((p) => p.type === type);
     setActiveType(type);
     setActiveSlug(next[0]?.slug || projects[0].slug);
     setActiveImageIndex(0);
   }
 
+  function handleSelect(slug) {
+    setActiveSlug(slug);
+    setActiveImageIndex(0);
+  }
+
+  function goPrev() { if (hasPrev) setActiveImageIndex(i => i - 1); }
+  function goNext() { if (hasNext) setActiveImageIndex(i => i + 1); }
+
   return (
-    <section className="projects-showcase">
-      <div className="container">
+    <section style={{
+      minHeight: '100vh',
+      background: 'var(--background)',
+      color: 'var(--foreground)',
+      paddingTop: '8rem',
+      paddingBottom: '6rem',
+    }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 max(2rem, 4vw)' }}>
 
-        {/* ── Header ──────────────────────────────────────────── */}
-        <header className="projects-showcase-header">
-          <p className="projects-eyebrow">Selected Work</p>
-
-          <div className="projects-header-grid">
-            <div>
-              <h2 className="section-title">Projects with real product thinking.</h2>
-              <p className="section-subtitle">
-                Web and mobile products built with clean UI, practical engineering,
-                and business-focused decision making.
-              </p>
-            </div>
-
-            <div className="project-filters" aria-label="Project filters">
-              {['all', 'web', 'mobile'].map((type) => (
-                <button
-                  key={type}
-                  type="button"
-                  onClick={() => handleFilter(type)}
-                  className={activeType === type ? 'active' : ''}
-                >
-                  {type}
-                </button>
-              ))}
-            </div>
+        {/* ── Header ── */}
+        <div style={{
+          display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between',
+          marginBottom: '4rem', gap: '1.5rem', flexWrap: 'wrap',
+        }}>
+          <div>
+            <p style={{
+              fontFamily: "'JetBrains Mono', monospace", fontSize: '0.7rem',
+              letterSpacing: '0.18em', textTransform: 'uppercase', color: ACCENT,
+              margin: '0 0 0.6rem',
+            }}>
+              Selected Work
+            </p>
+            <h1 style={{
+              fontFamily: "'JetBrains Mono', monospace", fontWeight: 800,
+              fontSize: 'clamp(2.5rem, 5vw, 4.5rem)', lineHeight: 1,
+              letterSpacing: '-0.03em', textTransform: 'uppercase', margin: 0,
+            }}>
+              Projects
+            </h1>
           </div>
-        </header>
 
-        {/* ── Layout ──────────────────────────────────────────── */}
-        <div className="projects-showcase-layout">
-
-          {/* Project list sidebar */}
-          <aside className="project-list" aria-label="Project list">
-            {filteredProjects.map((project) => (
+          <div style={{
+            display: 'flex', border: '1px solid var(--card-border)',
+            borderRadius: '4px', overflow: 'hidden',
+          }}>
+            {['all', 'web', 'mobile'].map((type, i) => (
               <button
-                key={project.slug}
-                type="button"
-                className={`project-list-card ${
-                  activeProject.slug === project.slug ? 'selected' : ''
-                }`}
-                onClick={() => {
-                  setActiveSlug(project.slug);
-                  setActiveImageIndex(0);
+                key={type}
+                onClick={() => handleFilter(type)}
+                style={{
+                  padding: '0.45rem 1rem',
+                  background: activeType === type ? ACCENT : 'transparent',
+                  color: activeType === type ? '#fff' : 'var(--muted)',
+                  border: 'none',
+                  borderRight: i < 2 ? '1px solid var(--card-border)' : 'none',
+                  fontFamily: "'JetBrains Mono', monospace",
+                  fontSize: '0.7rem', letterSpacing: '0.12em', textTransform: 'uppercase',
+                  cursor: 'pointer', transition: 'background 0.2s, color 0.2s',
                 }}
               >
-                <span className="project-list-meta">
-                  <span>{project.year}</span>
-                  <span className={`project-type-badge project-type-badge--${project.type}`}>
-                    {project.type}
-                  </span>
-                </span>
-                <strong>{project.title}</strong>
-                <span>{project.shortDescription}</span>
+                {type}
               </button>
             ))}
-          </aside>
+          </div>
+        </div>
 
-          {/* Feature panel */}
-          <article className="project-feature">
+        {/* ── Body ── */}
+        <div className="ps-layout">
 
-            {/* ── Visual preview ────────────────────────────── */}
-            <div
-              className={`project-preview${
-                isMobileProject ? ' project-preview--mobile' : ''
-              }`}
-            >
-              {isMobileProject ? (
-                /* Mobile project: two staggered phone mocks */
-                <div className="phone-duo-wrap">
-                  <div className="phone-duo-primary">
-                    <div className="phone-notch" />
-                    {phoneImage1 ? (
-                      <img
-                        src={phoneImage1}
-                        alt={`${activeProject.title} screen 1`}
-                      />
-                    ) : (
-                      <div className="empty-preview">
-                        <span>{activeProject.title}</span>
-                        <span>Mobile App</span>
-                      </div>
-                    )}
-                  </div>
+          {/* ── Sidebar ── */}
+          <nav style={{ borderTop: '1px solid var(--card-border)' }}>
+            {filteredProjects.map((project) => {
+              const isActive = activeProject.slug === project.slug;
+              return (
+                <button
+                  key={project.slug}
+                  onClick={() => handleSelect(project.slug)}
+                  style={{
+                    display: 'block', width: '100%', textAlign: 'left',
+                    padding: '0.9rem 0 0.9rem 0.85rem',
+                    background: 'none', border: 'none',
+                    borderBottom: '1px solid var(--card-border)',
+                    borderLeft: `2px solid ${isActive ? ACCENT : 'transparent'}`,
+                    cursor: 'pointer', transition: 'border-left-color 0.2s',
+                  }}
+                  onMouseEnter={e => { if (!isActive) e.currentTarget.style.borderLeftColor = 'var(--card-border)'; }}
+                  onMouseLeave={e => { if (!isActive) e.currentTarget.style.borderLeftColor = 'transparent'; }}
+                >
+                  <span style={{
+                    display: 'block', fontFamily: "'JetBrains Mono', monospace",
+                    fontWeight: 700, fontSize: '0.82rem', letterSpacing: '0.02em',
+                    textTransform: 'uppercase',
+                    color: isActive ? ACCENT : 'var(--foreground)',
+                    marginBottom: '0.2rem', transition: 'color 0.2s',
+                  }}>
+                    {project.title}
+                  </span>
+                  <span style={{
+                    fontFamily: "'JetBrains Mono', monospace", fontSize: '0.62rem',
+                    letterSpacing: '0.1em', color: 'var(--muted)', textTransform: 'uppercase',
+                  }}>
+                    {project.year} · {project.type}
+                  </span>
+                </button>
+              );
+            })}
+          </nav>
 
-                  {activeProject.images?.length > 1 && (
-                    <div className="phone-duo-secondary">
-                      <div className="phone-notch" />
-                      {phoneImage2 && (
-                        <img
-                          src={phoneImage2}
-                          alt={`${activeProject.title} screen 2`}
-                        />
-                      )}
+          {/* ── Main panel ── */}
+          <article>
+
+            {/* ── Image with arrow navigation ── */}
+            {isMobile ? (
+              /* Mobile: portrait image with arrows on either side */
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem', justifyContent: 'center' }}>
+                <ArrowBtn onClick={goPrev} disabled={!hasPrev} dir="left" />
+                <div style={{ borderRadius: '38px', overflow: 'hidden', border: '1px solid var(--card-border)', flexShrink: 0 }}>
+                  {currentImage ? (
+                    <img
+                      src={currentImage.src}
+                      alt={currentImage.caption || activeProject.title}
+                      style={{ height: '480px', width: 'auto', display: 'block', maxWidth: '260px', objectFit: 'cover' }}
+                    />
+                  ) : (
+                    <div style={{ height: '480px', width: '220px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--card)' }}>
+                      <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.75rem', color: 'var(--muted)', textTransform: 'uppercase' }}>{activeProject.title}</span>
                     </div>
                   )}
                 </div>
-              ) : (
-                /* Web project: browser mock + small phone in corner */
-                <>
-                  <div className="desktop-preview">
-                    <div className="browser-bar">
-                      <span />
-                      <span />
-                      <span />
-                      <span className="browser-url">{liveUrlDisplay}</span>
+                <ArrowBtn onClick={goNext} disabled={!hasNext} dir="right" />
+              </div>
+            ) : (
+              /* Web: full-width landscape image with overlaid arrows */
+              <div style={{ position: 'relative', marginBottom: '1rem' }}>
+                <div style={{ borderRadius: '8px', overflow: 'hidden', border: '1px solid var(--card-border)', background: 'var(--card)' }}>
+                  {currentImage ? (
+                    <img
+                      src={currentImage.src}
+                      alt={currentImage.caption || activeProject.title}
+                      style={{ width: '100%', height: 'auto', display: 'block' }}
+                    />
+                  ) : (
+                    <div style={{ height: '360px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.8rem', color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>{activeProject.title}</span>
                     </div>
-                    {desktopImage ? (
-                      <img
-                        src={desktopImage}
-                        alt={`${activeProject.title} desktop screen`}
-                      />
-                    ) : (
-                      <div className="empty-preview">
-                        <span>{activeProject.title}</span>
-                        <span>Web App</span>
-                      </div>
-                    )}
-                  </div>
+                  )}
+                </div>
+                {images.length > 1 && (
+                  <>
+                    <div style={{ position: 'absolute', left: '0.75rem', top: '50%', transform: 'translateY(-50%)', zIndex: 2 }}>
+                      <ArrowBtn onClick={goPrev} disabled={!hasPrev} dir="left" />
+                    </div>
+                    <div style={{ position: 'absolute', right: '0.75rem', top: '50%', transform: 'translateY(-50%)', zIndex: 2 }}>
+                      <ArrowBtn onClick={goNext} disabled={!hasNext} dir="right" />
+                    </div>
+                  </>
+                )}
+              </div>
+            )}
 
-                  <div className="mobile-preview">
-                    <div className="phone-notch" />
-                    {cornerPhoneImage && (
-                      <img
-                        src={cornerPhoneImage}
-                        alt={`${activeProject.title} mobile screen`}
-                      />
-                    )}
-                  </div>
-                </>
+            {/* Caption + counter */}
+            <div style={{
+              display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+              gap: '1rem', marginBottom: '2rem', minHeight: '1.4rem',
+            }}>
+              <span style={{
+                fontFamily: "'Lora', Georgia, serif", fontSize: '0.82rem',
+                color: 'var(--muted)', fontStyle: 'italic',
+              }}>
+                {currentImage?.caption || ''}
+              </span>
+              {images.length > 1 && (
+                <span style={{
+                  fontFamily: "'JetBrains Mono', monospace", fontSize: '0.62rem',
+                  letterSpacing: '0.1em', color: 'var(--muted)', textTransform: 'uppercase',
+                  flexShrink: 0,
+                }}>
+                  {activeImageIndex + 1} / {images.length}
+                </span>
               )}
             </div>
 
-            {/* ── Details panel ─────────────────────────────── */}
-            <div className="project-details">
+            {/* Title + year */}
+            <div style={{
+              display: 'flex', alignItems: 'baseline', justifyContent: 'space-between',
+              gap: '1rem', marginBottom: '0.4rem', flexWrap: 'wrap',
+            }}>
+              <h2 style={{
+                fontFamily: "'JetBrains Mono', monospace", fontWeight: 800,
+                fontSize: 'clamp(1.8rem, 3.5vw, 3rem)', lineHeight: 1,
+                letterSpacing: '-0.03em', textTransform: 'uppercase', margin: 0,
+              }}>
+                {activeProject.title}
+              </h2>
+              <span style={{
+                fontFamily: "'JetBrains Mono', monospace", fontSize: '0.7rem',
+                letterSpacing: '0.1em', color: 'var(--muted)', textTransform: 'uppercase',
+              }}>
+                {activeProject.year}
+              </span>
+            </div>
 
-              <div className="project-title-row">
-                <div>
-                  <p className="project-kind">{activeProject.type} project</p>
-                  <h3>{activeProject.title}</h3>
-                </div>
-                <span aria-label={`Year: ${activeProject.year}`}>
-                  {activeProject.year}
+            <p style={{
+              fontFamily: "'JetBrains Mono', monospace", fontSize: '0.68rem',
+              letterSpacing: '0.1em', color: 'var(--muted)', textTransform: 'uppercase',
+              margin: '0 0 1.25rem',
+            }}>
+              {activeProject.myRole} · {activeProject.team}
+            </p>
+
+            <p style={{
+              fontFamily: "'Lora', Georgia, serif", fontSize: '1rem',
+              color: 'var(--dark-text)', lineHeight: 1.75, margin: '0 0 1.5rem',
+              maxWidth: '640px',
+            }}>
+              {activeProject.description}
+            </p>
+
+            {/* Tags */}
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.35rem', marginBottom: '1.75rem' }}>
+              {activeProject.tags.slice(0, 8).map((tag) => (
+                <span key={tag} style={{
+                  fontFamily: "'JetBrains Mono', monospace", fontSize: '0.62rem',
+                  letterSpacing: '0.08em', textTransform: 'uppercase',
+                  padding: '0.2rem 0.55rem',
+                  border: '1px solid var(--card-border)', borderRadius: '3px',
+                  color: 'var(--muted)',
+                }}>
+                  {tag}
                 </span>
-              </div>
+              ))}
+            </div>
 
-              <p className="project-description">{activeProject.description}</p>
-
-              <div className="project-info-grid">
-                <div>
-                  <small>Role</small>
-                  <strong>{activeProject.myRole}</strong>
-                </div>
-                <div>
-                  <small>Team</small>
-                  <strong>{activeProject.team}</strong>
-                </div>
-              </div>
-
-              {/* Tech stack */}
-              <div className="project-tags">
-                {activeProject.tags.slice(0, 8).map((tag) => (
-                  <span key={tag}>{tag}</span>
-                ))}
-              </div>
-
-              {/* Key wins */}
-              {activeProject.highlights?.length > 0 && (
-                <div className="project-wins">
-                  <h4>Key achievements</h4>
-                  <ul>
-                    {activeProject.highlights.slice(0, 5).map((h) => (
-                      <li key={h}>{h}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              {/* Image switcher dots */}
-              {activeProject.images?.length > 1 && (
-                <div className="project-image-dots">
-                  {activeProject.images.map((img, i) => (
-                    <button
-                      key={`${img.src}-${i}`}
-                      type="button"
-                      className={activeImageIndex === i ? 'active' : ''}
-                      onClick={() => setActiveImageIndex(i)}
-                      aria-label={`Show screen ${i + 1}`}
-                    >
-                      {i + 1}
-                    </button>
+            {/* Highlights */}
+            {activeProject.highlights?.length > 0 && (
+              <div style={{
+                borderTop: '1px solid var(--card-border)',
+                paddingTop: '1.25rem', marginBottom: '1.75rem',
+              }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '0.45rem 1.5rem' }}>
+                  {activeProject.highlights.slice(0, 6).map((h) => (
+                    <span key={h} style={{
+                      fontFamily: "'Lora', Georgia, serif", fontSize: '0.85rem',
+                      color: 'var(--dark-text)', display: 'flex', alignItems: 'flex-start', gap: '0.4rem',
+                    }}>
+                      <span style={{ color: ACCENT, marginTop: '1px', flexShrink: 0 }}>↗</span>
+                      {h}
+                    </span>
                   ))}
                 </div>
-              )}
-
-              {/* CTA links */}
-              <div className="project-links">
-                {activeProject.liveUrl && (
-                  <a href={activeProject.liveUrl} target="_blank" rel="noreferrer">
-                    View Live
-                  </a>
-                )}
-                {activeProject.githubUrl && (
-                  <a href={activeProject.githubUrl} target="_blank" rel="noreferrer">
-                    GitHub
-                  </a>
-                )}
-                {activeProject.demoUrl && (
-                  <a href={activeProject.demoUrl} target="_blank" rel="noreferrer">
-                    Demo
-                  </a>
-                )}
-                {activeProject.prototypeUrl && (
-                  <a href={activeProject.prototypeUrl} target="_blank" rel="noreferrer">
-                    Prototype
-                  </a>
-                )}
-                {activeProject.wireframeUrl && (
-                  <a href={activeProject.wireframeUrl} target="_blank" rel="noreferrer">
-                    Wireframe
-                  </a>
-                )}
-                <Link
-                  href={activeProject.caseStudySlug
-                    ? `/case-studies/${activeProject.caseStudySlug}`
-                    : `/projects/${activeProject.slug}`}
-                  className="project-link-case-study"
-                >
-                  Case Study →
-                </Link>
               </div>
+            )}
+
+            {/* Links */}
+            <div style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap', alignItems: 'center' }}>
+              {activeProject.liveUrl && (
+                <a
+                  href={activeProject.liveUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  style={{
+                    display: 'inline-flex', alignItems: 'center', gap: '0.4rem',
+                    padding: '0.55rem 1.1rem', background: ACCENT, color: '#fff',
+                    border: `1.5px solid ${ACCENT}`, borderRadius: '4px',
+                    fontFamily: "'JetBrains Mono', monospace", fontSize: '0.72rem',
+                    textDecoration: 'none', letterSpacing: '0.06em', textTransform: 'uppercase',
+                    transition: 'background 0.2s, border-color 0.2s',
+                  }}
+                  onMouseEnter={e => { e.currentTarget.style.background = '#9a0093'; e.currentTarget.style.borderColor = '#9a0093'; }}
+                  onMouseLeave={e => { e.currentTarget.style.background = ACCENT; e.currentTarget.style.borderColor = ACCENT; }}
+                >
+                  Live <FiExternalLink size={11} />
+                </a>
+              )}
+              {activeProject.githubUrl && (
+                <a
+                  href={activeProject.githubUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  style={{
+                    display: 'inline-flex', alignItems: 'center', gap: '0.4rem',
+                    padding: '0.55rem 1rem', background: 'transparent',
+                    color: 'var(--foreground)', border: '1.5px solid var(--card-border)',
+                    borderRadius: '4px', fontFamily: "'JetBrains Mono', monospace",
+                    fontSize: '0.72rem', textDecoration: 'none', letterSpacing: '0.06em',
+                    textTransform: 'uppercase', transition: 'border-color 0.2s, color 0.2s',
+                  }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = ACCENT; e.currentTarget.style.color = ACCENT; }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--card-border)'; e.currentTarget.style.color = 'var(--foreground)'; }}
+                >
+                  <FiGithub size={11} /> GitHub
+                </a>
+              )}
+              {activeProject.demoUrl && (
+                <a
+                  href={activeProject.demoUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  style={{
+                    display: 'inline-flex', alignItems: 'center', gap: '0.4rem',
+                    padding: '0.55rem 1rem', background: 'transparent',
+                    color: 'var(--foreground)', border: '1.5px solid var(--card-border)',
+                    borderRadius: '4px', fontFamily: "'JetBrains Mono', monospace",
+                    fontSize: '0.72rem', textDecoration: 'none', letterSpacing: '0.06em',
+                    textTransform: 'uppercase', transition: 'border-color 0.2s, color 0.2s',
+                  }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = ACCENT; e.currentTarget.style.color = ACCENT; }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--card-border)'; e.currentTarget.style.color = 'var(--foreground)'; }}
+                >
+                  Demo <FiExternalLink size={11} />
+                </a>
+              )}
+              <Link
+                href={
+                  activeProject.caseStudySlug
+                    ? `/case-studies/${activeProject.caseStudySlug}`
+                    : `/projects/${activeProject.slug}`
+                }
+                style={{
+                  display: 'inline-flex', alignItems: 'center', gap: '0.4rem',
+                  padding: '0.55rem 1rem', background: 'transparent',
+                  color: 'var(--foreground)', border: '1.5px solid var(--card-border)',
+                  borderRadius: '4px', fontFamily: "'JetBrains Mono', monospace",
+                  fontSize: '0.72rem', textDecoration: 'none', letterSpacing: '0.06em',
+                  textTransform: 'uppercase', transition: 'border-color 0.2s, color 0.2s',
+                }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = ACCENT; e.currentTarget.style.color = ACCENT; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--card-border)'; e.currentTarget.style.color = 'var(--foreground)'; }}
+              >
+                Case Study <FiArrowRight size={11} />
+              </Link>
             </div>
+
           </article>
         </div>
       </div>
+
+      <style jsx>{`
+        .ps-layout {
+          display: grid;
+          grid-template-columns: 200px 1fr;
+          gap: 3.5rem;
+          align-items: start;
+        }
+        @media (max-width: 800px) {
+          .ps-layout {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+          }
+        }
+      `}</style>
     </section>
   );
 }
