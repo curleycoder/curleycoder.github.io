@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { caseStudies } from '../../../../data/case-studies';
+import { caseStudies } from '../../../data/case-studies';
 import CaseStudyDetail from './CaseStudyDetail';
 
 export function generateStaticParams() {

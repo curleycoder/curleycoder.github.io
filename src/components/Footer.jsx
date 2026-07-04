@@ -23,10 +23,10 @@ export default function Footer() {
     >
       <div
         className="container"
-        style={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', alignItems: 'center', gap: '1rem' }}
+        style={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', alignItems: 'center', gap: '1rem', paddingLeft: 0, paddingRight: 0 }}
       >
         {/* Left — logo */}
-        <span style={{ fontWeight: 700, fontSize: '1.05rem', fontFamily: "'JetBrains Mono', monospace", color: 'var(--muted)', letterSpacing: '-0.04em', transition: 'color 0.5s ease' }}>
+        <span style={{ fontWeight: 500, fontSize: '1.05rem', fontFamily: "'JetBrains Mono', monospace", color: 'var(--muted)', letterSpacing: '-0.04em', transition: 'color 0.5s ease' }}>
           {'{'}<span style={{ letterSpacing: '-0.08em' }}>C</span><sup style={{ fontSize: '0.65em', position: 'relative', top: '-0.7em', marginLeft: '1px' }}>2</sup>{'}'}
         </span>
 
@@ -51,14 +51,6 @@ export default function Footer() {
               {icon}
             </a>
           ))}
-          <a
-            href="/resume"
-            style={{ color: 'var(--muted)', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.72rem', textDecoration: 'none', letterSpacing: '0.08em', transition: 'color 0.15s' }}
-            onMouseEnter={e => { e.currentTarget.style.color = ACCENT; }}
-            onMouseLeave={e => { e.currentTarget.style.color = 'var(--muted)'; }}
-          >
-            Resume
-          </a>
         </nav>
       </div>
     </footer>

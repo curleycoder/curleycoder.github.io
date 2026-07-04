@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { caseStudies } from '../../../data/case-studies';
+import { caseStudies } from '../../data/case-studies';
 
 export default function CaseStudiesPage() {
   return (

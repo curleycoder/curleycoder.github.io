@@ -3,10 +3,10 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FiArrowRight, FiMoon, FiSun, FiCheck, FiGithub, FiLinkedin } from 'react-icons/fi';
+import { FiArrowRight, FiMoon, FiSun, FiCheck, FiGithub, FiLinkedin, FiDownload } from 'react-icons/fi';
 
 const ACCENT = '#BE00B5';
-const SECTION_LABELS = ['Intro', 'Full-Stack', 'AI & Chatbots', 'Accessibility', 'Connect'];
+const SECTION_LABELS = ['Intro', 'AI & Chatbots', 'Accessibility', 'Connect'];
 
 // All colors come from CSS variables — toggling html.dark handles switching
 function useC() {
@@ -34,7 +34,7 @@ function Tag({ n, label, c }) {
 function SideNav({ current, total, onGo }) {
   const c = useC();
   return (
-    <div style={{ position: 'fixed', right: '2rem', top: '50%', transform: 'translateY(-50%)', zIndex: 50, display: 'flex', flexDirection: 'column', gap: '0.5rem', alignItems: 'center' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', alignItems: 'center' }}>
       {Array.from({ length: total }).map((_, i) => (
         <button
           key={i}
@@ -76,17 +76,8 @@ function Marquee() {
 }
 
 // ─── 1. INTRO ─────────────────────────────────────────────────────────────────
-const ROLES = ['Full-Stack Developer', 'AI & Chatbot Builder', 'Accessibility Advocate', 'UX Engineer'];
-
-function IntroSection({ onGo }) {
+function IntroSection() {
   const c = useC();
-  const [roleIdx, setRoleIdx] = useState(0);
-  const [codeMode, setCodeMode] = useState(false);
-
-  useEffect(() => {
-    const t = setInterval(() => setRoleIdx(r => (r + 1) % ROLES.length), 3000);
-    return () => clearInterval(t);
-  }, []);
 
   return (
     <section style={{ minHeight: '100vh', width: '100%', background: c.bg, color: c.fg, display: 'flex', flexDirection: 'column', transition: 'background 0.5s ease, color 0.5s ease' }}>
@@ -96,13 +87,9 @@ function IntroSection({ onGo }) {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.08, duration: 0.55 }}
-          onMouseEnter={() => setCodeMode(true)}
-          onMouseLeave={() => setCodeMode(false)}
-          style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.95rem', color: ACCENT, margin: '0 0 1.25rem', cursor: 'default', letterSpacing: '0.04em', minHeight: '1.4em' }}
+          style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.95rem', color: ACCENT, margin: '0 0 1.25rem', cursor: 'default', letterSpacing: '0.04em' }}
         >
-          {codeMode
-            ? <><span style={{ color: ACCENT }}>print</span><span style={{ color: c.fg }}>(&#34;Hello, world!&#34;);</span></>
-            : '// hello, world!'}
+          // Full-Stack Developer
         </motion.p>
 
         <div style={{ overflow: 'hidden' }}>
@@ -124,53 +111,78 @@ function IntroSection({ onGo }) {
           >
             Beiraghian
           </motion.h1>
-          <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '1rem', color: c.muted, letterSpacing: '0.06em', transition: 'color 0.5s ease' }}>
-              /&#643;&#601;b&#712;n&#230;m/ &mdash; morning dew
-            </span>
         </div>
 
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.6 }}
-          style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1.5rem' }}
+          style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', maxWidth: '600px' }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <div style={{ width: '2rem', height: '1px', background: c.border, flexShrink: 0 }} />
-            <div style={{ overflow: 'hidden', height: '1.5rem' }}>
-              <AnimatePresence mode="wait">
-                <motion.span
-                  key={roleIdx}
-                  initial={{ y: '100%' }}
-                  animate={{ y: 0 }}
-                  exit={{ y: '-100%' }}
-                  transition={{ duration: 0.34, ease: [0.22, 1, 0.36, 1] }}
-                  style={{ display: 'block', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.88rem', letterSpacing: '0.05em', color: c.sub, whiteSpace: 'nowrap', transition: 'color 0.5s ease' }}
-                >
-                  {ROLES[roleIdx]}
-                </motion.span>
-              </AnimatePresence>
-            </div>
+          {/* Proof statement */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+            <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: '1.05rem', color: c.fg, lineHeight: 1.7, margin: 0, transition: 'color 0.5s ease' }}>
+              Building responsive web apps, AI tools, and business systems using{' '}
+              <span style={{ color: ACCENT }}>React, Next.js, Node.js</span> and PostgreSQL.
+            </p>
+            <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: '0.92rem', color: c.sub, lineHeight: 1.7, margin: 0, transition: 'color 0.5s ease' }}>
+              Recent: live booking platform for Elika Beauty · embeddable AI front-desk assistant · production frontend at Community of Guardians
+            </p>
+            <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.78rem', color: c.muted, margin: 0, letterSpacing: '0.06em', transition: 'color 0.5s ease' }}>
+              Vancouver, BC · Open to frontend and full-stack developer roles
+            </p>
           </div>
 
+          {/* Primary CTAs */}
           <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', alignItems: 'center' }}>
-            <button
-              onClick={() => onGo(1)}
-              style={{ display: 'inline-flex', alignItems: 'center', gap: '0.45rem', padding: '0.7rem 1.5rem', background: ACCENT, color: '#fff', border: `2px solid ${ACCENT}`, borderRadius: '4px', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.85rem', cursor: 'pointer', transition: 'background 0.2s, border-color 0.2s' }}
+            <Link
+              href="/case-studies/elika-beauty"
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '0.45rem', padding: '0.7rem 1.5rem', background: ACCENT, color: '#fff', border: `2px solid ${ACCENT}`, borderRadius: '4px', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.85rem', textDecoration: 'none', transition: 'background 0.2s, border-color 0.2s' }}
               onMouseEnter={e => { e.currentTarget.style.background = '#9a0093'; e.currentTarget.style.borderColor = '#9a0093'; }}
               onMouseLeave={e => { e.currentTarget.style.background = ACCENT; e.currentTarget.style.borderColor = ACCENT; }}
             >
-              View work <FiArrowRight size={13} />
-            </button>
+              View Elika Beauty <FiArrowRight size={13} />
+            </Link>
             <Link
               href="/resume"
               style={{ display: 'inline-flex', alignItems: 'center', gap: '0.45rem', padding: '0.7rem 1.5rem', background: 'transparent', color: c.fg, border: `2px solid ${c.border}`, borderRadius: '4px', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.85rem', textDecoration: 'none', transition: 'border-color 0.2s, color 0.5s ease' }}
               onMouseEnter={e => { e.currentTarget.style.borderColor = c.fg; }}
               onMouseLeave={e => { e.currentTarget.style.borderColor = c.border; }}
             >
-              Resume
+              <FiDownload size={13} /> Download Resume
             </Link>
-            
+          </div>
+
+          {/* Social links */}
+          <div style={{ display: 'flex', gap: '0.65rem', flexWrap: 'wrap' }}>
+            <a
+              href="https://github.com/curleycoder"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.45rem 0.9rem', border: `1.5px solid ${c.border}`, borderRadius: '4px', color: c.sub, fontFamily: "'JetBrains Mono', monospace", fontSize: '0.76rem', textDecoration: 'none', letterSpacing: '0.06em', transition: 'border-color 0.2s, color 0.2s' }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = ACCENT; e.currentTarget.style.color = ACCENT; }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = c.border; e.currentTarget.style.color = c.sub; }}
+            >
+              <FiGithub size={13} /> GitHub
+            </a>
+            <a
+              href="https://linkedin.com/in/shabnam-beiraghian"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.45rem 0.9rem', border: `1.5px solid ${c.border}`, borderRadius: '4px', color: c.sub, fontFamily: "'JetBrains Mono', monospace", fontSize: '0.76rem', textDecoration: 'none', letterSpacing: '0.06em', transition: 'border-color 0.2s, color 0.2s' }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = ACCENT; e.currentTarget.style.color = ACCENT; }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = c.border; e.currentTarget.style.color = c.sub; }}
+            >
+              <FiLinkedin size={13} /> LinkedIn
+            </a>
+            <Link
+              href="/projects"
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.45rem 0.9rem', border: `1.5px solid ${c.border}`, borderRadius: '4px', color: c.sub, fontFamily: "'JetBrains Mono', monospace", fontSize: '0.76rem', textDecoration: 'none', letterSpacing: '0.06em', transition: 'border-color 0.2s, color 0.2s' }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = ACCENT; e.currentTarget.style.color = ACCENT; }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = c.border; e.currentTarget.style.color = c.sub; }}
+            >
+              All projects <FiArrowRight size={12} />
+            </Link>
           </div>
         </motion.div>
       </div>
@@ -182,62 +194,6 @@ function IntroSection({ onGo }) {
   );
 }
 
-// ─── 2. FULL-STACK ────────────────────────────────────────────────────────────
-const STACK = [
-  { label: 'React & Next.js',   note: 'My go-to frontend stack' },
-  { label: 'Node.js & Express', note: 'APIs, auth, real-time' },
-  { label: 'TypeScript',        note: 'Everything typed, always' },
-  { label: 'React Native',      note: 'Cross-platform mobile' },
-  { label: 'PostgreSQL / MongoDB', note: 'Relational and document' },
-  { label: 'Supabase & Neon',   note: 'Modern backend-as-a-service' },
-];
-
-function FullStackSection() {
-  const c = useC();
-  return (
-    <section style={{ minHeight: '100vh', width: '100%', background: c.bg, color: c.fg, display: 'flex', alignItems: 'center', padding: '5rem max(2rem, 7vw)', transition: 'background 0.5s ease, color 0.5s ease' }}>
-      <div style={{ maxWidth: '1100px', width: '100%', margin: '0 auto' }}>
-        <Tag n="01" label="FULL-STACK" c={c} />
-
-        <div className="fs-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '5rem', alignItems: 'start' }}>
-          <div>
-            <h2 style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 800, fontSize: 'clamp(2rem, 5vw, 4rem)', lineHeight: 1.05, color: c.fg, textTransform: 'uppercase', letterSpacing: '-0.02em', margin: '0 0 1.75rem', transition: 'color 0.5s ease' }}>
-              I build<br />things<br /><span style={{ color: ACCENT }}>that work.</span>
-            </h2>
-            <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: '1rem', color: c.sub, lineHeight: 1.75, margin: '0 0 1.1rem', transition: 'color 0.5s ease' }}>
-              I care about the whole picture — from database schema to button hover states. I like when code is readable and the product feels intentional.
-            </p>
-            <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: '1rem', color: c.sub, lineHeight: 1.75, margin: '0 0 2.25rem', transition: 'color 0.5s ease' }}>
-              I&#39;ve shipped mobile apps, AI-powered tools, and production platforms — always biased toward real user needs and clean delivery over unnecessary complexity.
-            </p>
-            <Link
-              href="/projects"
-              style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.82rem', color: ACCENT, textDecoration: 'none', letterSpacing: '0.04em', transition: 'opacity 0.15s' }}
-              onMouseEnter={e => { e.currentTarget.style.opacity = '0.6'; }}
-              onMouseLeave={e => { e.currentTarget.style.opacity = '1'; }}
-            >
-              See my projects <FiArrowRight size={13} />
-            </Link>
-          </div>
-
-          <div>
-            <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.6rem', letterSpacing: '0.14em', color: c.muted, margin: '0 0 0.75rem', textTransform: 'uppercase', transition: 'color 0.5s ease' }}>
-              Stack I reach for
-            </p>
-            <div style={{ borderTop: `1px solid ${c.border}` }}>
-              {STACK.map(s => (
-                <div key={s.label} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', padding: '0.85rem 0', borderBottom: `1px solid ${c.border}`, gap: '1rem', flexWrap: 'wrap' }}>
-                  <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '1.35rem', color: c.fg, letterSpacing: '0.04em', transition: 'color 0.5s ease' }}>{s.label}</span>
-                  <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.6rem', color: c.muted, letterSpacing: '0.06em', transition: 'color 0.5s ease' }}>{s.note}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
 
 // ─── 3. AI & CHATBOTS ─────────────────────────────────────────────────────────
 const BOT_QA = {
@@ -274,7 +230,7 @@ function ChatSection() {
         <div>
           <Tag n="02" label="AI & CHATBOTS" c={c} />
           <h2 style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 800, fontSize: 'clamp(2rem, 5vw, 4rem)', lineHeight: 1.05, color: c.fg, textTransform: 'uppercase', letterSpacing: '-0.02em', margin: '0 0 1.75rem', transition: 'color 0.5s ease' }}>
-            Embeded<br /><span style={{ color: ACCENT }}>AI</span>
+            Embedded<br /><span style={{ color: ACCENT }}>AI</span>
           </h2>
           <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: '1rem', color: c.sub, lineHeight: 1.75, margin: '0 0 1.1rem', transition: 'color 0.5s ease' }}>
             What got me into AI wasn&#39;t the hype — it was watching a small business owner spend two hours answering the same five questions over email. I wanted to fix that.
@@ -454,7 +410,7 @@ function ConnectSection() {
 }
 
 // ─── Root ─────────────────────────────────────────────────────────────────────
-const SECTIONS = [IntroSection, FullStackSection, ChatSection, A11ySection, ConnectSection];
+const SECTIONS = [IntroSection, ChatSection, A11ySection, ConnectSection];
 
 const fade = { enter: { opacity: 0 }, center: { opacity: 1 }, exit: { opacity: 0 } };
 
@@ -545,15 +501,19 @@ export default function HomePage() {
         </motion.div>
       </AnimatePresence>
 
-      {/* Right side nav + label */}
-      <div style={{ position: 'fixed', right: '2rem', top: '50%', transform: 'translateY(-50%)', zIndex: 50, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem' }}>
+      {/* Right side nav dots */}
+      <div style={{ position: 'fixed', right: '2rem', top: '50%', transform: 'translateY(-50%)', zIndex: 50 }}>
         <SideNav current={current} total={SECTIONS.length} onGo={goTo} />
+      </div>
+
+      {/* Bottom-center label */}
+      <div style={{ position: 'fixed', bottom: '3.5rem', left: '50%', transform: 'translateX(-50%)', zIndex: 20, pointerEvents: 'none', userSelect: 'none' }}>
         <AnimatePresence mode="wait">
           <motion.span
             key={current}
             initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -4 }}
             transition={{ duration: 0.2 }}
-            style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.55rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--counter-color)', userSelect: 'none', pointerEvents: 'none', writingMode: 'vertical-rl', transition: 'color 0.5s ease' }}
+            style={{ display: 'block', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.6rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--counter-color)', transition: 'color 0.5s ease', whiteSpace: 'nowrap' }}
           >
             {String(current + 1).padStart(2, '0')} — {SECTION_LABELS[current]}
           </motion.span>

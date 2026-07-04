@@ -112,7 +112,7 @@ export default function AboutPage() {
               Hi, I&apos;m <span className="gradient-text">Shabnam</span>
             </h1>
             <p style={{ color: 'var(--muted)', fontStyle: 'italic', marginBottom: '1.75rem', fontSize: '0.88rem' }}>
-              [&#643;&#230;b.n&#230;&#769;m] &#8212; An Iranian name that means morning dew
+              [&#643;&#230;b.n&#230;&#769;m] &#8212; Persian name that means morning dew
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.9rem', fontSize: '1rem', lineHeight: 1.8, color: 'var(--foreground)' }}>
               <p>

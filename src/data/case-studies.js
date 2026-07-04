@@ -13,10 +13,10 @@ export const caseStudies = [
     problem:
       'Amina was listed on Fresha, which brought some visibility but came with real costs: her salon appeared alongside competitors, ads pulled clients away before they could book, and she had zero control over SEO or her brand presentation. Every missed DM was a missed appointment.',
     metrics: [
-      { label: 'Organic traffic', value: '40%', sub: 'increase in 60 days' },
-      { label: 'Manual confirmations', value: '0', sub: 'fully automated' },
+      { label: 'Organic traffic', value: '40%', sub: 'increase in 60 days (Google Search Console)' },
+      { label: 'Manual confirmations', value: '0', sub: 'every booking auto-confirmed by email' },
       { label: 'Time to v1', value: '1 month', sub: 'solo build' },
-      { label: 'Booking conversion', value: '3x', sub: 'vs Instagram DMs' },
+      { label: 'Booking source', value: 'Google', sub: 'clients now find via search, not DMs' },
     ],
     testimonialQuote:
       "I never thought having my own website would make this much of a difference. Clients tell me they found me on Google, and my bookings just come in — I don't have to chase anyone anymore. It feels like a real business now.",
