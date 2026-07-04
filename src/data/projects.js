@@ -66,6 +66,70 @@ export const projects = [
     caseStudySlug: 'elika-beauty',
   },
   {
+    slug: 'navly',
+    type: 'web',
+    title: 'Navly',
+    shortDescription: 'A Canadian PR pathway planner that gives immigrants a personalized CRS score estimate and matching pathways — without asking for sensitive documents.',
+    description:
+      'Navly helps prospective immigrants understand their pathway to Canadian permanent residence. Users answer a short profile questionnaire and receive estimated CRS scores, matched pathways (CEC, FSW, FST, PNP, study-to-PR), identified gaps, and province-by-province PNP options — no passport or SIN required. The paid tier adds an AI immigration assistant, permit expiry reminders, and full score breakdowns.',
+    tags: ['Next.js', 'React', 'Tailwind CSS', 'AI', 'Vercel'],
+    year: 2025,
+    liveUrl: 'https://navly.ca',
+    githubUrl: '',
+    prototypeUrl: '',
+    wireframeUrl: '',
+    myRole: 'Full-Stack Developer',
+    team: 'Solo project',
+    contribution:
+      'Designed and built Navly from scratch — adaptive intake flow, CRS scoring logic, pathway matching engine, and the freemium SaaS structure. Built the AI assistant for general immigration guidance and the province-by-province PNP matching for the paid tier.',
+    rationaleProblem:
+      'Canadian immigration pathways are genuinely complex. Most people don\'t know their CRS score, which pathway applies to them, or what gaps they need to close — and hiring a consultant just to get a baseline understanding is expensive.',
+    rationaleChallenge:
+      'Build a tool that gives accurate, personalized pathway assessments without collecting sensitive documents, and structure it as a sustainable freemium product.',
+    rationaleSolution:
+      'An adaptive intake flow that asks only the questions relevant to each user\'s situation, a CRS scoring engine, and pathway matching logic — free to screen, paid to go deeper with AI guidance and PNP matching.',
+    whatItDoes: [
+      'Adaptive profile questionnaire — different questions based on user status (student, worker, visitor)',
+      'Estimated CRS score and matched pathways (CEC, FSW, FST, PNP, study-to-PR)',
+      'Province-by-province PNP matching for the paid tier',
+      'AI assistant for general immigration guidance',
+      'Permit expiry reminders and full score breakdowns (paid)',
+      'No passport, SIN, or government documents required',
+    ],
+    technicalDecisions: [
+      {
+        choice: 'Adaptive intake — questions change based on user status',
+        reason: 'A worker, student, and visitor have completely different pathways. Showing all questions to everyone creates noise. Branching logic keeps the flow focused and the results accurate.',
+      },
+      {
+        choice: 'Freemium model — free screening, paid depth',
+        reason: 'The free tier gives enough value to build trust. The paid tier (PNP matching, AI assistant, reminders) serves users who are serious about their application.',
+      },
+    ],
+    challenges: [
+      {
+        problem: 'CRS scoring rules are complex and change with policy updates',
+        solution: 'Built the scoring logic as a modular engine with clearly separated rules — easy to update individual components when IRCC changes thresholds without touching the rest of the system.',
+      },
+    ],
+    highlights: [
+      'Live SaaS product — navly.ca',
+      'Freemium model with AI-powered paid tier',
+      'CRS scoring and pathway matching engine',
+      'Province-by-province PNP matching',
+      'No sensitive documents required',
+    ],
+    images: [
+      { src: '/projects/navly.png', caption: 'Landing page — check your PR pathway without uploading any documents.' },
+      { src: '/projects/navly-1.png', caption: 'Home dashboard — personalized CRS score, urgent alerts, and next steps at a glance.' },
+      { src: '/projects/navly-2.png', caption: 'Tasks — step-by-step checklist generated from your profile to move you closer to PR readiness.' },
+      { src: '/projects/navly-3.png', caption: 'Tracker — estimated CRS score, pathway strength, and what to improve next.' },
+      { src: '/projects/navly-4.png', caption: 'Express Entry draw history — compare your score against recent cutoffs across all pools.' },
+      { src: '/projects/navly-5.png', caption: 'AI Assistant — personalized immigration guidance based on your profile and pathway.' },
+      { src: '/projects/navly-6.png', caption: 'Important Dates — key permit expiry dates and deadlines tracked from your profile.' },
+    ],
+  },
+  {
     slug: 'community-of-guardians',
     type: 'web',
     title: 'Community of Guardians',
