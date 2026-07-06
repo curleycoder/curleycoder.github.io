@@ -202,10 +202,10 @@ h3 {
   justify-content: center;
   gap: 0.45rem;
   padding: 0.45rem 1.15rem;
-  border: 2px solid #000000;
+  border: 2px solid var(--foreground);
   border-radius: 8px;
   background: transparent;
-  color: #000000;
+  color: var(--foreground);
   font-family: 'Bebas Neue', 'Arial Narrow', sans-serif;
   font-size: 1.25rem;
   line-height: 1;
