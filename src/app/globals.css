@@ -219,8 +219,8 @@ h3 {
 .btn-cta:hover,
 .btn-secondary:hover,
 .btn-outline:hover {
-  background: #000000;
-  color: #ffffff;
+  background: var(--foreground);
+  color: var(--background);
   transform: translateY(-1px);
 }
 
