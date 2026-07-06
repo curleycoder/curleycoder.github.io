@@ -370,7 +370,7 @@ function ConnectSection() {
 
   const ctas = [
     { label: 'View projects', href: '/projects', primary: false },
-    { label: 'Get in touch', href: '/about#contact', primary: true },
+    { label: 'Get in touch', href: '/contact', primary: true },
   ];
 
   const socials = [
