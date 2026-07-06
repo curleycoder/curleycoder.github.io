@@ -351,12 +351,12 @@ export const projects = [
       'Real-time availability tracking',
     ],
     images: [
-      { src: '/projects/lenditout-home.png', caption: 'Home screen — browse available items in your community.' },
       { src: '/projects/lenditout-login.png', caption: 'Login flow with secure authentication.' },
+      { src: '/projects/lenditout-home.png', caption: 'Home screen — browse available items in your community.' },
+      { src: '/projects/lendotout-post.png', caption: 'Request confirmation and borrower messaging.' },
       { src: '/projects/lenditout-post1.png', caption: 'Create a listing — add photos, description, and availability.' },
       { src: '/projects/lenditout-post2.png', caption: 'Item detail page with borrowing request flow.' },
       { src: '/projects/lenditout-post3.png', caption: 'Manage your active listings and incoming requests.' },
-      { src: '/projects/lendotout-post.png', caption: 'Request confirmation and borrower messaging.' },
     ],
   },
 ];
