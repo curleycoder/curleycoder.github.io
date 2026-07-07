@@ -3,300 +3,153 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 
+const ACCENT = '#BE00B5';
+
 export default function CaseStudyDetail({ study }) {
   return (
     <div style={{ paddingTop: '80px' }}>
+
       {/* Header */}
-      <section
-        style={{
-          padding: '4rem 0 3rem',
-          background: 'linear-gradient(180deg, rgba(109,40,217,0.06) 0%, transparent 100%)',
-          borderBottom: '1px solid var(--card-border)',
-        }}
-      >
-        <div className="container" style={{ maxWidth: '820px' }}>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
+      <section style={{ padding: '4rem max(2rem, 7vw) 3rem' }}>
+        <div style={{ maxWidth: '820px', margin: '0 auto' }}>
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+
             <Link
-              href="/case-studies"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.4rem',
-                color: 'var(--muted)',
-                fontSize: '0.875rem',
-                marginBottom: '2rem',
-                transition: 'color 0.15s',
-                textDecoration: 'none',
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--accent)')}
-              onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--muted)')}
+              href="/projects"
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', color: 'var(--muted)', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.75rem', letterSpacing: '0.06em', marginBottom: '2rem', textDecoration: 'none', transition: 'color 0.15s' }}
+              onMouseEnter={e => e.currentTarget.style.color = ACCENT}
+              onMouseLeave={e => e.currentTarget.style.color = 'var(--muted)'}
             >
               <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M13 8H3M7 4L3 8l4 4" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
-              Case studies
+              Projects
             </Link>
 
-            <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '1rem', flexWrap: 'wrap' }}>
-              <span
-                style={{
-                  display: 'inline-block',
-                  padding: '0.3rem 0.75rem',
-                  background: 'rgba(109,40,217,0.12)',
-                  border: '1px solid rgba(109,40,217,0.25)',
-                  borderRadius: '9999px',
-                  fontSize: '0.75rem',
-                  color: 'var(--accent)',
-                  fontWeight: '600',
-                  letterSpacing: '0.06em',
-                  textTransform: 'uppercase',
-                }}
-              >
+            <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.72rem', color: ACCENT, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.6rem' }}>
+              Case Study
+            </p>
+            <h1 style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 800, fontSize: 'clamp(2rem, 5vw, 3.25rem)', lineHeight: 1.05, letterSpacing: '-0.02em', textTransform: 'uppercase', marginBottom: '1rem', color: 'var(--foreground)' }}>
+              {study.title}
+            </h1>
+            <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: '1.05rem', color: 'var(--dark-text)', lineHeight: 1.75, maxWidth: '600px', marginBottom: '1.5rem' }}>
+              {study.tagline}
+            </p>
+
+            <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '2.5rem' }}>
+              <span style={{ padding: '0.3rem 0.75rem', background: `${ACCENT}18`, border: `1px solid ${ACCENT}40`, borderRadius: '4px', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.7rem', color: ACCENT, letterSpacing: '0.06em', textTransform: 'uppercase' }}>
                 {study.role}
               </span>
-              <span
-                style={{
-                  display: 'inline-block',
-                  padding: '0.3rem 0.75rem',
-                  background: 'transparent',
-                  border: '1px solid var(--card-border)',
-                  borderRadius: '9999px',
-                  fontSize: '0.75rem',
-                  color: 'var(--muted)',
-                }}
-              >
+              <span style={{ padding: '0.3rem 0.75rem', background: 'transparent', border: '1px solid var(--card-border)', borderRadius: '4px', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.7rem', color: 'var(--muted)', letterSpacing: '0.04em' }}>
                 {study.timeline}
               </span>
             </div>
 
-            <h1
-              style={{
-                fontSize: 'clamp(2.2rem, 5vw, 3.25rem)',
-                fontWeight: '800',
-                letterSpacing: '-0.02em',
-                marginBottom: '1rem',
-              }}
-            >
-              {study.title}
-            </h1>
-
-            <p
-              style={{
-                color: 'var(--foreground)',
-                fontSize: '1.1rem',
-                lineHeight: 1.7,
-                maxWidth: '620px',
-                marginBottom: '2.5rem',
-              }}
-            >
-              {study.tagline}
-            </p>
-
             {/* Metrics */}
-            <div
-              style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fill, minmax(130px, 1fr))',
-                gap: '1rem',
-                marginBottom: '2rem',
-              }}
-            >
-              {study.metrics.map((m) => (
-                <div
-                  key={m.label}
-                  style={{
-                    background: 'var(--card)',
-                    border: '1px solid var(--card-border)',
-                    borderRadius: '0.75rem',
-                    padding: '1rem 1.25rem',
-                  }}
-                >
-                  <p style={{ fontSize: '1.75rem', fontWeight: '800', color: 'var(--accent)', lineHeight: 1 }}>
-                    {m.value}
-                  </p>
-                  <p style={{ fontSize: '0.7rem', color: 'var(--muted)', marginTop: '0.3rem' }}>{m.sub}</p>
-                  <p style={{ fontSize: '0.72rem', color: 'var(--muted)', marginTop: '0.15rem' }}>{m.label}</p>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: '1rem', marginBottom: '2rem' }}>
+              {study.metrics.map(m => (
+                <div key={m.label} style={{ background: 'var(--card)', border: '1px solid var(--card-border)', borderRadius: '8px', padding: '1rem 1.25rem' }}>
+                  <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '1.75rem', fontWeight: 800, color: ACCENT, lineHeight: 1, margin: 0 }}>{m.value}</p>
+                  <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: '0.72rem', color: 'var(--muted)', marginTop: '0.3rem', lineHeight: 1.5 }}>{m.sub}</p>
+                  <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.65rem', color: 'var(--muted)', marginTop: '0.2rem', letterSpacing: '0.06em', textTransform: 'uppercase' }}>{m.label}</p>
                 </div>
               ))}
             </div>
 
             {/* Links */}
-            <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
-              {study.liveUrl && (
-                <a href={study.liveUrl} target="_blank" rel="noopener noreferrer" className="btn-primary">
+            {study.liveUrl && (
+              <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+                <a
+                  href={study.liveUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: '0.45rem', padding: '0.65rem 1.4rem', background: ACCENT, color: '#fff', border: `2px solid ${ACCENT}`, borderRadius: '6px', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.82rem', textDecoration: 'none', letterSpacing: '0.04em', transition: 'background 0.2s, border-color 0.2s' }}
+                  onMouseEnter={e => { e.currentTarget.style.background = '#9a0093'; e.currentTarget.style.borderColor = '#9a0093'; }}
+                  onMouseLeave={e => { e.currentTarget.style.background = ACCENT; e.currentTarget.style.borderColor = ACCENT; }}
+                >
                   Visit site
-                  <svg width="13" height="13" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.8">
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.8">
                     <path d="M2 2h8v8M2 10 10 2" strokeLinecap="round" />
                   </svg>
                 </a>
-              )}
-            </div>
+              </div>
+            )}
           </motion.div>
         </div>
       </section>
 
       {/* Body */}
-      <section style={{ padding: '4rem 0' }}>
-        <div className="container" style={{ maxWidth: '760px' }}>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.15 }}
-          >
-            <h2
-              style={{
-                fontSize: '1.35rem',
-                fontWeight: '700',
-                marginBottom: '1.25rem',
-                paddingBottom: '0.75rem',
-                borderBottom: '1px solid var(--card-border)',
-              }}
-            >
-              Overview
-            </h2>
-            <p style={{ color: 'var(--muted)', lineHeight: 1.8, fontSize: '0.975rem', marginBottom: '3rem' }}>
-              {study.overview}
-            </p>
+      <section style={{ padding: '0 max(2rem, 7vw) 5rem' }}>
+        <div style={{ maxWidth: '760px', margin: '0 auto' }}>
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.15 }}>
 
-            <h2
-              style={{
-                fontSize: '1.35rem',
-                fontWeight: '700',
-                marginBottom: '1.25rem',
-                paddingBottom: '0.75rem',
-                borderBottom: '1px solid var(--card-border)',
-              }}
-            >
-              The Problem
-            </h2>
-            <p style={{ color: 'var(--muted)', lineHeight: 1.8, fontSize: '0.975rem', marginBottom: '3rem' }}>
-              {study.problem}
-            </p>
+            {/* Overview */}
+            <div style={{ marginBottom: '3rem' }}>
+              <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.7rem', color: ACCENT, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.75rem' }}>Overview</p>
+              <p style={{ fontFamily: "'Lora', Georgia, serif", color: 'var(--muted)', lineHeight: 1.8, fontSize: '0.975rem' }}>{study.overview}</p>
+            </div>
 
-            {/* Sections accordion */}
-            <h2
-              style={{
-                fontSize: '1.35rem',
-                fontWeight: '700',
-                marginBottom: '1.5rem',
-                paddingBottom: '0.75rem',
-                borderBottom: '1px solid var(--card-border)',
-              }}
-            >
-              How It Came Together
-            </h2>
+            {/* The Problem */}
+            <div style={{ marginBottom: '3rem' }}>
+              <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.7rem', color: ACCENT, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.75rem' }}>The Problem</p>
+              <p style={{ fontFamily: "'Lora', Georgia, serif", color: 'var(--muted)', lineHeight: 1.8, fontSize: '0.975rem' }}>{study.problem}</p>
+            </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginBottom: '3rem' }}>
-              {study.sections.map((section, idx) => (
-                <details
-                  key={section.title}
-                  open={idx === 0}
-                  style={{
-                    background: 'var(--card)',
-                    border: '1px solid var(--card-border)',
-                    borderRadius: '0.75rem',
-                    overflow: 'hidden',
-                  }}
-                >
-                  <summary
-                    style={{
-                      padding: '1rem 1.5rem',
-                      cursor: 'pointer',
-                      fontWeight: '600',
-                      fontSize: '0.95rem',
-                      color: 'var(--foreground)',
-                      listStyle: 'none',
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                      userSelect: 'none',
-                    }}
+            {/* How it came together */}
+            <div style={{ marginBottom: '3rem' }}>
+              <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.7rem', color: ACCENT, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '1rem' }}>How It Came Together</p>
+              <div style={{ display: 'flex', flexDirection: 'column', border: '1px solid var(--card-border)', borderRadius: '12px', overflow: 'hidden' }}>
+                {study.sections.map((section, idx) => (
+                  <details
+                    key={section.title}
+                    open={idx === 0}
+                    style={{ borderBottom: idx < study.sections.length - 1 ? '1px solid var(--card-border)' : 'none' }}
                   >
-                    <span>
-                      <span style={{ color: 'var(--accent)', marginRight: '0.5rem' }}>
-                        {String(idx + 1).padStart(2, '0')}.
+                    <summary style={{ padding: '1rem 1.25rem', cursor: 'pointer', listStyle: 'none', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'var(--card)', userSelect: 'none' }}>
+                      <span style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.65rem', color: ACCENT, letterSpacing: '0.06em' }}>{String(idx + 1).padStart(2, '0')}</span>
+                        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 700, fontSize: '0.82rem', color: 'var(--foreground)', letterSpacing: '0.04em' }}>{section.title}</span>
                       </span>
-                      {section.title}
-                    </span>
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 16 16"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      style={{ flexShrink: 0, opacity: 0.5 }}
-                    >
-                      <path d="M4 6l4 4 4-4" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </summary>
-                  <p
-                    style={{
-                      padding: '0 1.5rem 1.25rem',
-                      color: 'var(--muted)',
-                      fontSize: '0.9rem',
-                      lineHeight: 1.75,
-                    }}
-                  >
-                    {section.body}
-                  </p>
-                </details>
-              ))}
+                      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" style={{ flexShrink: 0, color: 'var(--muted)' }}>
+                        <path d="M4 6l4 4 4-4" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </summary>
+                    <p style={{ padding: '0.75rem 1.25rem 1.1rem', fontFamily: "'Lora', Georgia, serif", color: 'var(--muted)', fontSize: '0.9rem', lineHeight: 1.75, margin: 0 }}>
+                      {section.body}
+                    </p>
+                  </details>
+                ))}
+              </div>
             </div>
 
             {/* Testimonial */}
-            <blockquote
-              style={{
-                background: 'linear-gradient(135deg, rgba(109,40,217,0.08), rgba(109,40,217,0.04))',
-                border: '1px solid rgba(109,40,217,0.25)',
-                borderLeft: '4px solid var(--primary)',
-                borderRadius: '0.875rem',
-                padding: '1.75rem 2rem',
-                marginBottom: '3rem',
-              }}
-            >
-              <p
-                style={{
-                  fontSize: '1.05rem',
-                  lineHeight: 1.75,
-                  color: 'var(--foreground)',
-                  fontStyle: 'italic',
-                  marginBottom: '1rem',
-                }}
-              >
+            <blockquote style={{ border: `1px solid ${ACCENT}40`, borderLeft: `3px solid ${ACCENT}`, borderRadius: '8px', padding: '1.5rem 1.75rem', marginBottom: '3rem', background: `${ACCENT}08` }}>
+              <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: '1rem', lineHeight: 1.8, color: 'var(--foreground)', fontStyle: 'italic', marginBottom: '0.75rem' }}>
                 &ldquo;{study.testimonialQuote}&rdquo;
               </p>
-              <footer style={{ color: 'var(--accent)', fontWeight: '600', fontSize: '0.875rem' }}>
+              <footer style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.75rem', color: ACCENT, letterSpacing: '0.06em' }}>
                 — {study.testimonialAuthor}
               </footer>
             </blockquote>
 
-            {/* Conclusion */}
-            <h2
-              style={{
-                fontSize: '1.35rem',
-                fontWeight: '700',
-                marginBottom: '1.25rem',
-                paddingBottom: '0.75rem',
-                borderBottom: '1px solid var(--card-border)',
-              }}
-            >
-              Takeaway
-            </h2>
-            <p style={{ color: 'var(--muted)', lineHeight: 1.8, fontSize: '0.975rem', marginBottom: '3rem' }}>
-              {study.conclusion}
-            </p>
+            {/* Takeaway */}
+            <div style={{ marginBottom: '3rem' }}>
+              <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.7rem', color: ACCENT, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.75rem' }}>Takeaway</p>
+              <p style={{ fontFamily: "'Lora', Georgia, serif", color: 'var(--muted)', lineHeight: 1.8, fontSize: '0.975rem' }}>{study.conclusion}</p>
+            </div>
 
-            <Link href="/case-studies" className="btn-outline">
+            <Link
+              href="/projects"
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', color: 'var(--muted)', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.75rem', letterSpacing: '0.06em', textDecoration: 'none', transition: 'color 0.15s' }}
+              onMouseEnter={e => e.currentTarget.style.color = ACCENT}
+              onMouseLeave={e => e.currentTarget.style.color = 'var(--muted)'}
+            >
               <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M13 8H3M7 4L3 8l4 4" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
               Back to case studies
             </Link>
+
           </motion.div>
         </div>
       </section>

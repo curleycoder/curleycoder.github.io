@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
-import { FiArrowRight, FiMoon, FiSun, FiCheck, FiGithub, FiLinkedin, FiDownload } from 'react-icons/fi';
+import { FiArrowRight, FiMoon, FiSun, FiCheck, FiGithub, FiLinkedin } from 'react-icons/fi';
 
 const ACCENT = '#BE00B5';
 
@@ -39,7 +39,7 @@ const TICKER = ['React', 'Next.js', 'Node.js', 'TypeScript', 'AI Chatbots', 'Acc
 function Marquee() {
   const c = useC();
   return (
-    <div style={{ overflow: 'hidden', borderTop: `1px solid ${c.border}`, padding: '0.9rem 0', transition: 'border-color 0.5s ease' }}>
+    <div style={{ overflow: 'hidden', borderTop: `1px solid ${c.border}`, borderBottom: `1px solid ${c.border}`, padding: '0.9rem 0', transition: 'border-color 0.5s ease' }}>
       <div style={{ display: 'flex', width: 'max-content', animation: 'tickerMove 28s linear infinite' }}>
         {[0, 1].map(copy => (
           <span key={copy} style={{ display: 'flex', alignItems: 'center', gap: '0', whiteSpace: 'nowrap' }}>
@@ -120,15 +120,14 @@ function HeroSection() {
             >
               View selected work <FiArrowRight size={13} />
             </a>
-            <a
-              href="/resume.pdf"
-              download
+            <Link
+              href="/resume"
               style={{ display: 'inline-flex', alignItems: 'center', gap: '0.45rem', padding: '0.7rem 1.5rem', background: 'transparent', color: c.fg, border: `2px solid ${c.border}`, borderRadius: '4px', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.85rem', textDecoration: 'none', transition: 'border-color 0.2s, color 0.2s' }}
               onMouseEnter={e => { e.currentTarget.style.borderColor = ACCENT; e.currentTarget.style.color = ACCENT; }}
               onMouseLeave={e => { e.currentTarget.style.borderColor = c.border; e.currentTarget.style.color = c.fg; }}
             >
-              <FiDownload size={13} /> Download resume
-            </a>
+              View resume
+            </Link>
           </div>
 
           <div style={{ display: 'flex', gap: '0.65rem', flexWrap: 'wrap' }}>
@@ -150,20 +149,27 @@ function HeroSection() {
             >
               <FiLinkedin size={13} /> LinkedIn
             </a>
-            <Link
-              href="/projects"
-              style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.45rem 0.9rem', border: `1.5px solid ${c.border}`, borderRadius: '4px', color: c.sub, fontFamily: "'JetBrains Mono', monospace", fontSize: '0.76rem', textDecoration: 'none', letterSpacing: '0.06em', transition: 'border-color 0.2s, color 0.2s' }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = ACCENT; e.currentTarget.style.color = ACCENT; }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = c.border; e.currentTarget.style.color = c.sub; }}
-            >
-              All projects <FiArrowRight size={12} />
-            </Link>
           </div>
         </motion.div>
       </div>
 
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.85, duration: 0.6 }}>
         <Marquee />
+      </motion.div>
+
+      {/* Scroll indicator */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.1, duration: 0.6 }}
+        style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.4rem', padding: '2.5rem 0 1.5rem', cursor: 'default' }}
+      >
+        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.62rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--muted)' }}>scroll</span>
+        <motion.div
+          animate={{ y: [0, 6, 0] }}
+          transition={{ duration: 1.4, repeat: Infinity, ease: 'easeInOut' }}
+          style={{ width: '1px', height: '32px', background: `linear-gradient(to bottom, var(--muted), transparent)` }}
+        />
       </motion.div>
     </section>
   );
@@ -521,6 +527,8 @@ function AboutSection() {
               <div key={i} style={{ borderBottom: i < ABOUT_CARDS.length - 1 ? `1px solid ${c.border}` : 'none', transition: 'border-color 0.5s ease' }}>
                 <button
                   onClick={() => setOpen(open === i ? -1 : i)}
+                  aria-expanded={open === i}
+                  aria-controls={`about-panel-${i}`}
                   style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '1rem 1.25rem', background: open === i ? `${ACCENT}12` : c.card, border: 'none', cursor: 'pointer', textAlign: 'left', transition: 'background 0.2s ease' }}
                 >
                   <div>
@@ -534,6 +542,9 @@ function AboutSection() {
                   {open === i && (
                     <motion.div
                       key="body"
+                      id={`about-panel-${i}`}
+                      role="region"
+                      aria-label={card.label}
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: 'auto', opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
@@ -566,7 +577,7 @@ function ConnectSection() {
   const socials = [
     { label: 'GitHub',   href: 'https://github.com/curleycoder',            icon: <FiGithub size={14} /> },
     { label: 'LinkedIn', href: 'https://linkedin.com/in/shabnam-beiraghian', icon: <FiLinkedin size={14} /> },
-    { label: 'Resume',   href: '/resume',                                    icon: <FiArrowRight size={14} /> },
+    { label: 'View resume', href: '/resume',                                  icon: <FiArrowRight size={14} /> },
   ];
 
   return (
