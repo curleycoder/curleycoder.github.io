@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 
-const ACCENT = '#BE00B5';
+const ACCENT = '#7B40E0';
 
 export default function CaseStudyDetail({ study }) {
   return (
@@ -32,7 +32,7 @@ export default function CaseStudyDetail({ study }) {
             <h1 style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 800, fontSize: 'clamp(2rem, 5vw, 3.25rem)', lineHeight: 1.05, letterSpacing: '-0.02em', textTransform: 'uppercase', marginBottom: '1rem', color: 'var(--foreground)' }}>
               {study.title}
             </h1>
-            <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: '1.05rem', color: 'var(--dark-text)', lineHeight: 1.75, maxWidth: '600px', marginBottom: '1.5rem' }}>
+            <p style={{ fontFamily: "'Inter', system-ui, sans-serif", fontSize: '1.05rem', color: 'var(--dark-text)', lineHeight: 1.75, maxWidth: '600px', marginBottom: '1.5rem' }}>
               {study.tagline}
             </p>
 
@@ -50,7 +50,7 @@ export default function CaseStudyDetail({ study }) {
               {study.metrics.map(m => (
                 <div key={m.label} style={{ background: 'var(--card)', border: '1px solid var(--card-border)', borderRadius: '8px', padding: '1rem 1.25rem' }}>
                   <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '1.75rem', fontWeight: 800, color: ACCENT, lineHeight: 1, margin: 0 }}>{m.value}</p>
-                  <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: '0.72rem', color: 'var(--muted)', marginTop: '0.3rem', lineHeight: 1.5 }}>{m.sub}</p>
+                  <p style={{ fontFamily: "'Inter', system-ui, sans-serif", fontSize: '0.72rem', color: 'var(--muted)', marginTop: '0.3rem', lineHeight: 1.5 }}>{m.sub}</p>
                   <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.65rem', color: 'var(--muted)', marginTop: '0.2rem', letterSpacing: '0.06em', textTransform: 'uppercase' }}>{m.label}</p>
                 </div>
               ))}
@@ -64,7 +64,7 @@ export default function CaseStudyDetail({ study }) {
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{ display: 'inline-flex', alignItems: 'center', gap: '0.45rem', padding: '0.65rem 1.4rem', background: ACCENT, color: '#fff', border: `2px solid ${ACCENT}`, borderRadius: '6px', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.82rem', textDecoration: 'none', letterSpacing: '0.04em', transition: 'background 0.2s, border-color 0.2s' }}
-                  onMouseEnter={e => { e.currentTarget.style.background = '#9a0093'; e.currentTarget.style.borderColor = '#9a0093'; }}
+                  onMouseEnter={e => { e.currentTarget.style.background = '#6230C0'; e.currentTarget.style.borderColor = '#6230C0'; }}
                   onMouseLeave={e => { e.currentTarget.style.background = ACCENT; e.currentTarget.style.borderColor = ACCENT; }}
                 >
                   Visit site
@@ -86,13 +86,13 @@ export default function CaseStudyDetail({ study }) {
             {/* Overview */}
             <div style={{ marginBottom: '3rem' }}>
               <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.7rem', color: ACCENT, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.75rem' }}>Overview</p>
-              <p style={{ fontFamily: "'Lora', Georgia, serif", color: 'var(--muted)', lineHeight: 1.8, fontSize: '0.975rem' }}>{study.overview}</p>
+              <p style={{ fontFamily: "'Inter', system-ui, sans-serif", color: 'var(--muted)', lineHeight: 1.8, fontSize: '0.975rem' }}>{study.overview}</p>
             </div>
 
             {/* The Problem */}
             <div style={{ marginBottom: '3rem' }}>
               <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.7rem', color: ACCENT, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.75rem' }}>The Problem</p>
-              <p style={{ fontFamily: "'Lora', Georgia, serif", color: 'var(--muted)', lineHeight: 1.8, fontSize: '0.975rem' }}>{study.problem}</p>
+              <p style={{ fontFamily: "'Inter', system-ui, sans-serif", color: 'var(--muted)', lineHeight: 1.8, fontSize: '0.975rem' }}>{study.problem}</p>
             </div>
 
             {/* How it came together */}
@@ -114,7 +114,7 @@ export default function CaseStudyDetail({ study }) {
                         <path d="M4 6l4 4 4-4" strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
                     </summary>
-                    <p style={{ padding: '0.75rem 1.25rem 1.1rem', fontFamily: "'Lora', Georgia, serif", color: 'var(--muted)', fontSize: '0.9rem', lineHeight: 1.75, margin: 0 }}>
+                    <p style={{ padding: '0.75rem 1.25rem 1.1rem', fontFamily: "'Inter', system-ui, sans-serif", color: 'var(--muted)', fontSize: '0.9rem', lineHeight: 1.75, margin: 0 }}>
                       {section.body}
                     </p>
                   </details>
@@ -124,7 +124,7 @@ export default function CaseStudyDetail({ study }) {
 
             {/* Testimonial */}
             <blockquote style={{ border: `1px solid ${ACCENT}40`, borderLeft: `3px solid ${ACCENT}`, borderRadius: '8px', padding: '1.5rem 1.75rem', marginBottom: '3rem', background: `${ACCENT}08` }}>
-              <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: '1rem', lineHeight: 1.8, color: 'var(--foreground)', fontStyle: 'italic', marginBottom: '0.75rem' }}>
+              <p style={{ fontFamily: "'Inter', system-ui, sans-serif", fontSize: '1rem', lineHeight: 1.8, color: 'var(--foreground)', marginBottom: '0.75rem' }}>
                 &ldquo;{study.testimonialQuote}&rdquo;
               </p>
               <footer style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.75rem', color: ACCENT, letterSpacing: '0.06em' }}>
@@ -135,7 +135,7 @@ export default function CaseStudyDetail({ study }) {
             {/* Takeaway */}
             <div style={{ marginBottom: '3rem' }}>
               <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.7rem', color: ACCENT, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.75rem' }}>Takeaway</p>
-              <p style={{ fontFamily: "'Lora', Georgia, serif", color: 'var(--muted)', lineHeight: 1.8, fontSize: '0.975rem' }}>{study.conclusion}</p>
+              <p style={{ fontFamily: "'Inter', system-ui, sans-serif", color: 'var(--muted)', lineHeight: 1.8, fontSize: '0.975rem' }}>{study.conclusion}</p>
             </div>
 
             <Link

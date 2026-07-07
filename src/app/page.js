@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
 import { FiArrowRight, FiMoon, FiSun, FiCheck, FiGithub, FiLinkedin } from 'react-icons/fi';
 
-const ACCENT = '#BE00B5';
+const ACCENT = '#7B40E0';
 
 function useC() {
   return {
@@ -67,6 +67,7 @@ function HeroSection() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.08, duration: 0.55 }}
+          className="accent-glow"
           style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.95rem', color: ACCENT, margin: '0 0 1.25rem', cursor: 'default', letterSpacing: '0.04em' }}
         >
           // Full-Stack Developer
@@ -100,10 +101,10 @@ function HeroSection() {
           style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', maxWidth: '600px' }}
         >
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
-            <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: '1.05rem', color: c.fg, lineHeight: 1.7, margin: 0, transition: 'color 0.5s ease' }}>
+            <p style={{ fontFamily: "'Inter', system-ui, sans-serif", fontSize: '1.05rem', color: c.fg, lineHeight: 1.7, margin: 0, transition: 'color 0.5s ease' }}>
               Building accessible web applications and AI tools that solve real business problems.
             </p>
-            <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: '0.92rem', color: c.sub, lineHeight: 1.7, margin: 0, transition: 'color 0.5s ease' }}>
+            <p style={{ fontFamily: "'Inter', system-ui, sans-serif", fontSize: '0.92rem', color: c.sub, lineHeight: 1.7, margin: 0, transition: 'color 0.5s ease' }}>
               Recent work includes a production booking platform, an AI front-desk assistant, and frontend systems for real users.
             </p>
             <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.78rem', color: c.muted, margin: 0, letterSpacing: '0.06em', transition: 'color 0.5s ease' }}>
@@ -115,7 +116,7 @@ function HeroSection() {
             <a
               href="#projects"
               style={{ display: 'inline-flex', alignItems: 'center', gap: '0.45rem', padding: '0.7rem 1.5rem', background: ACCENT, color: '#fff', border: `2px solid ${ACCENT}`, borderRadius: '4px', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.85rem', textDecoration: 'none', transition: 'background 0.2s, border-color 0.2s' }}
-              onMouseEnter={e => { e.currentTarget.style.background = '#9a0093'; e.currentTarget.style.borderColor = '#9a0093'; }}
+              onMouseEnter={e => { e.currentTarget.style.background = '#6230C0'; e.currentTarget.style.borderColor = '#6230C0'; }}
               onMouseLeave={e => { e.currentTarget.style.background = ACCENT; e.currentTarget.style.borderColor = ACCENT; }}
             >
               View selected work <FiArrowRight size={13} />
@@ -228,7 +229,7 @@ function ProjectExplorer() {
     <section id="projects" style={{ padding: '3.5rem max(2rem, 7vw)', background: c.card, color: c.fg, transition: 'background 0.5s ease, color 0.5s ease' }}>
       <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
         <FadeIn>
-          <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.72rem', color: ACCENT, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.6rem' }}>// selected work</p>
+          <p className="accent-glow" style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.72rem', color: ACCENT, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.6rem' }}>// selected work</p>
           <h2 style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 800, fontSize: 'clamp(2rem, 5vw, 4rem)', lineHeight: 1.05, color: c.fg, textTransform: 'uppercase', letterSpacing: '-0.02em', margin: '0 0 2rem', transition: 'color 0.5s ease' }}>
             Built for<br /><span style={{ color: ACCENT }}>real users.</span>
           </h2>
@@ -265,26 +266,26 @@ function ProjectExplorer() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.3 }}
-              style={{ padding: '2rem', border: `1px solid ${c.border}`, borderRadius: '12px', background: c.card, transition: 'border-color 0.5s ease, background 0.5s ease' }}
+              style={{ padding: '2rem', border: `1px solid ${c.border}`, borderRadius: '12px', background: 'var(--background)', transition: 'border-color 0.5s ease, background 0.5s ease' }}
             >
-              <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.7rem', color: ACCENT, letterSpacing: '0.1em', textTransform: 'uppercase', margin: '0 0 0.35rem' }}>{project.type}</p>
+              <p className="accent-glow" style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.7rem', color: ACCENT, letterSpacing: '0.1em', textTransform: 'uppercase', margin: '0 0 0.35rem' }}>{project.type}</p>
               <h3 style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 800, fontSize: '1.6rem', color: c.fg, margin: '0 0 0.75rem', letterSpacing: '-0.01em', transition: 'color 0.5s ease' }}>{project.name}</h3>
-              <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: '0.95rem', color: c.sub, lineHeight: 1.7, margin: '0 0 1.5rem', transition: 'color 0.5s ease' }}>{project.outcome}</p>
+              <p style={{ fontFamily: "'Inter', system-ui, sans-serif", fontSize: '0.95rem', color: c.fg, lineHeight: 1.7, margin: '0 0 1.5rem', transition: 'color 0.5s ease' }}>{project.outcome}</p>
 
               <div className="project-cards" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1.5rem' }}>
-                <div style={{ padding: '1rem', border: `1px solid ${c.border}`, borderRadius: '8px', transition: 'border-color 0.5s ease' }}>
-                  <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.65rem', color: c.muted, letterSpacing: '0.09em', textTransform: 'uppercase', margin: '0 0 0.4rem' }}>Challenge</p>
-                  <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: '0.88rem', color: c.sub, lineHeight: 1.65, margin: 0, transition: 'color 0.5s ease' }}>{project.challenge}</p>
+                <div style={{ padding: '1rem', border: `1px solid ${c.border}`, borderRadius: '8px', background: 'var(--background)', transition: 'border-color 0.5s ease, background 0.5s ease' }}>
+                  <p className="accent-glow" style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.65rem', color: ACCENT, letterSpacing: '0.09em', textTransform: 'uppercase', margin: '0 0 0.4rem' }}>Challenge</p>
+                  <p style={{ fontFamily: "'Inter', system-ui, sans-serif", fontSize: '0.88rem', color: c.fg, lineHeight: 1.65, margin: 0, transition: 'color 0.5s ease' }}>{project.challenge}</p>
                 </div>
-                <div style={{ padding: '1rem', border: `1px solid ${c.border}`, borderRadius: '8px', transition: 'border-color 0.5s ease' }}>
-                  <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.65rem', color: c.muted, letterSpacing: '0.09em', textTransform: 'uppercase', margin: '0 0 0.4rem' }}>Engineering decision</p>
-                  <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: '0.88rem', color: c.sub, lineHeight: 1.65, margin: 0, transition: 'color 0.5s ease' }}>{project.decision}</p>
+                <div style={{ padding: '1rem', border: `1px solid ${c.border}`, borderRadius: '8px', background: 'var(--background)', transition: 'border-color 0.5s ease, background 0.5s ease' }}>
+                  <p className="accent-glow" style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.65rem', color: ACCENT, letterSpacing: '0.09em', textTransform: 'uppercase', margin: '0 0 0.4rem' }}>Engineering decision</p>
+                  <p style={{ fontFamily: "'Inter', system-ui, sans-serif", fontSize: '0.88rem', color: c.fg, lineHeight: 1.65, margin: 0, transition: 'color 0.5s ease' }}>{project.decision}</p>
                 </div>
               </div>
 
               <div style={{ display: 'flex', gap: '0.45rem', flexWrap: 'wrap', marginBottom: '1.5rem' }}>
                 {project.stack.map(tool => (
-                  <span key={tool} style={{ padding: '0.25rem 0.6rem', border: `1px solid ${c.border}`, borderRadius: '4px', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.7rem', color: c.muted, transition: 'border-color 0.5s ease, color 0.5s ease' }}>{tool}</span>
+                  <span key={tool} style={{ padding: '0.25rem 0.6rem', border: `1px solid ${c.border}`, borderRadius: '4px', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.7rem', color: c.fg, transition: 'border-color 0.5s ease, color 0.5s ease' }}>{tool}</span>
                 ))}
               </div>
 
@@ -340,14 +341,14 @@ function ChatSection() {
           <h2 style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 800, fontSize: 'clamp(2rem, 5vw, 4rem)', lineHeight: 1.05, color: c.fg, textTransform: 'uppercase', letterSpacing: '-0.02em', margin: '0 0 1.75rem', transition: 'color 0.5s ease' }}>
             Embedded<br /><span style={{ color: ACCENT }}>AI</span>
           </h2>
-          <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: '1rem', color: c.sub, lineHeight: 1.75, margin: '0 0 1.5rem', transition: 'color 0.5s ease' }}>
+          <p style={{ fontFamily: "'Inter', system-ui, sans-serif", fontSize: '1rem', color: c.sub, lineHeight: 1.75, margin: '0 0 1.5rem', transition: 'color 0.5s ease' }}>
             What got me into AI was watching a small business owner spend two hours answering the same five questions over email. I built a system to handle that automatically.
           </p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginBottom: '1.5rem' }}>
             {['Intent-based response flows', 'Knowledge-base retrieval', 'Booking and lead-routing logic', 'Human handoff for complex cases'].map(f => (
               <div key={f} style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
                 <FiCheck size={11} style={{ color: ACCENT, flexShrink: 0 }} />
-                <span style={{ fontFamily: "'Lora', Georgia, serif", fontSize: '0.95rem', color: c.sub, transition: 'color 0.5s ease' }}>{f}</span>
+                <span style={{ fontFamily: "'Inter', system-ui, sans-serif", fontSize: '0.95rem', color: c.sub, transition: 'color 0.5s ease' }}>{f}</span>
               </div>
             ))}
           </div>
@@ -367,7 +368,7 @@ function ChatSection() {
             <div style={{ padding: '1rem', minHeight: '160px', maxHeight: '210px', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
               {messages.map((m, i) => (
                 <div key={i} style={{ display: 'flex', justifyContent: m.from === 'user' ? 'flex-end' : 'flex-start' }}>
-                  <div style={{ maxWidth: '80%', padding: '0.55rem 0.9rem', borderRadius: m.from === 'user' ? '12px 12px 3px 12px' : '12px 12px 12px 3px', background: m.from === 'user' ? ACCENT : 'var(--chat-bubble-bg)', color: m.from === 'user' ? '#fff' : c.fg, fontFamily: "'Lora', Georgia, serif", fontSize: '0.88rem', lineHeight: 1.65, transition: 'background 0.5s ease, color 0.5s ease' }}>
+                  <div style={{ maxWidth: '80%', padding: '0.55rem 0.9rem', borderRadius: m.from === 'user' ? '12px 12px 3px 12px' : '12px 12px 12px 3px', background: m.from === 'user' ? ACCENT : 'var(--chat-bubble-bg)', color: m.from === 'user' ? '#fff' : c.fg, fontFamily: "'Inter', system-ui, sans-serif", fontSize: '0.88rem', lineHeight: 1.65, transition: 'background 0.5s ease, color 0.5s ease' }}>
                     {m.text}
                   </div>
                 </div>
@@ -402,6 +403,10 @@ function ChatSection() {
 function A11ySection() {
   const c = useC();
   const [isDark, setIsDark] = useState(false);
+  const [srAnnounced, setSrAnnounced] = useState(false);
+  const [srText, setSrText] = useState('');
+  const [lastFocus, setLastFocus] = useState(null);
+  const [focusMethod, setFocusMethod] = useState(null);
 
   useEffect(() => {
     setIsDark(document.documentElement.classList.contains('dark'));
@@ -418,48 +423,133 @@ function A11ySection() {
     setIsDark(next);
   };
 
-  const items = [
-    { label: 'Keyboard Navigation', desc: 'Every interaction reachable without a mouse.' },
-    { label: 'Screen Reader Support', desc: 'Semantic HTML and ARIA labels throughout.' },
-    { label: 'WCAG-aware Contrast', desc: 'Designed with contrast ratios that meet accessibility guidelines across all text.' },
-    { label: 'Reduced Motion', desc: 'Respects prefers-reduced-motion at OS level.' },
-  ];
+  const announce = () => {
+    const msg = 'Screen reader test: This portfolio is built with semantic HTML, ARIA labels, and full keyboard navigation throughout every page.';
+    setSrText(msg);
+    setSrAnnounced(true);
+    setTimeout(() => setSrAnnounced(false), 3500);
+  };
+
+  const cell = (right, bottom) => ({
+    padding: '1.5rem',
+    background: c.card,
+    borderRight: right ? `1px solid ${c.border}` : 'none',
+    borderBottom: bottom ? `1px solid ${c.border}` : 'none',
+    transition: 'background 0.5s ease, border-color 0.5s ease',
+  });
+
+  const cellTitle = (label) => (
+    <div style={{ display: 'flex', alignItems: 'center', gap: '0.55rem', marginBottom: '0.35rem' }}>
+      <FiCheck size={11} style={{ color: ACCENT, flexShrink: 0 }} />
+      <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.9rem', letterSpacing: '0.03em', color: c.fg, margin: 0, transition: 'color 0.5s ease' }}>{label}</p>
+    </div>
+  );
+
+  const cellDesc = (text) => (
+    <p style={{ fontFamily: "'Inter', system-ui, sans-serif", fontSize: '0.82rem', color: c.muted, margin: '0 0 0.85rem', lineHeight: 1.6, paddingLeft: '1.3rem', transition: 'color 0.5s ease' }}>{text}</p>
+  );
 
   return (
     <section style={{ padding: '3.5rem max(2rem, 7vw)', width: '100%', background: c.card, color: c.fg, transition: 'background 0.5s ease, color 0.5s ease' }}>
       <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
         <FadeIn>
-          <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: '3rem', flexWrap: 'wrap', gap: '2rem' }}>
-            <h2 style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 800, fontSize: 'clamp(2rem, 5.5vw, 4.5rem)', lineHeight: 1.05, color: c.fg, textTransform: 'uppercase', letterSpacing: '-0.02em', margin: 0, transition: 'color 0.5s ease' }}>
-              Built for<br /><span style={{ color: ACCENT }}>everyone.</span>
-            </h2>
-
-            <button
-              onClick={toggleDark}
-              aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-              style={{ display: 'inline-flex', alignItems: 'center', gap: '0.75rem', padding: '0.85rem 1.75rem', border: `2px solid ${c.border}`, borderRadius: '4px', background: 'transparent', color: c.fg, fontFamily: "'JetBrains Mono', monospace", fontSize: '0.85rem', cursor: 'pointer', transition: 'border-color 0.25s, color 0.25s, background 0.5s ease' }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = ACCENT; e.currentTarget.style.color = ACCENT; }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = c.border; e.currentTarget.style.color = c.fg; }}
-            >
-              {isDark ? <FiSun size={16} /> : <FiMoon size={16} />}
-              {isDark ? 'Switch to light' : 'Switch to dark'}
-            </button>
-          </div>
-
-          <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: '1rem', color: c.sub, maxWidth: '540px', lineHeight: 1.75, margin: '0 0 2.5rem', transition: 'color 0.5s ease' }}>
-            I build for everyone — regardless of ability, device, or environment. The toggle above is a live example. Every page I ship works in both themes.
+          <p className="accent-glow" style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.72rem', color: ACCENT, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.6rem' }}>// accessibility</p>
+          <h2 style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 800, fontSize: 'clamp(2rem, 5.5vw, 4.5rem)', lineHeight: 1.05, color: c.fg, textTransform: 'uppercase', letterSpacing: '-0.02em', margin: '0 0 0.85rem', transition: 'color 0.5s ease' }}>
+            Built for<br /><span style={{ color: ACCENT }}>everyone.</span>
+          </h2>
+          <p style={{ fontFamily: "'Inter', system-ui, sans-serif", fontSize: '1rem', color: c.sub, maxWidth: '520px', lineHeight: 1.75, margin: '0 0 2.5rem', transition: 'color 0.5s ease' }}>
+            I build for everyone — regardless of ability, device, or environment. Each cell below is a live demo.
           </p>
 
-          <div className="a11y-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1px', border: `1px solid ${c.border}`, borderRadius: '8px', overflow: 'hidden', transition: 'border-color 0.5s ease' }}>
-            {items.map((item, i) => (
-              <div key={item.label} style={{ padding: '1.5rem', background: c.card, borderRight: i % 2 === 0 ? `1px solid ${c.border}` : 'none', borderBottom: i < 2 ? `1px solid ${c.border}` : 'none', transition: 'background 0.5s ease, border-color 0.5s ease' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.55rem', marginBottom: '0.4rem' }}>
-                  <FiCheck size={11} style={{ color: ACCENT, flexShrink: 0 }} />
-                  <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '1.05rem', letterSpacing: '0.03em', color: c.fg, margin: 0, transition: 'color 0.5s ease' }}>{item.label}</p>
+          {/* Hidden aria-live region — read aloud by screen readers */}
+          <div aria-live="polite" aria-atomic="true" style={{ position: 'absolute', width: '1px', height: '1px', overflow: 'hidden', clip: 'rect(0,0,0,0)', whiteSpace: 'nowrap' }}>
+            {srText}
+          </div>
+
+          <div className="a11y-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', border: `1px solid ${c.border}`, borderRadius: '10px', overflow: 'hidden', transition: 'border-color 0.5s ease' }}>
+
+            {/* 1 — Keyboard navigation */}
+            <div style={cell(true, true)}>
+              {cellTitle('Keyboard Navigation')}
+              {cellDesc('Tab to each button and press Enter — the focus ring shows where you are without a mouse.')}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem', paddingLeft: '1.3rem' }}>
+                <div style={{ display: 'flex', gap: '0.45rem', flexWrap: 'wrap' }}>
+                  {['Action A', 'Action B', 'Action C'].map((label, i) => {
+                    const active = lastFocus === i;
+                    return (
+                      <button
+                        key={label}
+                        aria-label={`Keyboard demo button: ${label}`}
+                        onMouseDown={() => setFocusMethod('mouse')}
+                        onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') setFocusMethod('keyboard'); }}
+                        onClick={() => setLastFocus(lastFocus === i ? null : i)}
+                        style={{ padding: '0.28rem 0.65rem', border: `1.5px solid ${active ? ACCENT : c.border}`, borderRadius: '4px', background: active ? `${ACCENT}18` : 'transparent', color: active ? ACCENT : c.fg, fontFamily: "'JetBrains Mono', monospace", fontSize: '0.68rem', cursor: 'pointer', transition: 'all 0.2s' }}
+                      >
+                        {label}
+                      </button>
+                    );
+                  })}
                 </div>
-                <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: '0.9rem', color: c.sub, margin: 0, lineHeight: 1.7, paddingLeft: '1.3rem', transition: 'color 0.5s ease' }}>{item.desc}</p>
+                {lastFocus !== null && (
+                  <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.65rem', color: ACCENT, margin: 0, letterSpacing: '0.04em' }}>
+                    ✓ {['Action A', 'Action B', 'Action C'][lastFocus]} activated via {focusMethod}
+                  </p>
+                )}
               </div>
-            ))}
+            </div>
+
+            {/* 2 — Screen reader */}
+            <div style={cell(false, true)}>
+              {cellTitle('Screen Reader Support')}
+              {cellDesc('Press the button — screen readers announce it aloud. Sighted users see the transcript.')}
+              <div style={{ paddingLeft: '1.3rem' }}>
+                <button
+                  onClick={announce}
+                  aria-label="Trigger a screen reader announcement"
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: '0.45rem', padding: '0.32rem 0.8rem', border: `1.5px solid ${srAnnounced ? ACCENT : c.border}`, borderRadius: '4px', background: srAnnounced ? `${ACCENT}18` : 'transparent', color: srAnnounced ? ACCENT : c.fg, fontFamily: "'JetBrains Mono', monospace", fontSize: '0.7rem', cursor: 'pointer', transition: 'all 0.25s' }}
+                >
+                  <span style={{ fontSize: '0.65rem' }}>{srAnnounced ? '✓' : '▶'}</span>
+                  {srAnnounced ? 'Announced' : 'Trigger announcement'}
+                </button>
+                {srAnnounced && (
+                  <div style={{ marginTop: '0.6rem', padding: '0.55rem 0.75rem', border: `1px solid ${ACCENT}40`, borderRadius: '4px', background: `${ACCENT}0c` }}>
+                    <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.6rem', color: ACCENT, margin: '0 0 0.25rem', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Screen reader heard:</p>
+                    <p style={{ fontFamily: "'Inter', system-ui, sans-serif", fontSize: '0.75rem', color: c.fg, margin: 0, lineHeight: 1.55 }}>"{srText}"</p>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* 3 — Contrast / dark mode */}
+            <div style={cell(true, false)}>
+              {cellTitle('WCAG-aware Contrast')}
+              {cellDesc('Contrast ratios meet accessibility guidelines. Check both themes:')}
+              <div style={{ paddingLeft: '1.3rem' }}>
+                <button
+                  onClick={toggleDark}
+                  aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: '0.55rem', padding: '0.32rem 0.8rem', border: `1.5px solid ${c.border}`, borderRadius: '4px', background: 'transparent', color: c.fg, fontFamily: "'JetBrains Mono', monospace", fontSize: '0.7rem', cursor: 'pointer', transition: 'border-color 0.25s, color 0.25s, background 0.5s ease' }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = ACCENT; e.currentTarget.style.color = ACCENT; }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = c.border; e.currentTarget.style.color = c.fg; }}
+                >
+                  {isDark ? <FiSun size={12} /> : <FiMoon size={12} />}
+                  {isDark ? 'Switch to light' : 'Switch to dark'}
+                </button>
+              </div>
+            </div>
+
+            {/* 4 — Reduced motion */}
+            <div style={cell(false, false)}>
+              {cellTitle('Reduced Motion')}
+              {cellDesc('Animations pause automatically when OS motion preference is set:')}
+              <div style={{ paddingLeft: '1.3rem', display: 'flex', alignItems: 'center', gap: '0.7rem' }}>
+                <div className="a11y-pulse" style={{ width: '9px', height: '9px', borderRadius: '50%', background: ACCENT, flexShrink: 0 }} />
+                <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.65rem', color: c.muted, letterSpacing: '0.04em' }}>
+                  Pauses when reduce-motion is on
+                </span>
+              </div>
+            </div>
+
           </div>
         </FadeIn>
       </div>
@@ -503,7 +593,7 @@ function AboutSection() {
           <h2 style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 800, fontSize: 'clamp(2rem, 5vw, 4rem)', lineHeight: 1.05, color: c.fg, textTransform: 'uppercase', letterSpacing: '-0.02em', margin: '0 0 1.75rem', transition: 'color 0.5s ease' }}>
             Built to<br /><span style={{ color: ACCENT }}>ship.</span>
           </h2>
-          <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: '1rem', color: c.sub, lineHeight: 1.75, margin: '0 0 1.5rem', transition: 'color 0.5s ease' }}>
+          <p style={{ fontFamily: "'Inter', system-ui, sans-serif", fontSize: '1rem', color: c.sub, lineHeight: 1.75, margin: '0 0 1.5rem', transition: 'color 0.5s ease' }}>
             Full-stack developer with a background in architectural engineering. I build production systems — not prototypes.
           </p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.45rem' }}>
@@ -515,7 +605,7 @@ function AboutSection() {
             ].map(f => (
               <div key={f} style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
                 <FiCheck size={11} style={{ color: ACCENT, flexShrink: 0 }} />
-                <span style={{ fontFamily: "'Lora', Georgia, serif", fontSize: '0.92rem', color: c.sub, transition: 'color 0.5s ease' }}>{f}</span>
+                <span style={{ fontFamily: "'Inter', system-ui, sans-serif", fontSize: '0.92rem', color: c.sub, transition: 'color 0.5s ease' }}>{f}</span>
               </div>
             ))}
           </div>
@@ -533,7 +623,7 @@ function AboutSection() {
                 >
                   <div>
                     <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.82rem', fontWeight: 700, color: open === i ? ACCENT : c.fg, margin: 0, letterSpacing: '0.04em', transition: 'color 0.2s' }}>{card.label}</p>
-                    {open !== i && <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: '0.78rem', color: c.muted, margin: '0.15rem 0 0', transition: 'color 0.5s ease' }}>{card.hint}</p>}
+                    {open !== i && <p style={{ fontFamily: "'Inter', system-ui, sans-serif", fontSize: '0.78rem', color: c.muted, margin: '0.15rem 0 0', transition: 'color 0.5s ease' }}>{card.hint}</p>}
                   </div>
                   <span style={{ color: open === i ? ACCENT : c.muted, fontSize: '1rem', lineHeight: 1, transition: 'transform 0.25s, color 0.2s', transform: open === i ? 'rotate(45deg)' : 'rotate(0deg)', flexShrink: 0, marginLeft: '1rem' }}>+</span>
                 </button>
@@ -551,7 +641,7 @@ function AboutSection() {
                       transition={{ duration: 0.28, ease: 'easeInOut' }}
                       style={{ overflow: 'hidden' }}
                     >
-                      <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: '0.9rem', color: c.sub, lineHeight: 1.75, margin: 0, padding: '0 1.25rem 1.1rem', transition: 'color 0.5s ease' }}>{card.body}</p>
+                      <p style={{ fontFamily: "'Inter', system-ui, sans-serif", fontSize: '0.9rem', color: c.sub, lineHeight: 1.75, margin: 0, padding: '0 1.25rem 1.1rem', transition: 'color 0.5s ease' }}>{card.body}</p>
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -588,7 +678,7 @@ function ConnectSection() {
             Open for<br /><span style={{ color: ACCENT }}>new roles.</span>
           </h2>
 
-          <p style={{ fontFamily: "'Lora', Georgia, serif", fontSize: '1rem', color: c.sub, maxWidth: '500px', lineHeight: 1.75, margin: '0 0 3rem', transition: 'color 0.5s ease' }}>
+          <p style={{ fontFamily: "'Inter', system-ui, sans-serif", fontSize: '1rem', color: c.sub, maxWidth: '500px', lineHeight: 1.75, margin: '0 0 3rem', transition: 'color 0.5s ease' }}>
             Looking for a full-time position where I can build real products with a team that cares. Based in Vancouver — open to remote.
           </p>
 
@@ -599,7 +689,7 @@ function ConnectSection() {
                 href={href}
                 style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.75rem', background: primary ? ACCENT : 'transparent', color: primary ? '#fff' : c.fg, border: `2px solid ${primary ? ACCENT : c.border}`, borderRadius: '4px', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.85rem', textDecoration: 'none', letterSpacing: '0.04em', transition: 'background 0.2s, border-color 0.2s, color 0.2s' }}
                 onMouseEnter={e => {
-                  if (primary) { e.currentTarget.style.background = '#9a0093'; e.currentTarget.style.borderColor = '#9a0093'; }
+                  if (primary) { e.currentTarget.style.background = '#6230C0'; e.currentTarget.style.borderColor = '#6230C0'; }
                   else { e.currentTarget.style.borderColor = c.fg; }
                 }}
                 onMouseLeave={e => {

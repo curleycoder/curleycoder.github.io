@@ -2,7 +2,7 @@
 
 import { FiGithub, FiLinkedin } from 'react-icons/fi';
 
-const ACCENT = '#BE00B5';
+const ACCENT = '#7B40E0';
 
 const iconLinks = [
   { label: 'GitHub',   href: 'https://github.com/curleycoder',            icon: <FiGithub size={22} /> },

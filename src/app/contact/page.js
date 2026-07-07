@@ -39,7 +39,7 @@ export default function ContactPage() {
     border: '1px solid var(--card-border)',
     borderRadius: '6px',
     color: 'var(--foreground)',
-    fontFamily: "'Lora', Georgia, serif",
+    fontFamily: "'Inter', system-ui, sans-serif",
     fontSize: '0.92rem',
     outline: 'none',
     transition: 'border-color 0.2s',

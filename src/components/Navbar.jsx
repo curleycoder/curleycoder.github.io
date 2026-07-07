@@ -69,15 +69,16 @@ export default function Navbar() {
             display: 'inline-flex',
             alignItems: 'center',
             textDecoration: 'none',
-            color: '#BE00B5',
+            color: '#7B40E0',
           }}
         >
           <span
+            className="accent-glow"
             style={{
               fontWeight: '700',
               fontSize: '1.05rem',
               fontFamily: "'JetBrains Mono', monospace",
-              color: '#BE00B5',
+              color: '#7B40E0',
               letterSpacing: '-0.04em',
             }}
           >
@@ -120,8 +121,9 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
+                className={isActive ? 'accent-glow' : ''}
                 style={{
-                  color: isActive ? '#BE00B5' : 'var(--nav-link-color)',
+                  color: isActive ? '#7B40E0' : 'var(--nav-link-color)',
                   textDecoration: 'none',
                   fontSize: '1rem',
                   lineHeight: 1,
@@ -131,11 +133,11 @@ export default function Navbar() {
                   transition: 'color 0.2s ease, transform 0.2s ease',
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.color = '#BE00B5';
+                  e.currentTarget.style.color = '#7B40E0';
                   e.currentTarget.style.transform = 'translateY(-3px)';
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.color = isActive ? '#BE00B5' : 'var(--nav-link-color)';
+                  e.currentTarget.style.color = isActive ? '#7B40E0' : 'var(--nav-link-color)';
                   e.currentTarget.style.transform = 'translateY(0)';
                 }}
               >
@@ -154,7 +156,7 @@ export default function Navbar() {
               background: 'transparent', color: 'var(--nav-link-color)',
               cursor: 'pointer', transition: 'border-color 0.2s, color 0.2s',
             }}
-            onMouseEnter={e => { e.currentTarget.style.borderColor = '#BE00B5'; e.currentTarget.style.color = '#BE00B5'; }}
+            onMouseEnter={e => { e.currentTarget.style.borderColor = '#7B40E0'; e.currentTarget.style.color = '#7B40E0'; }}
             onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--nav-border-color)'; e.currentTarget.style.color = 'var(--nav-link-color)'; }}
           >
             {isDark ? <FiSun size={14} /> : <FiMoon size={14} />}
@@ -218,10 +220,11 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
+                className={isActive ? 'accent-glow' : ''}
                 style={{
                   display: 'block',
                   padding: '0.85rem 0',
-                  color: isActive ? '#BE00B5' : 'var(--nav-link-color)',
+                  color: isActive ? '#7B40E0' : 'var(--nav-link-color)',
                   textDecoration: 'none',
                   fontSize: '0.9rem',
                   fontFamily: "'JetBrains Mono', monospace",

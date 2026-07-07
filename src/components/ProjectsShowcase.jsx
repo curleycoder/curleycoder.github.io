@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { FiArrowRight, FiArrowLeft, FiExternalLink, FiGithub } from 'react-icons/fi';
 import { projects } from '@/data/projects';
 
-const ACCENT = '#BE00B5';
+const ACCENT = '#7B40E0';
 
 function ArrowBtn({ onClick, disabled, dir }) {
   return (
@@ -223,7 +223,7 @@ export default function ProjectsShowcase() {
               gap: '1rem', marginBottom: '2rem', minHeight: '1.4rem',
             }}>
               <span style={{
-                fontFamily: "'Lora', Georgia, serif", fontSize: '0.82rem',
+                fontFamily: "'Inter', system-ui, sans-serif", fontSize: '0.82rem',
                 color: 'var(--muted)', fontStyle: 'italic',
               }}>
                 {currentImage?.caption || ''}
@@ -268,7 +268,7 @@ export default function ProjectsShowcase() {
             </p>
 
             <p style={{
-              fontFamily: "'Lora', Georgia, serif", fontSize: '1rem',
+              fontFamily: "'Inter', system-ui, sans-serif", fontSize: '1rem',
               color: 'var(--dark-text)', lineHeight: 1.75, margin: '0 0 1.5rem',
               maxWidth: '640px',
             }}>
@@ -299,7 +299,7 @@ export default function ProjectsShowcase() {
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '0.45rem 1.5rem' }}>
                   {activeProject.highlights.slice(0, 6).map((h) => (
                     <span key={h} style={{
-                      fontFamily: "'Lora', Georgia, serif", fontSize: '0.85rem',
+                      fontFamily: "'Inter', system-ui, sans-serif", fontSize: '0.85rem',
                       color: 'var(--dark-text)', display: 'flex', alignItems: 'flex-start', gap: '0.4rem',
                     }}>
                       <span style={{ color: ACCENT, marginTop: '1px', flexShrink: 0 }}>↗</span>
@@ -325,7 +325,7 @@ export default function ProjectsShowcase() {
                     textDecoration: 'none', letterSpacing: '0.06em', textTransform: 'uppercase',
                     transition: 'background 0.2s, border-color 0.2s',
                   }}
-                  onMouseEnter={e => { e.currentTarget.style.background = '#9a0093'; e.currentTarget.style.borderColor = '#9a0093'; }}
+                  onMouseEnter={e => { e.currentTarget.style.background = '#6230C0'; e.currentTarget.style.borderColor = '#6230C0'; }}
                   onMouseLeave={e => { e.currentTarget.style.background = ACCENT; e.currentTarget.style.borderColor = ACCENT; }}
                 >
                   Live <FiExternalLink size={11} />
