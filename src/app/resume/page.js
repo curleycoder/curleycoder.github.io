@@ -134,6 +134,16 @@ export default function ResumePage() {
                 ]}
               />
               <ExperienceItem
+                title="Enumerator"
+                company="Statistics Canada"
+                period="JUN 2026 - JUL 2026"
+                bullets={[
+                  'Conducted door-to-door data collection for the national census across assigned geographic areas',
+                  'Ensured accurate and complete census responses from households within the designated enumeration area',
+                  'Handled sensitive personal data with confidentiality in compliance with Statistics Canada protocols',
+                ]}
+              />
+              <ExperienceItem
                 title="Customer Operations & Team Lead"
                 company="Lordco Auto Parts"
                 period="NOV 2019 – MAR 2025"
@@ -147,33 +157,23 @@ export default function ResumePage() {
             {/* Projects */}
             <Section title="Projects" delay={0.2}>
               <ExperienceItem
-                title="DEW AI Chatbot — Customer Interaction Tool"
+                title="DEW AI Assistant — AI Chatbot"
                 company=""
                 period="December 2025"
                 bullets={[
-                  'Built and deployed AI chatbot integrated into business websites',
-                  'Automated customer inquiries, improving response time and reducing manual workload',
+                  'Built and deployed an AI chatbot assistant integrated into business websites',
+                  'Automated customer inquiries with intent-based response flows and human escalation paths',
+                  'Reduced repetitive customer messages and improved response time for service businesses',
                 ]}
               />
               <ExperienceItem
-                title="Forge — Mobile Trade Career App"
-                company="Technical Manager & Full-Stack Developer · Team of 4"
-                period="September 2025"
+                title="Navly — Immigration Tracker"
+                company=""
+                period="2025"
                 bullets={[
-                  'Led technical direction as Technical Manager — translated Figma specs into engineering requirements and reviewed all pull requests before merge',
-                  'Built My Pathways and Explore Careers screens end-to-end, including AI-powered trade recommendations using Google GenAI SDK',
-                  'Owned the deployment pipeline and coordinated the final demo presentation across the team',
-                  'Backend built with Hono + Bun for high-speed performance; Redis-backed caching for mobile responsiveness',
-                ]}
-              />
-              <ExperienceItem
-                title="LendItOut — Peer-to-Peer Lending Platform"
-                company="Scrum Master & Full-Stack Developer · Team of 4"
-                period="April 2025"
-                bullets={[
-                  'Acted as Scrum Master — ran sprints, daily standups, and unblocked team throughout the project lifecycle',
-                  'Owned homepage, chat system, notifications, and product detail pages — handling frontend, backend, and database design for each feature',
-                  'Introduced a branching strategy mid-project that eliminated merge conflicts and taught the team professional collaboration on shared code',
+                  'Designed and launched an immigration tracking app to help users monitor application status, deadlines, and document requirements',
+                  'Built a clear dashboard with status timelines and deadline alerts to simplify a complex, stressful process',
+                  'Owned the full development lifecycle from concept to production deployment',
                 ]}
               />
             </Section>
@@ -188,40 +188,52 @@ export default function ResumePage() {
             {/* Education */}
             <Section title="Education" delay={0.3}>
               {[
-                { school: 'British Columbia Institute of Technology (BCIT)', program: 'Diploma of Full Stack Development' },
-                { school: 'Islamic Azad University', program: 'Bachelor of Architectural Engineering' },
+                { school: 'British Columbia Institute of Technology (BCIT)', program: 'Diploma of Full Stack Development', period: 'APR 2026' },
+                { school: 'Islamic Azad University', program: 'Bachelor of Architectural Engineering', period: 'JAN 2019' },
               ].map((edu) => (
-                <div key={edu.school} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.4rem', marginBottom: '0.875rem' }}>
-                  <div>
-                    <p style={{ fontWeight: '600', fontSize: '0.925rem' }}>{edu.school}</p>
-                    <p style={{ color: 'var(--muted)', fontSize: '0.85rem' }}>{edu.program}</p>
+                <div key={edu.school} style={{ marginBottom: '1.25rem' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', flexWrap: 'wrap', gap: '0.25rem', marginBottom: '0.35rem' }}>
+                    <span style={{ fontWeight: '700', fontSize: '0.95rem' }}>{edu.school}</span>
+                    <span style={{ color: 'var(--muted)', fontSize: '0.78rem', fontFamily: "'JetBrains Mono', monospace", flexShrink: 0 }}>{edu.period}</span>
                   </div>
+                  <ul style={{ paddingLeft: '1.1rem', margin: 0 }}>
+                    <li style={{ color: 'var(--muted)', fontSize: '0.88rem', lineHeight: 1.65 }}>{edu.program}</li>
+                  </ul>
                 </div>
               ))}
             </Section>
 
             {/* Volunteer */}
             <Section title="Volunteer" delay={0.35}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.4rem' }}>
-                <div>
-                  <span style={{ fontWeight: '600', fontSize: '0.925rem' }}>BCIT Women In Computing (WiC)</span>
-                  <span style={{ color: 'var(--accent)', fontSize: '0.9rem' }}> · Social Media Director</span>
+              {[
+                { org: 'BCIT Women In Computing (WiC)', role: 'Social Media Director', period: 'SEP 2025 – Present' },
+                { org: 'Web Summit Vancouver', role: 'Data Collection & Analytics', period: 'MAY 2025' },
+              ].map((v) => (
+                <div key={v.org} style={{ marginBottom: '1.25rem' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', flexWrap: 'wrap', gap: '0.25rem', marginBottom: '0.35rem' }}>
+                    <span style={{ fontWeight: '700', fontSize: '0.95rem' }}>{v.org}</span>
+                    <span style={{ color: 'var(--muted)', fontSize: '0.78rem', fontFamily: "'JetBrains Mono', monospace", flexShrink: 0 }}>{v.period}</span>
+                  </div>
+                  <ul style={{ paddingLeft: '1.1rem', margin: 0 }}>
+                    <li style={{ color: 'var(--muted)', fontSize: '0.88rem', lineHeight: 1.65 }}>{v.role}</li>
+                  </ul>
                 </div>
-                <span style={{ color: 'var(--muted)', fontSize: '0.78rem', fontFamily: "'JetBrains Mono', monospace" }}>SEP 2025 – Present</span>
-              </div>
+              ))}
             </Section>
 
             {/* Awards */}
             <Section title="Awards" delay={0.4}>
-              {[
-                { title: 'Pam and Jerry Bastien Bursary; BCIT Special Bursaries', period: 'March 2025' },
-                { title: 'PBCIT Legacy of Leadership Bursary', period: 'March 2026' },
-              ].map((award) => (
-                <div key={award.title} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.4rem', marginBottom: '0.75rem' }}>
-                  <span style={{ fontWeight: '600', fontSize: '0.925rem' }}>{award.title}</span>
-                  <span style={{ color: 'var(--muted)', fontSize: '0.78rem', fontFamily: "'JetBrains Mono', monospace", flexShrink: 0 }}>{award.period}</span>
-                </div>
-              ))}
+              <ul style={{ paddingLeft: '1.1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                {[
+                  { title: 'Pam and Jerry Bastien Bursary — BCIT Special Bursaries', period: 'March 2025' },
+                  { title: 'BCIT Legacy of Leadership Bursary', period: 'March 2026' },
+                ].map((award) => (
+                  <li key={award.title} style={{ color: 'var(--muted)', fontSize: '0.88rem', lineHeight: 1.65, display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.4rem' }}>
+                    <span style={{ color: 'var(--foreground)', fontWeight: '600' }}>{award.title}</span>
+                    <span style={{ color: 'var(--muted)', fontSize: '0.78rem', fontFamily: "'JetBrains Mono', monospace", flexShrink: 0 }}>{award.period}</span>
+                  </li>
+                ))}
+              </ul>
             </Section>
 
           </motion.div>
