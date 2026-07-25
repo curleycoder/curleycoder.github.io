@@ -115,6 +115,7 @@ function HeroSection() {
           <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', alignItems: 'center' }}>
             <a
               href="#projects"
+              onClick={e => { e.preventDefault(); document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' }); }}
               style={{ display: 'inline-flex', alignItems: 'center', gap: '0.45rem', padding: '0.7rem 1.5rem', background: ACCENT, color: '#fff', border: `2px solid ${ACCENT}`, borderRadius: '4px', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.85rem', textDecoration: 'none', transition: 'background 0.2s, border-color 0.2s' }}
               onMouseEnter={e => { e.currentTarget.style.background = '#6230C0'; e.currentTarget.style.borderColor = '#6230C0'; }}
               onMouseLeave={e => { e.currentTarget.style.background = ACCENT; e.currentTarget.style.borderColor = ACCENT; }}
