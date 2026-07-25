@@ -5,7 +5,8 @@ import Link from 'next/link';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
 import { FiArrowRight, FiMoon, FiSun, FiCheck, FiGithub, FiLinkedin } from 'react-icons/fi';
 
-const ACCENT = '#7B40E0';
+const ACCENT = '#435058';
+const LIME   = '#dcf763';
 
 function useC() {
   return {
@@ -39,13 +40,13 @@ const TICKER = ['React', 'Next.js', 'Node.js', 'TypeScript', 'AI Chatbots', 'Acc
 function Marquee() {
   const c = useC();
   return (
-    <div style={{ overflow: 'hidden', borderTop: `1px solid ${c.border}`, borderBottom: `1px solid ${c.border}`, padding: '0.9rem 0', transition: 'border-color 0.5s ease' }}>
+    <div style={{ overflow: 'hidden', borderTop: `1px solid ${c.border}`, borderBottom: `1px solid ${c.border}`, padding: '0.85rem 0', transition: 'border-color 0.5s ease' }}>
       <div style={{ display: 'flex', width: 'max-content', animation: 'tickerMove 28s linear infinite' }}>
         {[0, 1].map(copy => (
           <span key={copy} style={{ display: 'flex', alignItems: 'center', gap: '0', whiteSpace: 'nowrap' }}>
             {TICKER.map((item, i) => (
-              <span key={i} style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.68rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: c.muted, transition: 'color 0.5s ease' }}>
-                {item}<span style={{ color: ACCENT, margin: '0 1.5rem' }}>·</span>
+              <span key={i} style={{ fontFamily: "'Inter', system-ui, sans-serif", fontWeight: 500, fontSize: '0.72rem', letterSpacing: '0.06em', textTransform: 'uppercase', color: c.muted, transition: 'color 0.5s ease' }}>
+                {item}<span style={{ color: LIME, margin: '0 1.5rem', fontWeight: 700 }}>·</span>
               </span>
             ))}
           </span>
@@ -68,7 +69,7 @@ function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.08, duration: 0.55 }}
           className="accent-glow"
-          style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.95rem', color: ACCENT, margin: '0 0 1.25rem', cursor: 'default', letterSpacing: '0.04em' }}
+          style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.78rem', color: ACCENT, margin: '0 0 1.25rem', cursor: 'default', letterSpacing: '0.1em', textTransform: 'uppercase' }}
         >
           // Full-Stack Developer
         </motion.p>
@@ -88,9 +89,9 @@ function HeroSection() {
             initial={{ y: '104%' }}
             animate={{ y: 0 }}
             transition={{ delay: 0.2, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-            style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 800, fontSize: 'clamp(2rem, 8vw, 6.5rem)', lineHeight: 1, color: ACCENT, textTransform: 'uppercase', letterSpacing: '-0.03em', margin: 0 }}
+            style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 800, fontSize: 'clamp(2rem, 8vw, 6.5rem)', lineHeight: 1, color: c.fg, textTransform: 'uppercase', letterSpacing: '-0.03em', margin: 0 }}
           >
-            Beiraghian
+            <span style={{ borderBottom: `5px solid ${LIME}`, paddingBottom: '0.04em' }}>Beiraghian</span>
           </motion.h1>
         </div>
 
@@ -98,7 +99,7 @@ function HeroSection() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.6 }}
-          style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', maxWidth: '600px' }}
+          style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', maxWidth: '580px' }}
         >
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
             <p style={{ fontFamily: "'Inter', system-ui, sans-serif", fontSize: '1.05rem', color: c.fg, lineHeight: 1.7, margin: 0, transition: 'color 0.5s ease' }}>
@@ -107,49 +108,54 @@ function HeroSection() {
             <p style={{ fontFamily: "'Inter', system-ui, sans-serif", fontSize: '0.92rem', color: c.sub, lineHeight: 1.7, margin: 0, transition: 'color 0.5s ease' }}>
               Recent work includes a production booking platform, an AI front-desk assistant, and frontend systems for real users.
             </p>
-            <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.78rem', color: c.muted, margin: 0, letterSpacing: '0.06em', transition: 'color 0.5s ease' }}>
-              Vancouver, BC · Open to frontend and full-stack developer roles
+            {/* Location — Inter, full fg for WCAG contrast */}
+            <p style={{ fontFamily: "'Inter', system-ui, sans-serif", fontSize: '0.85rem', color: c.fg, margin: 0, transition: 'color 0.5s ease' }}>
+              Vancouver, BC · Open to frontend and full-stack roles
             </p>
           </div>
 
-          <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', alignItems: 'center' }}>
+          {/* Fix 3: single primary CTA + text link + icon-only socials */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', flexWrap: 'wrap' }}>
             <a
               href="#projects"
               onClick={e => { e.preventDefault(); document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' }); }}
-              style={{ display: 'inline-flex', alignItems: 'center', gap: '0.45rem', padding: '0.7rem 1.5rem', background: ACCENT, color: '#fff', border: `2px solid ${ACCENT}`, borderRadius: '4px', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.85rem', textDecoration: 'none', transition: 'background 0.2s, border-color 0.2s' }}
-              onMouseEnter={e => { e.currentTarget.style.background = '#6230C0'; e.currentTarget.style.borderColor = '#6230C0'; }}
-              onMouseLeave={e => { e.currentTarget.style.background = ACCENT; e.currentTarget.style.borderColor = ACCENT; }}
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.6rem', background: ACCENT, color: '#f1f2ee', border: `2px solid ${ACCENT}`, borderRadius: '4px', fontFamily: "'Inter', system-ui, sans-serif", fontWeight: 600, fontSize: '0.9rem', textDecoration: 'none', transition: 'background 0.2s, border-color 0.2s, color 0.2s' }}
+              onMouseEnter={e => { e.currentTarget.style.background = LIME; e.currentTarget.style.borderColor = LIME; e.currentTarget.style.color = ACCENT; }}
+              onMouseLeave={e => { e.currentTarget.style.background = ACCENT; e.currentTarget.style.borderColor = ACCENT; e.currentTarget.style.color = '#f1f2ee'; }}
             >
               View selected work <FiArrowRight size={13} />
             </a>
             <Link
               href="/resume"
-              style={{ display: 'inline-flex', alignItems: 'center', gap: '0.45rem', padding: '0.7rem 1.5rem', background: 'transparent', color: c.fg, border: `2px solid ${c.border}`, borderRadius: '4px', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.85rem', textDecoration: 'none', transition: 'border-color 0.2s, color 0.2s' }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = ACCENT; e.currentTarget.style.color = ACCENT; }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = c.border; e.currentTarget.style.color = c.fg; }}
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem', color: c.sub, fontFamily: "'Inter', system-ui, sans-serif", fontSize: '0.88rem', textDecoration: 'none', transition: 'color 0.2s' }}
+              onMouseEnter={e => { e.currentTarget.style.color = c.fg; }}
+              onMouseLeave={e => { e.currentTarget.style.color = c.sub; }}
             >
-              View resume
+              Resume <FiArrowRight size={12} />
             </Link>
           </div>
 
-          <div style={{ display: 'flex', gap: '0.65rem', flexWrap: 'wrap' }}>
+          {/* Icon-only social links */}
+          <div style={{ display: 'flex', gap: '0.5rem' }}>
             <a
               href="https://github.com/curleycoder"
               target="_blank" rel="noopener noreferrer"
-              style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.45rem 0.9rem', border: `1.5px solid ${c.border}`, borderRadius: '4px', color: c.sub, fontFamily: "'JetBrains Mono', monospace", fontSize: '0.76rem', textDecoration: 'none', letterSpacing: '0.06em', transition: 'border-color 0.2s, color 0.2s' }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = ACCENT; e.currentTarget.style.color = ACCENT; }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = c.border; e.currentTarget.style.color = c.sub; }}
+              aria-label="GitHub"
+              style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '36px', height: '36px', border: `1.5px solid ${c.border}`, borderRadius: '6px', color: c.sub, textDecoration: 'none', transition: 'border-color 0.2s, color 0.2s, background 0.2s' }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = LIME; e.currentTarget.style.background = LIME; e.currentTarget.style.color = ACCENT; }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = c.border; e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = c.sub; }}
             >
-              <FiGithub size={13} /> GitHub
+              <FiGithub size={15} />
             </a>
             <a
               href="https://linkedin.com/in/shabnam-beiraghian"
               target="_blank" rel="noopener noreferrer"
-              style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.45rem 0.9rem', border: `1.5px solid ${c.border}`, borderRadius: '4px', color: c.sub, fontFamily: "'JetBrains Mono', monospace", fontSize: '0.76rem', textDecoration: 'none', letterSpacing: '0.06em', transition: 'border-color 0.2s, color 0.2s' }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = ACCENT; e.currentTarget.style.color = ACCENT; }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = c.border; e.currentTarget.style.color = c.sub; }}
+              aria-label="LinkedIn"
+              style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '36px', height: '36px', border: `1.5px solid ${c.border}`, borderRadius: '6px', color: c.sub, textDecoration: 'none', transition: 'border-color 0.2s, color 0.2s, background 0.2s' }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = LIME; e.currentTarget.style.background = LIME; e.currentTarget.style.color = ACCENT; }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = c.border; e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = c.sub; }}
             >
-              <FiLinkedin size={13} /> LinkedIn
+              <FiLinkedin size={15} />
             </a>
           </div>
         </motion.div>
@@ -248,7 +254,7 @@ function ProjectExplorer() {
                   padding: '0.85rem 1rem 0.85rem 1.25rem', background: 'transparent',
                   border: 'none', borderLeft: `2px solid ${selected === index ? ACCENT : c.border}`,
                   color: selected === index ? ACCENT : c.muted,
-                  fontFamily: "'JetBrains Mono', monospace", fontSize: '0.82rem',
+                  fontFamily: "'Inter', system-ui, sans-serif", fontSize: '0.82rem',
                   cursor: 'pointer', textAlign: 'left', width: '100%',
                   transition: 'color 0.2s, border-color 0.2s',
                 }}
@@ -292,9 +298,9 @@ function ProjectExplorer() {
 
               <Link
                 href={project.link}
-                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', color: ACCENT, fontFamily: "'JetBrains Mono', monospace", fontSize: '0.8rem', textDecoration: 'none', letterSpacing: '0.04em', transition: 'opacity 0.2s' }}
-                onMouseEnter={e => e.currentTarget.style.opacity = '0.7'}
-                onMouseLeave={e => e.currentTarget.style.opacity = '1'}
+                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', color: ACCENT, fontFamily: "'Inter', system-ui, sans-serif", fontWeight: 600, fontSize: '0.82rem', textDecoration: 'none', transition: 'color 0.2s' }}
+                onMouseEnter={e => e.currentTarget.style.color = '#848c8e'}
+                onMouseLeave={e => e.currentTarget.style.color = ACCENT}
               >
                 {project.linkLabel} <FiArrowRight size={12} />
               </Link>
@@ -387,9 +393,9 @@ function ChatSection() {
             <div style={{ padding: '0.7rem', borderTop: `1px solid ${c.border}`, display: 'flex', gap: '0.4rem', flexWrap: 'wrap', transition: 'border-color 0.5s ease' }}>
               {Object.keys(BOT_QA).map(q => (
                 <button key={q} onClick={() => ask(q)} disabled={typing}
-                  style={{ padding: '0.28rem 0.7rem', borderRadius: '999px', border: `1.5px solid ${c.border}`, background: 'transparent', color: c.muted, fontFamily: "'JetBrains Mono', monospace", fontSize: '0.63rem', cursor: typing ? 'not-allowed' : 'pointer', opacity: typing ? 0.4 : 1, letterSpacing: '0.02em', transition: 'border-color 0.2s, color 0.2s, opacity 0.2s' }}
-                  onMouseEnter={e => { if (!typing) { e.currentTarget.style.borderColor = ACCENT; e.currentTarget.style.color = ACCENT; } }}
-                  onMouseLeave={e => { e.currentTarget.style.borderColor = c.border; e.currentTarget.style.color = c.muted; }}
+                  style={{ padding: '0.28rem 0.7rem', borderRadius: '999px', border: `1.5px solid ${c.border}`, background: 'transparent', color: c.muted, fontFamily: "'Inter', system-ui, sans-serif", fontSize: '0.63rem', cursor: typing ? 'not-allowed' : 'pointer', opacity: typing ? 0.4 : 1, letterSpacing: '0.02em', transition: 'border-color 0.2s, color 0.2s, background 0.2s, opacity 0.2s' }}
+                  onMouseEnter={e => { if (!typing) { e.currentTarget.style.borderColor = LIME; e.currentTarget.style.background = LIME; e.currentTarget.style.color = ACCENT; } }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = c.border; e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = c.muted; }}
                 >{q}</button>
               ))}
             </div>
@@ -484,7 +490,7 @@ function A11ySection() {
                         onMouseDown={() => setFocusMethod('mouse')}
                         onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') setFocusMethod('keyboard'); }}
                         onClick={() => setLastFocus(lastFocus === i ? null : i)}
-                        style={{ padding: '0.28rem 0.65rem', border: `1.5px solid ${active ? ACCENT : c.border}`, borderRadius: '4px', background: active ? `${ACCENT}18` : 'transparent', color: active ? ACCENT : c.fg, fontFamily: "'JetBrains Mono', monospace", fontSize: '0.68rem', cursor: 'pointer', transition: 'all 0.2s' }}
+                        style={{ padding: '0.28rem 0.65rem', border: `1.5px solid ${active ? LIME : c.border}`, borderRadius: '4px', background: active ? LIME : 'transparent', color: active ? ACCENT : c.fg, fontFamily: "'Inter', system-ui, sans-serif", fontSize: '0.68rem', cursor: 'pointer', transition: 'all 0.2s' }}
                       >
                         {label}
                       </button>
@@ -507,13 +513,13 @@ function A11ySection() {
                 <button
                   onClick={announce}
                   aria-label="Trigger a screen reader announcement"
-                  style={{ display: 'inline-flex', alignItems: 'center', gap: '0.45rem', padding: '0.32rem 0.8rem', border: `1.5px solid ${srAnnounced ? ACCENT : c.border}`, borderRadius: '4px', background: srAnnounced ? `${ACCENT}18` : 'transparent', color: srAnnounced ? ACCENT : c.fg, fontFamily: "'JetBrains Mono', monospace", fontSize: '0.7rem', cursor: 'pointer', transition: 'all 0.25s' }}
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: '0.45rem', padding: '0.32rem 0.8rem', border: `1.5px solid ${srAnnounced ? ACCENT : c.border}`, borderRadius: '4px', background: srAnnounced ? 'rgba(67,80,88,0.08)' : 'transparent', color: srAnnounced ? ACCENT : c.fg, fontFamily: "'Inter', system-ui, sans-serif", fontSize: '0.7rem', cursor: 'pointer', transition: 'all 0.25s' }}
                 >
                   <span style={{ fontSize: '0.65rem' }}>{srAnnounced ? '✓' : '▶'}</span>
                   {srAnnounced ? 'Announced' : 'Trigger announcement'}
                 </button>
                 {srAnnounced && (
-                  <div style={{ marginTop: '0.6rem', padding: '0.55rem 0.75rem', border: `1px solid ${ACCENT}40`, borderRadius: '4px', background: `${ACCENT}0c` }}>
+                  <div style={{ marginTop: '0.6rem', padding: '0.55rem 0.75rem', border: `1px solid rgba(67,80,88,0.25)`, borderRadius: '4px', background: 'rgba(67,80,88,0.04)' }}>
                     <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.6rem', color: ACCENT, margin: '0 0 0.25rem', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Screen reader heard:</p>
                     <p style={{ fontFamily: "'Inter', system-ui, sans-serif", fontSize: '0.75rem', color: c.fg, margin: 0, lineHeight: 1.55 }}>"{srText}"</p>
                   </div>
@@ -530,8 +536,8 @@ function A11ySection() {
                   onClick={toggleDark}
                   aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
                   style={{ display: 'inline-flex', alignItems: 'center', gap: '0.55rem', padding: '0.32rem 0.8rem', border: `1.5px solid ${c.border}`, borderRadius: '4px', background: 'transparent', color: c.fg, fontFamily: "'JetBrains Mono', monospace", fontSize: '0.7rem', cursor: 'pointer', transition: 'border-color 0.25s, color 0.25s, background 0.5s ease' }}
-                  onMouseEnter={e => { e.currentTarget.style.borderColor = ACCENT; e.currentTarget.style.color = ACCENT; }}
-                  onMouseLeave={e => { e.currentTarget.style.borderColor = c.border; e.currentTarget.style.color = c.fg; }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = LIME; e.currentTarget.style.background = LIME; e.currentTarget.style.color = ACCENT; }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = c.border; e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = c.fg; }}
                 >
                   {isDark ? <FiSun size={12} /> : <FiMoon size={12} />}
                   {isDark ? 'Switch to light' : 'Switch to dark'}
@@ -688,14 +694,14 @@ function ConnectSection() {
               <Link
                 key={label}
                 href={href}
-                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.75rem', background: primary ? ACCENT : 'transparent', color: primary ? '#fff' : c.fg, border: `2px solid ${primary ? ACCENT : c.border}`, borderRadius: '4px', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.85rem', textDecoration: 'none', letterSpacing: '0.04em', transition: 'background 0.2s, border-color 0.2s, color 0.2s' }}
+                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.75rem', background: primary ? ACCENT : 'transparent', color: primary ? '#f1f2ee' : c.fg, border: `2px solid ${primary ? ACCENT : c.border}`, borderRadius: '4px', fontFamily: "'Inter', system-ui, sans-serif", fontWeight: 600, fontSize: '0.9rem', textDecoration: 'none', transition: 'background 0.2s, border-color 0.2s, color 0.2s' }}
                 onMouseEnter={e => {
-                  if (primary) { e.currentTarget.style.background = '#6230C0'; e.currentTarget.style.borderColor = '#6230C0'; }
-                  else { e.currentTarget.style.borderColor = c.fg; }
+                  if (primary) { e.currentTarget.style.background = LIME; e.currentTarget.style.borderColor = LIME; e.currentTarget.style.color = ACCENT; }
+                  else { e.currentTarget.style.borderColor = ACCENT; e.currentTarget.style.color = ACCENT; }
                 }}
                 onMouseLeave={e => {
-                  if (primary) { e.currentTarget.style.background = ACCENT; e.currentTarget.style.borderColor = ACCENT; }
-                  else { e.currentTarget.style.borderColor = c.border; }
+                  if (primary) { e.currentTarget.style.background = ACCENT; e.currentTarget.style.borderColor = ACCENT; e.currentTarget.style.color = '#f1f2ee'; }
+                  else { e.currentTarget.style.borderColor = c.border; e.currentTarget.style.color = c.fg; }
                 }}
               >
                 {label} <FiArrowRight size={13} />
@@ -710,9 +716,9 @@ function ConnectSection() {
                 href={href}
                 target={href.startsWith('http') ? '_blank' : undefined}
                 rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.55rem 1.1rem', border: `1.5px solid ${c.border}`, borderRadius: '4px', color: c.sub, fontFamily: "'JetBrains Mono', monospace", fontSize: '0.76rem', textDecoration: 'none', letterSpacing: '0.06em', transition: 'border-color 0.2s, color 0.2s' }}
-                onMouseEnter={e => { e.currentTarget.style.borderColor = ACCENT; e.currentTarget.style.color = ACCENT; }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor = c.border; e.currentTarget.style.color = c.sub; }}
+                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.55rem 1.1rem', border: `1.5px solid ${c.border}`, borderRadius: '4px', color: c.sub, fontFamily: "'Inter', system-ui, sans-serif", fontSize: '0.82rem', textDecoration: 'none', transition: 'border-color 0.2s, color 0.2s, background 0.2s' }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = LIME; e.currentTarget.style.background = LIME; e.currentTarget.style.color = ACCENT; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = c.border; e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = c.sub; }}
               >
                 {icon} {label}
               </a>
