@@ -82,10 +82,23 @@ export default function ResumePage() {
                 </div>
               </div>
               <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', alignItems: 'flex-start' }}>
-                <a href="/resume.pdf" download className="btn-primary">
+                <a
+                  href="/resume.pdf"
+                  download
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.6rem', background: '#435058', color: '#f1f2ee', border: '2px solid #435058', borderRadius: '6px', fontFamily: "'Inter', system-ui, sans-serif", fontWeight: 600, fontSize: '0.9rem', textDecoration: 'none', transition: 'background 0.2s, border-color 0.2s, color 0.2s' }}
+                  onMouseEnter={e => { e.currentTarget.style.background = '#dcf763'; e.currentTarget.style.borderColor = '#dcf763'; e.currentTarget.style.color = '#435058'; }}
+                  onMouseLeave={e => { e.currentTarget.style.background = '#435058'; e.currentTarget.style.borderColor = '#435058'; e.currentTarget.style.color = '#f1f2ee'; }}
+                >
                   <FiDownload size={14} /> Download PDF
                 </a>
-                <a href="https://linkedin.com/in/shabnam-beiraghian" target="_blank" rel="noopener noreferrer" className="btn-outline">
+                <a
+                  href="https://linkedin.com/in/shabnam-beiraghian"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.6rem', background: 'transparent', color: 'var(--foreground)', border: '2px solid var(--card-border)', borderRadius: '6px', fontFamily: "'Inter', system-ui, sans-serif", fontWeight: 600, fontSize: '0.9rem', textDecoration: 'none', transition: 'border-color 0.2s, color 0.2s' }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = '#435058'; e.currentTarget.style.color = '#435058'; }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--card-border)'; e.currentTarget.style.color = 'var(--foreground)'; }}
+                >
                   <FiLinkedin size={14} /> LinkedIn
                 </a>
               </div>

@@ -3,10 +3,13 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
-import { FiArrowRight, FiMoon, FiSun, FiCheck, FiGithub, FiLinkedin } from 'react-icons/fi';
+import {
+  FiArrowRight, FiMoon, FiSun, FiCheck,
+  FiGithub, FiLinkedin, FiCode, FiZap, FiDatabase, FiCpu,
+} from 'react-icons/fi';
 
 const ACCENT = '#435058';
-const LIME   = '#dcf763';
+const LIME   = 'var(--lime)';
 
 function useC() {
   return {
@@ -56,108 +59,322 @@ function Marquee() {
   );
 }
 
+// ─── Typewriter Role ───────────────────────────────────────────────────────────
+const ROLES = ['Full-Stack Developer', 'AI Integrator', 'Frontend Engineer', 'Data Scientist'];
+
+function TypewriterRole() {
+  const [roleIdx, setRoleIdx] = useState(0);
+  const [text, setText] = useState('');
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [cursorOn, setCursorOn] = useState(true);
+
+  useEffect(() => {
+    const t = setInterval(() => setCursorOn(v => !v), 530);
+    return () => clearInterval(t);
+  }, []);
+
+  useEffect(() => {
+    const current = ROLES[roleIdx];
+    const atEnd = !isDeleting && text.length === current.length;
+    const delay = atEnd ? 1700 : isDeleting ? 45 : 90;
+    const timer = setTimeout(() => {
+      if (!isDeleting) {
+        if (text.length < current.length) setText(current.slice(0, text.length + 1));
+        else setIsDeleting(true);
+      } else {
+        if (text.length > 0) setText(current.slice(0, text.length - 1));
+        else { setIsDeleting(false); setRoleIdx(i => (i + 1) % ROLES.length); }
+      }
+    }, delay);
+    return () => clearTimeout(timer);
+  }, [text, isDeleting, roleIdx]);
+
+  return (
+    <span style={{ fontFamily: "'JetBrains Mono', monospace" }}>
+      {text}
+      <span style={{ color: LIME, opacity: cursorOn ? 1 : 0, fontWeight: 700, transition: 'opacity 0.05s' }}>|</span>
+    </span>
+  );
+}
+
+// ─── Terminal Card ─────────────────────────────────────────────────────────────
+const CODE_LINES = [
+  [{ t: 'const ',      c: '#89b4fa' }, { t: 'dev',              c: '#cba6f7' }, { t: ' = {',   c: 'var(--muted)' }],
+  [{ t: '  name',      c: 'var(--foreground)' }, { t: ': ',    c: 'var(--muted)' }, { t: '"Shabnam Beiraghian"', c: '#dcf763' }, { t: ',', c: 'var(--muted)' }],
+  [{ t: '  role',      c: 'var(--foreground)' }, { t: ': ',    c: 'var(--muted)' }, { t: '"Full-Stack + AI"',    c: '#dcf763' }, { t: ',', c: 'var(--muted)' }],
+  [{ t: '  stack',     c: 'var(--foreground)' }, { t: ': [',   c: 'var(--muted)' }],
+  [{ t: '    ',        c: 'var(--foreground)' }, { t: '"React"',      c: '#a6e3a1' }, { t: ', ', c: 'var(--muted)' }, { t: '"Next.js"',  c: '#a6e3a1' }, { t: ', ', c: 'var(--muted)' }, { t: '"Node"',      c: '#a6e3a1' }, { t: ',', c: 'var(--muted)' }],
+  [{ t: '    ',        c: 'var(--foreground)' }, { t: '"TypeScript"', c: '#a6e3a1' }, { t: ', ', c: 'var(--muted)' }, { t: '"Supabase"', c: '#a6e3a1' }, { t: ',', c: 'var(--muted)' }],
+  [{ t: '  ],',        c: 'var(--muted)' }],
+  [{ t: '  ai',        c: 'var(--foreground)' }, { t: ': [',   c: 'var(--muted)' }, { t: '"Groq"',   c: '#89dceb' }, { t: ', ', c: 'var(--muted)' }, { t: '"Gemini"', c: '#89dceb' }, { t: ', ', c: 'var(--muted)' }, { t: '"OpenAI"', c: '#89dceb' }, { t: '],', c: 'var(--muted)' }],
+  [{ t: '  shipped',   c: 'var(--foreground)' }, { t: ': ',    c: 'var(--muted)' }, { t: '5',         c: '#fab387' }, { t: ',  ', c: 'var(--muted)' }, { t: '// production projects', c: '#6c7086' }],
+  [{ t: '  location',  c: 'var(--foreground)' }, { t: ': ',    c: 'var(--muted)' }, { t: '"Vancouver, BC"',      c: '#dcf763' }, { t: ',', c: 'var(--muted)' }],
+  [{ t: '  status',    c: 'var(--foreground)' }, { t: ': ',    c: 'var(--muted)' }, { t: '"open to work"',       c: '#a6e3a1' }, { t: ',', c: 'var(--muted)' }],
+  [{ t: '}',           c: 'var(--muted)' }],
+];
+
+function TerminalCard() {
+  const c = useC();
+  const [visible, setVisible] = useState(0);
+  const [cursorOn, setCursorOn] = useState(true);
+
+  useEffect(() => {
+    const t = setInterval(() => setCursorOn(b => !b), 530);
+    return () => clearInterval(t);
+  }, []);
+
+  useEffect(() => {
+    // Start after the parent motion.div finishes fading in (0.45s delay + 0.85s duration)
+    const start = setTimeout(() => {
+      let i = 0;
+      const interval = setInterval(() => {
+        i++;
+        setVisible(i);
+        if (i >= CODE_LINES.length) clearInterval(interval);
+      }, 95);
+      return () => clearInterval(interval);
+    }, 650);
+    return () => clearTimeout(start);
+  }, []);
+
+  return (
+    <div
+      style={{
+        borderRadius: '14px',
+        overflow: 'hidden',
+        border: `1px solid ${c.border}`,
+        boxShadow: '0 24px 80px rgba(67,80,88,0.12), 0 4px 20px rgba(67,80,88,0.06)',
+        transition: 'border-color 0.5s ease, box-shadow 0.5s ease',
+      }}
+    >
+      {/* Title bar */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.8rem 1rem', background: ACCENT }}>
+        {['#ff5f57', '#febc2e', '#28c840'].map(bg => (
+          <div key={bg} style={{ width: '11px', height: '11px', borderRadius: '50%', background: bg, flexShrink: 0 }} />
+        ))}
+        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.65rem', color: 'rgba(241,242,238,0.5)', marginLeft: '0.45rem', letterSpacing: '0.04em', flex: 1 }}>
+          ~/portfolio/shabnam.js
+        </span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+          <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#28c840' }} />
+          <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.58rem', color: '#28c840', letterSpacing: '0.04em' }}>live</span>
+        </div>
+      </div>
+
+      {/* Code area */}
+      <div style={{ display: 'flex', background: '#1a1b26' }}>
+        {/* Line numbers */}
+        <div style={{ padding: '1rem 0.65rem 1rem 0.9rem', borderRight: '1px solid rgba(255,255,255,0.07)', minWidth: '2.6rem', userSelect: 'none' }}>
+          {CODE_LINES.map((_, i) => (
+            <div key={i} style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.7rem', lineHeight: 1.9, color: i < visible ? '#585b70' : 'transparent', textAlign: 'right' }}>
+              {i + 1}
+            </div>
+          ))}
+        </div>
+
+        {/* Code */}
+        <div style={{ padding: '1rem 1.1rem', flex: 1, overflowX: 'auto' }}>
+          {CODE_LINES.map((line, i) => (
+            <div
+              key={i}
+              style={{
+                fontFamily: "'JetBrains Mono', monospace",
+                fontSize: '0.73rem',
+                lineHeight: 1.9,
+                opacity: i < visible ? 1 : 0,
+                transition: i < visible ? 'opacity 0.18s ease' : 'none',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              {line.map((part, j) => (
+                <span key={j} style={{ color: part.c }}>{part.t}</span>
+              ))}
+              {i === visible - 1 && visible < CODE_LINES.length && (
+                <span style={{ color: LIME, opacity: cursorOn ? 1 : 0 }}>_</span>
+              )}
+            </div>
+          ))}
+          {visible >= CODE_LINES.length && (
+            <div style={{ height: '1.9em', display: 'flex', alignItems: 'center' }}>
+              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.73rem', color: LIME, opacity: cursorOn ? 1 : 0 }}>_</span>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Status bar */}
+      <div style={{ padding: '0.38rem 1rem', background: ACCENT, borderTop: `1px solid ${c.border}`, display: 'flex', gap: '1.5rem', transition: 'background 0.5s ease, border-color 0.5s ease' }}>
+        {['JS', 'Node 20', 'UTF-8', 'Prettier'].map(s => (
+          <span key={s} style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.58rem', color: c.muted, letterSpacing: '0.04em' }}>{s}</span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 // ─── 1. HERO ──────────────────────────────────────────────────────────────────
 function HeroSection() {
   const c = useC();
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 60);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   return (
-    <section style={{ minHeight: '100vh', width: '100%', background: c.bg, color: c.fg, display: 'flex', flexDirection: 'column', transition: 'background 0.5s ease, color 0.5s ease' }}>
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '7rem max(2rem, 7vw) 2.5rem', maxWidth: '1200px', margin: '0 auto', width: '100%' }}>
+    <section
+      style={{
+        minHeight: '100vh', width: '100%', background: c.bg, color: c.fg,
+        display: 'flex', flexDirection: 'column',
+        transition: 'background 0.5s ease, color 0.5s ease',
+        position: 'relative', overflow: 'hidden',
+      }}
+    >
+      {/* Dot grid background */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0,
+          backgroundImage: 'radial-gradient(circle, var(--card-border) 1px, transparent 1px)',
+          backgroundSize: '28px 28px',
+          opacity: 0.65,
+        }}
+      />
+      {/* Lime radial orb — top right */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: 'absolute', top: '-12%', right: '-6%',
+          width: '42vw', height: '42vw', maxWidth: '580px', maxHeight: '580px',
+          borderRadius: '50%',
+          background: 'radial-gradient(circle, rgba(220,247,99,0.1) 0%, transparent 68%)',
+          pointerEvents: 'none', zIndex: 0,
+        }}
+      />
 
-        <motion.p
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.08, duration: 0.55 }}
-          className="accent-glow"
-          style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.78rem', color: ACCENT, margin: '0 0 1.25rem', cursor: 'default', letterSpacing: '0.1em', textTransform: 'uppercase' }}
-        >
-          // Full-Stack Developer
-        </motion.p>
-
-        <div style={{ overflow: 'hidden' }}>
-          <motion.h1
-            initial={{ y: '104%' }}
-            animate={{ y: 0 }}
-            transition={{ delay: 0.12, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-            style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 800, fontSize: 'clamp(2rem, 8vw, 6.5rem)', lineHeight: 1, color: c.fg, textTransform: 'uppercase', letterSpacing: '-0.03em', margin: 0, transition: 'color 0.5s ease' }}
+      {/* 2-column content */}
+      <div
+        className="hero-inner-grid"
+        style={{
+          flex: 1, position: 'relative', zIndex: 1,
+          display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem',
+          padding: '7rem max(2rem, 5vw) 2.5rem',
+          maxWidth: '1200px', margin: '0 auto', width: '100%',
+          alignItems: 'center',
+        }}
+      >
+        {/* ── Left: Text ── */}
+        <div>
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.08, duration: 0.55 }}
+            style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.78rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', margin: '0 0 1.25rem', color: LIME }}
           >
-            Shabnam
-          </motion.h1>
-        </div>
-        <div style={{ overflow: 'hidden', marginBottom: '2.25rem' }}>
-          <motion.h1
-            initial={{ y: '104%' }}
-            animate={{ y: 0 }}
-            transition={{ delay: 0.2, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-            style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 800, fontSize: 'clamp(2rem, 8vw, 6.5rem)', lineHeight: 1, color: c.fg, textTransform: 'uppercase', letterSpacing: '-0.03em', margin: 0 }}
+            // Full-Stack · AI · Frontend
+          </motion.p>
+
+          <div style={{ overflow: 'hidden' }}>
+            <motion.h1
+              initial={{ y: '104%' }}
+              animate={{ y: 0 }}
+              transition={{ delay: 0.12, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+              style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 800, fontSize: 'clamp(2.5rem, 6vw, 5rem)', lineHeight: 1, color: c.fg, textTransform: 'uppercase', letterSpacing: '-0.03em', margin: 0, transition: 'color 0.5s ease' }}
+            >
+              Shabnam
+            </motion.h1>
+          </div>
+          <div style={{ overflow: 'hidden', marginBottom: '1.1rem' }}>
+            <motion.h1
+              initial={{ y: '104%' }}
+              animate={{ y: 0 }}
+              transition={{ delay: 0.2, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+              style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 800, fontSize: 'clamp(2.5rem, 6vw, 5rem)', lineHeight: 1, color: c.fg, textTransform: 'uppercase', letterSpacing: '-0.03em', margin: 0 }}
+            >
+              <span style={{ borderBottom: `4px solid ${LIME}`, paddingBottom: '0.04em' }}>Beiraghian</span>
+            </motion.h1>
+          </div>
+
+          {/* Typewriter role */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.38, duration: 0.5 }}
+            style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 'clamp(0.9rem, 1.8vw, 1.15rem)', color: c.muted, marginBottom: '1.5rem', minHeight: '1.7em', transition: 'color 0.5s ease' }}
           >
-            <span style={{ borderBottom: `5px solid ${LIME}`, paddingBottom: '0.04em' }}>Beiraghian</span>
-          </motion.h1>
+            <TypewriterRole />
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5, duration: 0.6 }}
+            style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', maxWidth: '500px' }}
+          >
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+              <p style={{ fontFamily: "'Inter', system-ui, sans-serif", fontSize: '1rem', color: c.fg, lineHeight: 1.7, margin: 0, transition: 'color 0.5s ease' }}>
+                Building accessible web applications and AI tools that solve real business problems.
+              </p>
+              <p style={{ fontFamily: "'Inter', system-ui, sans-serif", fontSize: '0.88rem', color: c.sub, lineHeight: 1.65, margin: 0, transition: 'color 0.5s ease' }}>
+                Recent work includes a production booking platform, an AI front-desk assistant, and frontend systems for real users.
+              </p>
+              <p style={{ fontFamily: "'Inter', system-ui, sans-serif", fontSize: '0.85rem', color: c.fg, margin: 0, transition: 'color 0.5s ease' }}>
+                Vancouver, BC · Open to frontend and full-stack roles
+              </p>
+            </div>
+
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', flexWrap: 'wrap' }}>
+              <a
+                href="#projects"
+                onClick={e => { e.preventDefault(); document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' }); }}
+                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.6rem', background: ACCENT, color: '#f1f2ee', border: `2px solid ${ACCENT}`, borderRadius: '6px', fontFamily: "'Inter', system-ui, sans-serif", fontWeight: 600, fontSize: '0.9rem', textDecoration: 'none', transition: 'background 0.2s, border-color 0.2s, color 0.2s' }}
+                onMouseEnter={e => { e.currentTarget.style.background = LIME; e.currentTarget.style.borderColor = LIME; e.currentTarget.style.color = ACCENT; }}
+                onMouseLeave={e => { e.currentTarget.style.background = ACCENT; e.currentTarget.style.borderColor = ACCENT; e.currentTarget.style.color = '#f1f2ee'; }}
+              >
+                View selected work <FiArrowRight size={13} />
+              </a>
+              <Link
+                href="/resume"
+                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem', color: c.sub, fontFamily: "'Inter', system-ui, sans-serif", fontSize: '0.88rem', textDecoration: 'none', transition: 'color 0.2s' }}
+                onMouseEnter={e => { e.currentTarget.style.color = c.fg; }}
+                onMouseLeave={e => { e.currentTarget.style.color = c.sub; }}
+              >
+                Resume <FiArrowRight size={12} />
+              </Link>
+            </div>
+
+            <div style={{ display: 'flex', gap: '0.5rem' }}>
+              {[
+                { href: 'https://github.com/curleycoder', label: 'GitHub', icon: <FiGithub size={15} /> },
+                { href: 'https://linkedin.com/in/shabnam-beiraghian', label: 'LinkedIn', icon: <FiLinkedin size={15} /> },
+              ].map(({ href, label, icon }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '38px', height: '38px', border: `1.5px solid ${c.border}`, borderRadius: '8px', color: c.sub, textDecoration: 'none', transition: 'border-color 0.2s, color 0.2s, background 0.2s' }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = LIME; e.currentTarget.style.background = LIME; e.currentTarget.style.color = ACCENT; }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = c.border; e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = c.sub; }}
+                >
+                  {icon}
+                </a>
+              ))}
+            </div>
+          </motion.div>
         </div>
 
+        {/* ── Right: Terminal card ── */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5, duration: 0.6 }}
-          style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', maxWidth: '580px' }}
+          className="hero-terminal"
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.45, duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
         >
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
-            <p style={{ fontFamily: "'Inter', system-ui, sans-serif", fontSize: '1.05rem', color: c.fg, lineHeight: 1.7, margin: 0, transition: 'color 0.5s ease' }}>
-              Building accessible web applications and AI tools that solve real business problems.
-            </p>
-            <p style={{ fontFamily: "'Inter', system-ui, sans-serif", fontSize: '0.92rem', color: c.sub, lineHeight: 1.7, margin: 0, transition: 'color 0.5s ease' }}>
-              Recent work includes a production booking platform, an AI front-desk assistant, and frontend systems for real users.
-            </p>
-            {/* Location — Inter, full fg for WCAG contrast */}
-            <p style={{ fontFamily: "'Inter', system-ui, sans-serif", fontSize: '0.85rem', color: c.fg, margin: 0, transition: 'color 0.5s ease' }}>
-              Vancouver, BC · Open to frontend and full-stack roles
-            </p>
-          </div>
-
-          {/* Fix 3: single primary CTA + text link + icon-only socials */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', flexWrap: 'wrap' }}>
-            <a
-              href="#projects"
-              onClick={e => { e.preventDefault(); document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' }); }}
-              style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.6rem', background: ACCENT, color: '#f1f2ee', border: `2px solid ${ACCENT}`, borderRadius: '4px', fontFamily: "'Inter', system-ui, sans-serif", fontWeight: 600, fontSize: '0.9rem', textDecoration: 'none', transition: 'background 0.2s, border-color 0.2s, color 0.2s' }}
-              onMouseEnter={e => { e.currentTarget.style.background = LIME; e.currentTarget.style.borderColor = LIME; e.currentTarget.style.color = ACCENT; }}
-              onMouseLeave={e => { e.currentTarget.style.background = ACCENT; e.currentTarget.style.borderColor = ACCENT; e.currentTarget.style.color = '#f1f2ee'; }}
-            >
-              View selected work <FiArrowRight size={13} />
-            </a>
-            <Link
-              href="/resume"
-              style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem', color: c.sub, fontFamily: "'Inter', system-ui, sans-serif", fontSize: '0.88rem', textDecoration: 'none', transition: 'color 0.2s' }}
-              onMouseEnter={e => { e.currentTarget.style.color = c.fg; }}
-              onMouseLeave={e => { e.currentTarget.style.color = c.sub; }}
-            >
-              Resume <FiArrowRight size={12} />
-            </Link>
-          </div>
-
-          {/* Icon-only social links */}
-          <div style={{ display: 'flex', gap: '0.5rem' }}>
-            <a
-              href="https://github.com/curleycoder"
-              target="_blank" rel="noopener noreferrer"
-              aria-label="GitHub"
-              style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '36px', height: '36px', border: `1.5px solid ${c.border}`, borderRadius: '6px', color: c.sub, textDecoration: 'none', transition: 'border-color 0.2s, color 0.2s, background 0.2s' }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = LIME; e.currentTarget.style.background = LIME; e.currentTarget.style.color = ACCENT; }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = c.border; e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = c.sub; }}
-            >
-              <FiGithub size={15} />
-            </a>
-            <a
-              href="https://linkedin.com/in/shabnam-beiraghian"
-              target="_blank" rel="noopener noreferrer"
-              aria-label="LinkedIn"
-              style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '36px', height: '36px', border: `1.5px solid ${c.border}`, borderRadius: '6px', color: c.sub, textDecoration: 'none', transition: 'border-color 0.2s, color 0.2s, background 0.2s' }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = LIME; e.currentTarget.style.background = LIME; e.currentTarget.style.color = ACCENT; }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = c.border; e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = c.sub; }}
-            >
-              <FiLinkedin size={15} />
-            </a>
-          </div>
+          <TerminalCard />
         </motion.div>
       </div>
 
@@ -165,25 +382,24 @@ function HeroSection() {
         <Marquee />
       </motion.div>
 
-      {/* Scroll indicator */}
       <motion.div
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.1, duration: 0.6 }}
-        style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.4rem', padding: '2.5rem 0 1.5rem', cursor: 'default' }}
+        animate={{ opacity: scrolled ? 0 : 1 }}
+        transition={scrolled ? { duration: 0.3 } : { delay: 1.1, duration: 0.6 }}
+        style={{ position: 'fixed', bottom: '4rem', left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.4rem', cursor: 'default', zIndex: 50, pointerEvents: 'none' }}
       >
         <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.62rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--muted)' }}>scroll</span>
         <motion.div
           animate={{ y: [0, 6, 0] }}
           transition={{ duration: 1.4, repeat: Infinity, ease: 'easeInOut' }}
-          style={{ width: '1px', height: '32px', background: `linear-gradient(to bottom, var(--muted), transparent)` }}
+          style={{ width: '1px', height: '32px', background: 'linear-gradient(to bottom, var(--muted), transparent)' }}
         />
       </motion.div>
     </section>
   );
 }
 
-// ─── 2. PROJECT EXPLORER ──────────────────────────────────────────────────────
+// ─── 3. PROJECT EXPLORER ──────────────────────────────────────────────────────
 const PROJECTS = [
   {
     name: 'Elika Beauty',
@@ -231,41 +447,56 @@ function ProjectExplorer() {
   const c = useC();
   const [selected, setSelected] = useState(0);
   const project = PROJECTS[selected];
+  const detailRef = useRef(null);
+
+  const handleSelect = (index) => {
+    setSelected(index);
+    if (typeof window !== 'undefined' && window.innerWidth <= 760) {
+      setTimeout(() => {
+        detailRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }, 50);
+    }
+  };
 
   return (
-    <section id="projects" style={{ padding: '3.5rem max(2rem, 7vw)', background: c.card, color: c.fg, transition: 'background 0.5s ease, color 0.5s ease' }}>
+    <section id="projects" style={{ padding: '5rem max(2rem, 7vw)', background: c.card, color: c.fg, transition: 'background 0.5s ease, color 0.5s ease' }}>
       <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
         <FadeIn>
-          <p className="accent-glow" style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.72rem', color: ACCENT, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.6rem' }}>// selected work</p>
-          <h2 style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 800, fontSize: 'clamp(2rem, 5vw, 4rem)', lineHeight: 1.05, color: c.fg, textTransform: 'uppercase', letterSpacing: '-0.02em', margin: '0 0 2rem', transition: 'color 0.5s ease' }}>
-            Built for<br /><span style={{ color: ACCENT }}>real users.</span>
+          <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.6rem', color: LIME }}>// selected work</p>
+          <h2 style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 800, fontSize: 'clamp(2rem, 5vw, 4rem)', lineHeight: 1.05, color: c.fg, textTransform: 'uppercase', letterSpacing: '-0.02em', margin: '0 0 2.5rem', transition: 'color 0.5s ease' }}>
+            Built for<br /><span style={{ color: '#A0C20A' }}>real users.</span>
           </h2>
         </FadeIn>
 
         <div className="project-layout" style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: '3rem', alignItems: 'start' }}>
-          {/* Project list */}
+          {/* Sidebar list */}
           <div style={{ display: 'flex', flexDirection: 'column', position: 'sticky', top: '5rem' }}>
             {PROJECTS.map((item, index) => (
               <button
                 key={item.name}
-                onClick={() => setSelected(index)}
+                onClick={() => handleSelect(index)}
                 style={{
-                  position: 'relative', display: 'flex', alignItems: 'center', gap: '0.75rem',
-                  padding: '0.85rem 1rem 0.85rem 1.25rem', background: 'transparent',
-                  border: 'none', borderLeft: `2px solid ${selected === index ? ACCENT : c.border}`,
-                  color: selected === index ? ACCENT : c.muted,
+                  position: 'relative',
+                  display: 'flex', alignItems: 'center', gap: '0.75rem',
+                  padding: '0.85rem 1rem 0.85rem 1.25rem',
+                  border: 'none',
+                  borderLeft: `3px solid ${selected === index ? LIME : c.border}`,
+                  background: selected === index ? `rgba(220,247,99,0.07)` : 'transparent',
+                  color: selected === index ? c.fg : c.muted,
                   fontFamily: "'Inter', system-ui, sans-serif", fontSize: '0.82rem',
                   cursor: 'pointer', textAlign: 'left', width: '100%',
-                  transition: 'color 0.2s, border-color 0.2s',
+                  transition: 'color 0.2s, border-color 0.2s, background 0.2s',
+                  borderRadius: '0 6px 6px 0',
                 }}
               >
-                <span style={{ fontSize: '0.62rem', opacity: 0.55, flexShrink: 0 }}>0{index + 1}</span>
+                <span style={{ fontSize: '0.62rem', opacity: 0.5, flexShrink: 0, fontFamily: "'JetBrains Mono', monospace" }}>0{index + 1}</span>
                 {item.name}
               </button>
             ))}
           </div>
 
-          {/* Project detail */}
+          {/* Detail card */}
+          <div ref={detailRef}>
           <AnimatePresence mode="wait">
             <motion.div
               key={project.name}
@@ -273,26 +504,34 @@ function ProjectExplorer() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.3 }}
-              style={{ padding: '2rem', border: `1px solid ${c.border}`, borderRadius: '12px', background: 'var(--background)', transition: 'border-color 0.5s ease, background 0.5s ease' }}
+              style={{
+                padding: '2rem',
+                border: `1px solid ${c.border}`,
+                borderTop: `3px solid ${LIME}`,
+                borderRadius: '12px',
+                background: 'var(--background)',
+                transition: 'border-color 0.5s ease, background 0.5s ease',
+              }}
             >
               <p className="accent-glow" style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.7rem', color: ACCENT, letterSpacing: '0.1em', textTransform: 'uppercase', margin: '0 0 0.35rem' }}>{project.type}</p>
               <h3 style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 800, fontSize: '1.6rem', color: c.fg, margin: '0 0 0.75rem', letterSpacing: '-0.01em', transition: 'color 0.5s ease' }}>{project.name}</h3>
               <p style={{ fontFamily: "'Inter', system-ui, sans-serif", fontSize: '0.95rem', color: c.fg, lineHeight: 1.7, margin: '0 0 1.5rem', transition: 'color 0.5s ease' }}>{project.outcome}</p>
 
               <div className="project-cards" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1.5rem' }}>
-                <div style={{ padding: '1rem', border: `1px solid ${c.border}`, borderRadius: '8px', background: 'var(--background)', transition: 'border-color 0.5s ease, background 0.5s ease' }}>
-                  <p className="accent-glow" style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.65rem', color: ACCENT, letterSpacing: '0.09em', textTransform: 'uppercase', margin: '0 0 0.4rem' }}>Challenge</p>
-                  <p style={{ fontFamily: "'Inter', system-ui, sans-serif", fontSize: '0.88rem', color: c.fg, lineHeight: 1.65, margin: 0, transition: 'color 0.5s ease' }}>{project.challenge}</p>
-                </div>
-                <div style={{ padding: '1rem', border: `1px solid ${c.border}`, borderRadius: '8px', background: 'var(--background)', transition: 'border-color 0.5s ease, background 0.5s ease' }}>
-                  <p className="accent-glow" style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.65rem', color: ACCENT, letterSpacing: '0.09em', textTransform: 'uppercase', margin: '0 0 0.4rem' }}>Engineering decision</p>
-                  <p style={{ fontFamily: "'Inter', system-ui, sans-serif", fontSize: '0.88rem', color: c.fg, lineHeight: 1.65, margin: 0, transition: 'color 0.5s ease' }}>{project.decision}</p>
-                </div>
+                {[
+                  { label: 'Challenge', text: project.challenge },
+                  { label: 'Engineering decision', text: project.decision },
+                ].map(({ label, text }) => (
+                  <div key={label} style={{ padding: '1rem', border: `1px solid ${c.border}`, borderRadius: '8px', background: 'var(--background)', transition: 'border-color 0.5s ease, background 0.5s ease' }}>
+                    <p className="accent-glow" style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.65rem', color: ACCENT, letterSpacing: '0.09em', textTransform: 'uppercase', margin: '0 0 0.4rem' }}>{label}</p>
+                    <p style={{ fontFamily: "'Inter', system-ui, sans-serif", fontSize: '0.88rem', color: c.fg, lineHeight: 1.65, margin: 0, transition: 'color 0.5s ease' }}>{text}</p>
+                  </div>
+                ))}
               </div>
 
               <div style={{ display: 'flex', gap: '0.45rem', flexWrap: 'wrap', marginBottom: '1.5rem' }}>
                 {project.stack.map(tool => (
-                  <span key={tool} style={{ padding: '0.25rem 0.6rem', border: `1px solid ${c.border}`, borderRadius: '4px', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.7rem', color: c.fg, transition: 'border-color 0.5s ease, color 0.5s ease' }}>{tool}</span>
+                  <span key={tool} style={{ padding: '0.25rem 0.65rem', border: `1px solid ${c.border}`, borderRadius: '999px', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.7rem', color: c.fg, transition: 'border-color 0.5s ease, color 0.5s ease' }}>{tool}</span>
                 ))}
               </div>
 
@@ -306,13 +545,14 @@ function ProjectExplorer() {
               </Link>
             </motion.div>
           </AnimatePresence>
+          </div>
         </div>
       </div>
     </section>
   );
 }
 
-// ─── 3. AI & CHATBOTS ─────────────────────────────────────────────────────────
+// ─── 4. AI & CHATBOTS ─────────────────────────────────────────────────────────
 const BOT_QA = {
   'What do you build?':       'AI assistants for service businesses — FAQ automation, lead qualification, booking routing. Trained on your content, designed around your customer flow.',
   'Can it embed in my site?': 'Yes. Any stack — React, Next.js, WordPress, Webflow. Delivered as a script tag or component. No platform lock-in.',
@@ -326,7 +566,7 @@ function ChatSection() {
     { from: 'bot', text: "Hi — I'm a demo of the kind of AI assistant I build for service businesses. Ask me something." },
   ]);
   const [typing, setTyping] = useState(false);
-  const endRef = useRef(null);
+  const messagesRef = useRef(null);
 
   const ask = (q) => {
     if (typing) return;
@@ -338,15 +578,19 @@ function ChatSection() {
     }, 950);
   };
 
-  useEffect(() => { endRef.current?.scrollIntoView({ behavior: 'smooth' }); }, [messages, typing]);
+  useEffect(() => {
+    if (messagesRef.current) {
+      messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
+    }
+  }, [messages, typing]);
 
   return (
-    <section style={{ padding: '3.5rem max(2rem, 7vw)', width: '100%', background: c.bg, color: c.fg, transition: 'background 0.5s ease, color 0.5s ease' }}>
+    <section style={{ padding: '5rem max(2rem, 7vw)', width: '100%', background: c.bg, color: c.fg, transition: 'background 0.5s ease, color 0.5s ease' }}>
       <div className="chat-grid" style={{ maxWidth: '1100px', margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6rem', alignItems: 'center' }}>
-
         <FadeIn>
+          <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.6rem', color: LIME }}>// AI integration</p>
           <h2 style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 800, fontSize: 'clamp(2rem, 5vw, 4rem)', lineHeight: 1.05, color: c.fg, textTransform: 'uppercase', letterSpacing: '-0.02em', margin: '0 0 1.75rem', transition: 'color 0.5s ease' }}>
-            Embedded<br /><span style={{ color: ACCENT }}>AI</span>
+            Embedded<br /><span style={{ color: '#B0D50B' }}>AI</span>
           </h2>
           <p style={{ fontFamily: "'Inter', system-ui, sans-serif", fontSize: '1rem', color: c.sub, lineHeight: 1.75, margin: '0 0 1.5rem', transition: 'color 0.5s ease' }}>
             What got me into AI was watching a small business owner spend two hours answering the same five questions over email. I built a system to handle that automatically.
@@ -354,7 +598,7 @@ function ChatSection() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginBottom: '1.5rem' }}>
             {['Intent-based response flows', 'Knowledge-base retrieval', 'Booking and lead-routing logic', 'Human handoff for complex cases'].map(f => (
               <div key={f} style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-                <FiCheck size={11} style={{ color: ACCENT, flexShrink: 0 }} />
+                <FiCheck size={11} style={{ color: LIME, flexShrink: 0 }} />
                 <span style={{ fontFamily: "'Inter', system-ui, sans-serif", fontSize: '0.95rem', color: c.sub, transition: 'color 0.5s ease' }}>{f}</span>
               </div>
             ))}
@@ -362,17 +606,20 @@ function ChatSection() {
         </FadeIn>
 
         <FadeIn delay={0.1}>
-          <div style={{ border: `1px solid ${c.border}`, borderRadius: '12px', overflow: 'hidden', transition: 'border-color 0.5s ease' }}>
+          <div style={{ border: `1px solid ${c.border}`, borderTop: `3px solid ${LIME}`, borderRadius: '12px', overflow: 'hidden', transition: 'border-color 0.5s ease', boxShadow: '0 8px 40px rgba(67,80,88,0.08)' }}>
             {/* Chrome bar */}
             <div style={{ padding: '0.8rem 1.2rem', borderBottom: `1px solid ${c.border}`, display: 'flex', alignItems: 'center', gap: '0.55rem', background: c.card, transition: 'background 0.5s ease, border-color 0.5s ease' }}>
               <div style={{ display: 'flex', gap: '5px' }}>
                 {['#ff5f57','#febc2e','#28c840'].map(bg => <div key={bg} style={{ width: '10px', height: '10px', borderRadius: '50%', background: bg }} />)}
               </div>
-              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.68rem', color: c.muted, marginLeft: '0.2rem', transition: 'color 0.5s ease' }}>AI assistant prototype</span>
-              <div style={{ marginLeft: 'auto', width: '7px', height: '7px', borderRadius: '50%', background: '#28c840' }} />
+              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.68rem', color: c.muted, marginLeft: '0.2rem', transition: 'color 0.5s ease' }}>AI assistant · prototype</span>
+              <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+                <div style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#28c840' }} />
+                <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.6rem', color: '#28c840' }}>online</span>
+              </div>
             </div>
             {/* Messages */}
-            <div style={{ padding: '1rem', minHeight: '160px', maxHeight: '210px', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+            <div ref={messagesRef} style={{ padding: '1rem', minHeight: '160px', maxHeight: '210px', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
               {messages.map((m, i) => (
                 <div key={i} style={{ display: 'flex', justifyContent: m.from === 'user' ? 'flex-end' : 'flex-start' }}>
                   <div style={{ maxWidth: '80%', padding: '0.55rem 0.9rem', borderRadius: m.from === 'user' ? '12px 12px 3px 12px' : '12px 12px 12px 3px', background: m.from === 'user' ? ACCENT : 'var(--chat-bubble-bg)', color: m.from === 'user' ? '#fff' : c.fg, fontFamily: "'Inter', system-ui, sans-serif", fontSize: '0.88rem', lineHeight: 1.65, transition: 'background 0.5s ease, color 0.5s ease' }}>
@@ -387,7 +634,6 @@ function ChatSection() {
                   </div>
                 </div>
               )}
-              <div ref={endRef} />
             </div>
             {/* Chips */}
             <div style={{ padding: '0.7rem', borderTop: `1px solid ${c.border}`, display: 'flex', gap: '0.4rem', flexWrap: 'wrap', transition: 'border-color 0.5s ease' }}>
@@ -406,7 +652,99 @@ function ChatSection() {
   );
 }
 
-// ─── 4. ACCESSIBILITY ─────────────────────────────────────────────────────────
+// ─── 5. SKILLS BENTO ─────────────────────────────────────────────────────────
+const SKILL_GROUPS = [
+  {
+    icon: <FiCode size={17} />,
+    label: 'Frontend',
+    accent: '#89b4fa',
+    skills: ['React', 'Next.js', 'TypeScript', 'React Native', 'Tailwind CSS', 'Framer Motion', 'Accessibility (WCAG)'],
+  },
+  {
+    icon: <FiDatabase size={17} />,
+    label: 'Backend & Data',
+    accent: '#a6e3a1',
+    skills: ['Node.js', 'Express', 'Hono', 'PostgreSQL', 'MongoDB', 'Supabase', 'Redis', 'Drizzle ORM'],
+  },
+  {
+    icon: <FiCpu size={17} />,
+    label: 'AI & Integration',
+    accent: '#89dceb',
+    skills: ['OpenAI API', 'Google Gemini', 'Groq', 'Python', 'Prompt Engineering', 'Clerk', 'Auth0'],
+  },
+  {
+    icon: <FiZap size={17} />,
+    label: 'DevOps & Tools',
+    accent: LIME,
+    skills: ['Git', 'Vercel', 'Render', 'AWS S3', 'CI/CD', 'Figma', 'Bun', 'REST APIs'],
+  },
+];
+
+function SkillsSection() {
+  const c = useC();
+
+  return (
+    <section style={{ padding: '5rem max(2rem, 7vw)', background: c.card, transition: 'background 0.5s ease' }}>
+      <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
+        <FadeIn>
+          <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.6rem', color: LIME }}>// tech stack</p>
+          <h2 style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 800, fontSize: 'clamp(2rem, 5vw, 4rem)', lineHeight: 1.05, color: c.fg, textTransform: 'uppercase', letterSpacing: '-0.02em', margin: '0 0 2.5rem', transition: 'color 0.5s ease' }}>
+            Tools I<br /><span style={{ color: '#B0D50B' }}>ship with.</span>
+          </h2>
+        </FadeIn>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1rem' }} className="skills-bento">
+          {SKILL_GROUPS.map((group, i) => (
+            <FadeIn key={group.label} delay={i * 0.08}>
+              <div
+                className="skill-card-hover"
+                style={{
+                  padding: '1.75rem',
+                  border: `1px solid ${c.border}`,
+                  borderRadius: '16px',
+                  background: 'var(--background)',
+                  height: '100%',
+                  transition: 'border-color 0.25s ease, background 0.5s ease',
+                }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = group.accent + '70'; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = c.border; }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', marginBottom: '1.15rem' }}>
+                  <div style={{ color: group.accent, display: 'flex', alignItems: 'center', flexShrink: 0 }}>{group.icon}</div>
+                  <span style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 700, fontSize: '0.85rem', color: c.fg, textTransform: 'uppercase', letterSpacing: '0.07em', transition: 'color 0.5s ease' }}>{group.label}</span>
+                </div>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
+                  {group.skills.map(skill => (
+                    <span
+                      key={skill}
+                      style={{
+                        padding: '0.22rem 0.65rem',
+                        borderRadius: '999px',
+                        border: `1px solid ${c.border}`,
+                        color: c.muted,
+                        fontFamily: "'JetBrains Mono', monospace",
+                        fontSize: '0.7rem',
+                        letterSpacing: '0.02em',
+                        cursor: 'default',
+                        transition: 'border-color 0.2s, color 0.2s',
+                      }}
+                      onMouseEnter={e => { e.currentTarget.style.borderColor = group.accent; e.currentTarget.style.color = group.accent; }}
+                      onMouseLeave={e => { e.currentTarget.style.borderColor = c.border; e.currentTarget.style.color = c.muted; }}
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </FadeIn>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── 6. ACCESSIBILITY ─────────────────────────────────────────────────────────
 function A11ySection() {
   const c = useC();
   const [isDark, setIsDark] = useState(false);
@@ -448,7 +786,7 @@ function A11ySection() {
 
   const cellTitle = (label) => (
     <div style={{ display: 'flex', alignItems: 'center', gap: '0.55rem', marginBottom: '0.35rem' }}>
-      <FiCheck size={11} style={{ color: ACCENT, flexShrink: 0 }} />
+      <FiCheck size={11} style={{ color: LIME, flexShrink: 0 }} />
       <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.9rem', letterSpacing: '0.03em', color: c.fg, margin: 0, transition: 'color 0.5s ease' }}>{label}</p>
     </div>
   );
@@ -458,23 +796,22 @@ function A11ySection() {
   );
 
   return (
-    <section style={{ padding: '3.5rem max(2rem, 7vw)', width: '100%', background: c.card, color: c.fg, transition: 'background 0.5s ease, color 0.5s ease' }}>
+    <section style={{ padding: '5rem max(2rem, 7vw)', width: '100%', background: c.bg, color: c.fg, transition: 'background 0.5s ease, color 0.5s ease' }}>
       <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
         <FadeIn>
-          <p className="accent-glow" style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.72rem', color: ACCENT, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.6rem' }}>// accessibility</p>
+          <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.6rem', color: LIME }}>// accessibility</p>
           <h2 style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 800, fontSize: 'clamp(2rem, 5.5vw, 4.5rem)', lineHeight: 1.05, color: c.fg, textTransform: 'uppercase', letterSpacing: '-0.02em', margin: '0 0 0.85rem', transition: 'color 0.5s ease' }}>
-            Built for<br /><span style={{ color: ACCENT }}>everyone.</span>
+            Built for<br /><span style={{ color: '#B0D50B' }}>everyone.</span>
           </h2>
           <p style={{ fontFamily: "'Inter', system-ui, sans-serif", fontSize: '1rem', color: c.sub, maxWidth: '520px', lineHeight: 1.75, margin: '0 0 2.5rem', transition: 'color 0.5s ease' }}>
             I build for everyone — regardless of ability, device, or environment. Each cell below is a live demo.
           </p>
 
-          {/* Hidden aria-live region — read aloud by screen readers */}
           <div aria-live="polite" aria-atomic="true" style={{ position: 'absolute', width: '1px', height: '1px', overflow: 'hidden', clip: 'rect(0,0,0,0)', whiteSpace: 'nowrap' }}>
             {srText}
           </div>
 
-          <div className="a11y-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', border: `1px solid ${c.border}`, borderRadius: '10px', overflow: 'hidden', transition: 'border-color 0.5s ease' }}>
+          <div className="a11y-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', border: `1px solid ${c.border}`, borderTop: `3px solid ${LIME}`, borderRadius: '12px', overflow: 'hidden', transition: 'border-color 0.5s ease' }}>
 
             {/* 1 — Keyboard navigation */}
             <div style={cell(true, true)}>
@@ -537,15 +874,7 @@ function A11ySection() {
                   <button
                     onClick={toggleDark}
                     aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-                    style={{
-                      position: 'relative', display: 'flex', alignItems: 'center',
-                      width: '54px', height: '26px', borderRadius: '999px',
-                      border: `1.5px solid ${isDark ? 'rgba(132,140,142,0.35)' : '#bfb7b6'}`,
-                      background: isDark ? '#1c2529' : '#e8e9e5',
-                      cursor: 'pointer', padding: '2px',
-                      transition: 'background 0.45s ease, border-color 0.45s ease',
-                      overflow: 'hidden', flexShrink: 0,
-                    }}
+                    style={{ position: 'relative', display: 'flex', alignItems: 'center', width: '54px', height: '26px', borderRadius: '999px', border: `1.5px solid ${isDark ? 'rgba(132,140,142,0.35)' : '#bfb7b6'}`, background: isDark ? '#1c2529' : '#e8e9e5', cursor: 'pointer', padding: '2px', transition: 'background 0.45s ease, border-color 0.45s ease', overflow: 'hidden', flexShrink: 0 }}
                   >
                     {[{ left: '8px', top: '5px', size: 1.5 }, { left: '16px', top: '14px', size: 1 }, { left: '24px', top: '7px', size: 2 }].map((s, i) => (
                       <span key={i} aria-hidden="true" style={{ position: 'absolute', left: s.left, top: s.top, width: `${s.size}px`, height: `${s.size}px`, borderRadius: '50%', background: '#dcf763', opacity: isDark ? 1 : 0, transition: `opacity 0.3s ease ${i * 0.07}s`, pointerEvents: 'none' }} />
@@ -569,13 +898,12 @@ function A11ySection() {
               {cellTitle('Reduced Motion')}
               {cellDesc('Animations pause automatically when OS motion preference is set:')}
               <div style={{ paddingLeft: '1.3rem', display: 'flex', alignItems: 'center', gap: '0.7rem' }}>
-                <div className="a11y-pulse" style={{ width: '9px', height: '9px', borderRadius: '50%', background: ACCENT, flexShrink: 0 }} />
+                <div className="a11y-pulse" style={{ width: '9px', height: '9px', borderRadius: '50%', background: LIME, flexShrink: 0 }} />
                 <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.65rem', color: c.muted, letterSpacing: '0.04em' }}>
                   Pauses when reduce-motion is on
                 </span>
               </div>
             </div>
-
           </div>
         </FadeIn>
       </div>
@@ -583,7 +911,7 @@ function A11ySection() {
   );
 }
 
-// ─── 5. ABOUT ─────────────────────────────────────────────────────────────────
+// ─── 7. ABOUT ─────────────────────────────────────────────────────────────────
 const ABOUT_CARDS = [
   {
     label: 'My story',
@@ -612,12 +940,13 @@ function AboutSection() {
   const [open, setOpen] = useState(0);
 
   return (
-    <section style={{ padding: '3.5rem max(2rem, 7vw)', width: '100%', background: c.bg, color: c.fg, transition: 'background 0.5s ease, color 0.5s ease' }}>
+    <section style={{ padding: '5rem max(2rem, 7vw)', width: '100%', background: c.card, color: c.fg, transition: 'background 0.5s ease, color 0.5s ease' }}>
       <div className="chat-grid" style={{ maxWidth: '1100px', margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6rem', alignItems: 'center' }}>
 
         <FadeIn>
+          <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.6rem', color: LIME }}>// about</p>
           <h2 style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 800, fontSize: 'clamp(2rem, 5vw, 4rem)', lineHeight: 1.05, color: c.fg, textTransform: 'uppercase', letterSpacing: '-0.02em', margin: '0 0 1.75rem', transition: 'color 0.5s ease' }}>
-            Built to<br /><span style={{ color: ACCENT }}>ship.</span>
+            Built to<br /><span style={{ color: '#B0D50B' }}>ship.</span>
           </h2>
           <p style={{ fontFamily: "'Inter', system-ui, sans-serif", fontSize: '1rem', color: c.sub, lineHeight: 1.75, margin: '0 0 1.5rem', transition: 'color 0.5s ease' }}>
             Full-stack developer with a background in architectural engineering. I build production systems — not prototypes.
@@ -630,7 +959,7 @@ function AboutSection() {
               'Vancouver, BC · open to remote',
             ].map(f => (
               <div key={f} style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-                <FiCheck size={11} style={{ color: ACCENT, flexShrink: 0 }} />
+                <FiCheck size={11} style={{ color: LIME, flexShrink: 0 }} />
                 <span style={{ fontFamily: "'Inter', system-ui, sans-serif", fontSize: '0.92rem', color: c.sub, transition: 'color 0.5s ease' }}>{f}</span>
               </div>
             ))}
@@ -638,7 +967,7 @@ function AboutSection() {
         </FadeIn>
 
         <FadeIn delay={0.1}>
-          <div style={{ display: 'flex', flexDirection: 'column', border: `1px solid ${c.border}`, borderRadius: '12px', overflow: 'hidden', transition: 'border-color 0.5s ease' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', border: `1px solid ${c.border}`, borderTop: `3px solid ${LIME}`, borderRadius: '12px', overflow: 'hidden', transition: 'border-color 0.5s ease' }}>
             {ABOUT_CARDS.map((card, i) => (
               <div key={i} style={{ borderBottom: i < ABOUT_CARDS.length - 1 ? `1px solid ${c.border}` : 'none', transition: 'border-color 0.5s ease' }}>
                 <button
@@ -675,13 +1004,12 @@ function AboutSection() {
             ))}
           </div>
         </FadeIn>
-
       </div>
     </section>
   );
 }
 
-// ─── 6. CONNECT ───────────────────────────────────────────────────────────────
+// ─── 8. CONNECT ───────────────────────────────────────────────────────────────
 function ConnectSection() {
   const c = useC();
 
@@ -691,20 +1019,23 @@ function ConnectSection() {
   ];
 
   const socials = [
-    { label: 'GitHub',   href: 'https://github.com/curleycoder',            icon: <FiGithub size={14} /> },
-    { label: 'LinkedIn', href: 'https://linkedin.com/in/shabnam-beiraghian', icon: <FiLinkedin size={14} /> },
-    { label: 'View resume', href: '/resume',                                  icon: <FiArrowRight size={14} /> },
+    { label: 'GitHub',      href: 'https://github.com/curleycoder',            icon: <FiGithub size={14} /> },
+    { label: 'LinkedIn',    href: 'https://linkedin.com/in/shabnam-beiraghian', icon: <FiLinkedin size={14} /> },
+    { label: 'View resume', href: '/resume',                                     icon: <FiArrowRight size={14} /> },
   ];
 
   return (
-    <section style={{ padding: '3.5rem max(2rem, 7vw)', width: '100%', background: c.card, color: c.fg, transition: 'background 0.5s ease, color 0.5s ease' }}>
-      <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
-        <FadeIn>
-          <h2 style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 800, fontSize: 'clamp(2.5rem, 6vw, 5rem)', lineHeight: 1.05, color: c.fg, textTransform: 'uppercase', letterSpacing: '-0.02em', margin: '0 0 2rem', transition: 'color 0.5s ease' }}>
-            Open for<br /><span style={{ color: ACCENT }}>new roles.</span>
-          </h2>
+    <section className="connect-section" style={{ padding: '5rem max(2rem, 7vw)', width: '100%', background: c.bg, color: c.fg, transition: 'background 0.5s ease, color 0.5s ease', position: 'relative', overflow: 'hidden' }}>
+      {/* Lime orb bottom-left */}
+      <div aria-hidden="true" style={{ position: 'absolute', bottom: '-20%', left: '-5%', width: '36vw', height: '36vw', maxWidth: '450px', maxHeight: '450px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(220,247,99,0.08) 0%, transparent 70%)', pointerEvents: 'none' }} />
 
-          <p style={{ fontFamily: "'Inter', system-ui, sans-serif", fontSize: '1rem', color: c.sub, maxWidth: '500px', lineHeight: 1.75, margin: '0 0 3rem', transition: 'color 0.5s ease' }}>
+      <div style={{ maxWidth: '1100px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
+        <FadeIn>
+          <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.6rem', color: LIME }}>// let's work</p>
+          <h2 style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 800, fontSize: 'clamp(2.5rem, 6vw, 5rem)', lineHeight: 1.05, color: c.fg, textTransform: 'uppercase', letterSpacing: '-0.02em', margin: '0 0 1.25rem', transition: 'color 0.5s ease' }}>
+            Open for<br /><span style={{ color: '#B0D50B' }}>new roles.</span>
+          </h2>
+          <p style={{ fontFamily: "'Inter', system-ui, sans-serif", fontSize: '1rem', color: c.sub, maxWidth: '500px', lineHeight: 1.75, margin: '0 0 2.5rem', transition: 'color 0.5s ease' }}>
             Looking for a full-time position where I can build real products with a team that cares. Based in Vancouver — open to remote.
           </p>
 
@@ -713,7 +1044,7 @@ function ConnectSection() {
               <Link
                 key={label}
                 href={href}
-                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.75rem', background: primary ? ACCENT : 'transparent', color: primary ? '#f1f2ee' : c.fg, border: `2px solid ${primary ? ACCENT : c.border}`, borderRadius: '4px', fontFamily: "'Inter', system-ui, sans-serif", fontWeight: 600, fontSize: '0.9rem', textDecoration: 'none', transition: 'background 0.2s, border-color 0.2s, color 0.2s' }}
+                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.75rem', background: primary ? ACCENT : 'transparent', color: primary ? '#f1f2ee' : c.fg, border: `2px solid ${primary ? ACCENT : c.border}`, borderRadius: '6px', fontFamily: "'Inter', system-ui, sans-serif", fontWeight: 600, fontSize: '0.9rem', textDecoration: 'none', transition: 'background 0.2s, border-color 0.2s, color 0.2s' }}
                 onMouseEnter={e => {
                   if (primary) { e.currentTarget.style.background = LIME; e.currentTarget.style.borderColor = LIME; e.currentTarget.style.color = ACCENT; }
                   else { e.currentTarget.style.borderColor = ACCENT; e.currentTarget.style.color = ACCENT; }
@@ -735,7 +1066,7 @@ function ConnectSection() {
                 href={href}
                 target={href.startsWith('http') ? '_blank' : undefined}
                 rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.55rem 1.1rem', border: `1.5px solid ${c.border}`, borderRadius: '4px', color: c.sub, fontFamily: "'Inter', system-ui, sans-serif", fontSize: '0.82rem', textDecoration: 'none', transition: 'border-color 0.2s, color 0.2s, background 0.2s' }}
+                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.55rem 1.1rem', border: `1.5px solid ${c.border}`, borderRadius: '6px', color: c.sub, fontFamily: "'Inter', system-ui, sans-serif", fontSize: '0.82rem', textDecoration: 'none', transition: 'border-color 0.2s, color 0.2s, background 0.2s' }}
                 onMouseEnter={e => { e.currentTarget.style.borderColor = LIME; e.currentTarget.style.background = LIME; e.currentTarget.style.color = ACCENT; }}
                 onMouseLeave={e => { e.currentTarget.style.borderColor = c.border; e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = c.sub; }}
               >
@@ -763,6 +1094,7 @@ export default function HomePage() {
       <HeroSection />
       <ProjectExplorer />
       <ChatSection />
+      <SkillsSection />
       <A11ySection />
       <AboutSection />
       <ConnectSection />
@@ -773,9 +1105,10 @@ export default function HomePage() {
           to   { transform: translateX(-50%); }
         }
         @media (max-width: 760px) {
-          .chat-grid     { grid-template-columns: 1fr !important; gap: 2.5rem !important; }
+          .chat-grid      { grid-template-columns: 1fr !important; gap: 2.5rem !important; }
           .project-layout { grid-template-columns: 1fr !important; gap: 1.5rem !important; }
-          .project-cards { grid-template-columns: 1fr !important; }
+          .project-cards  { grid-template-columns: 1fr !important; }
+          .connect-section { padding: 3rem max(1.5rem, 5vw) !important; }
         }
         @media (max-width: 520px) {
           .a11y-grid { grid-template-columns: 1fr !important; }

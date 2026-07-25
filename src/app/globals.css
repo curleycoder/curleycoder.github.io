@@ -3,7 +3,7 @@
 
 :root {
   /* ── Brand palette ──────────────────────────── */
-  --lime:        #dcf763;   /* Lime Cream  — pop accent */
+  --lime:        #A0C20A;   /* Lime — day mode */
   --charcoal:    #435058;   /* Charcoal Blue — primary  */
   --grey-olive:  #848c8e;   /* Grey Olive  — muted      */
   --silver:      #bfb7b6;   /* Silver      — borders    */
@@ -43,6 +43,8 @@
 }
 
 html.dark {
+  --lime:        #dcf763;   /* Lime — dark mode */
+
   /* ── Core palette (dark) ────────────────────── */
   --background: #1c2529;
   --section-bg: #1c2529;
@@ -83,6 +85,71 @@ html.dark .accent-glow {
 @keyframes moonblink {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.25; }
+}
+
+/* ─── Terminal cursor blink ───────────────────────────────────────────────── */
+@keyframes blink-cursor {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+/* ─── Subtle float (hero decorative elements) ────────────────────────────── */
+@keyframes float-y {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-10px); }
+}
+
+/* ─── Gradient sweep (lime line) ─────────────────────────────────────────── */
+@keyframes gradient-sweep {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+/* ─── Skills bento card hover border glow ────────────────────────────────── */
+.skill-card-hover {
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.skill-card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(67, 80, 88, 0.1);
+}
+html.dark .skill-card-hover:hover {
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35);
+}
+
+/* ─── Lime gradient top border (active panels) ───────────────────────────── */
+.lime-top-border {
+  border-top: 3px solid #dcf763 !important;
+}
+
+/* ─── Stats section grid ─────────────────────────────────────────────────── */
+@media (max-width: 760px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+@media (max-width: 480px) {
+  .stats-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+}
+
+/* ─── Hero two-column grid ───────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .hero-inner-grid {
+    grid-template-columns: 1fr !important;
+    gap: 2.5rem !important;
+  }
+  .hero-terminal {
+    display: none !important;
+  }
+}
+
+/* ─── Skills bento 2-col → 1-col ─────────────────────────────────────────── */
+@media (max-width: 680px) {
+  .skills-bento {
+    grid-template-columns: 1fr !important;
+  }
 }
 
 @keyframes a11yPulse {

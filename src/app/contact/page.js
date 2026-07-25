@@ -122,7 +122,7 @@ export default function ContactPage() {
                     <button
                       type="submit"
                       disabled={status === 'sending'}
-                      style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.7rem 1.5rem', background: 'var(--accent)', color: '#fff', border: '2px solid var(--accent)', borderRadius: '6px', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.85rem', cursor: status === 'sending' ? 'not-allowed' : 'pointer', opacity: status === 'sending' ? 0.7 : 1, letterSpacing: '0.06em', transition: 'background 0.2s, border-color 0.2s', alignSelf: 'flex-start' }}
+                      style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.7rem 1.5rem', background: 'var(--accent)', color: 'var(--background)', border: '2px solid var(--accent)', borderRadius: '6px', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.85rem', cursor: status === 'sending' ? 'not-allowed' : 'pointer', opacity: status === 'sending' ? 0.7 : 1, letterSpacing: '0.06em', transition: 'background 0.2s, border-color 0.2s', alignSelf: 'flex-start' }}
                     >
                       <FiSend size={13} /> {status === 'sending' ? 'Sending…' : 'Send message'}
                     </button>

@@ -26,12 +26,12 @@ export default function Footer() {
         style={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', alignItems: 'center', gap: '1rem', paddingLeft: 0, paddingRight: 0 }}
       >
         {/* Left — logo */}
-        <span style={{ fontWeight: 500, fontSize: '1.05rem', fontFamily: "'JetBrains Mono', monospace", color: 'var(--muted)', letterSpacing: '-0.04em', transition: 'color 0.5s ease' }}>
+        <span style={{ fontWeight: 500, fontSize: '1.05rem', fontFamily: "'JetBrains Mono', monospace", color: 'var(--foreground)', letterSpacing: '-0.04em', transition: 'color 0.5s ease' }}>
           {'{'}<span style={{ letterSpacing: '-0.08em' }}>C</span><sup style={{ fontSize: '0.65em', position: 'relative', top: '-0.7em', marginLeft: '1px' }}>2</sup>{'}'}
         </span>
 
         {/* Center — copyright */}
-        <p style={{ color: 'var(--muted)', fontSize: '0.78rem', fontFamily: "'JetBrains Mono', monospace", textAlign: 'center', transition: 'color 0.5s ease' }}>
+        <p style={{ color: 'var(--foreground)', fontSize: '0.78rem', fontFamily: "'JetBrains Mono', monospace", textAlign: 'center', transition: 'color 0.5s ease' }}>
           &copy; {year} Shabnam Beiraghian
         </p>
 
@@ -44,9 +44,9 @@ export default function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={label}
-              style={{ color: 'var(--muted)', display: 'flex', alignItems: 'center', transition: 'color 0.15s' }}
+              style={{ color: 'var(--foreground)', display: 'flex', alignItems: 'center', transition: 'color 0.15s' }}
               onMouseEnter={e => { e.currentTarget.style.color = ACCENT; }}
-              onMouseLeave={e => { e.currentTarget.style.color = 'var(--muted)'; }}
+              onMouseLeave={e => { e.currentTarget.style.color = 'var(--foreground)'; }}
             >
               {icon}
             </a>

@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(rm -rf /Users/User/Documents/Work/curleycoder.github.io/.next)",
+      "Bash(npm run:*)"
+    ]
+  }
+}
