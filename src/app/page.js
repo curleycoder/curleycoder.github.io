@@ -427,6 +427,7 @@ function A11ySection() {
   const toggleDark = () => {
     const next = !isDark;
     document.documentElement.classList.toggle('dark', next);
+    localStorage.setItem('theme', next ? 'dark' : 'light');
     setIsDark(next);
   };
 
@@ -532,16 +533,34 @@ function A11ySection() {
               {cellTitle('WCAG-aware Contrast')}
               {cellDesc('Contrast ratios meet accessibility guidelines. Check both themes:')}
               <div style={{ paddingLeft: '1.3rem' }}>
-                <button
-                  onClick={toggleDark}
-                  aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-                  style={{ display: 'inline-flex', alignItems: 'center', gap: '0.55rem', padding: '0.32rem 0.8rem', border: `1.5px solid ${c.border}`, borderRadius: '4px', background: 'transparent', color: c.fg, fontFamily: "'JetBrains Mono', monospace", fontSize: '0.7rem', cursor: 'pointer', transition: 'border-color 0.25s, color 0.25s, background 0.5s ease' }}
-                  onMouseEnter={e => { e.currentTarget.style.borderColor = LIME; e.currentTarget.style.background = LIME; e.currentTarget.style.color = ACCENT; }}
-                  onMouseLeave={e => { e.currentTarget.style.borderColor = c.border; e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = c.fg; }}
-                >
-                  {isDark ? <FiSun size={12} /> : <FiMoon size={12} />}
-                  {isDark ? 'Switch to light' : 'Switch to dark'}
-                </button>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                  <button
+                    onClick={toggleDark}
+                    aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+                    style={{
+                      position: 'relative', display: 'flex', alignItems: 'center',
+                      width: '54px', height: '26px', borderRadius: '999px',
+                      border: `1.5px solid ${isDark ? 'rgba(132,140,142,0.35)' : '#bfb7b6'}`,
+                      background: isDark ? '#1c2529' : '#e8e9e5',
+                      cursor: 'pointer', padding: '2px',
+                      transition: 'background 0.45s ease, border-color 0.45s ease',
+                      overflow: 'hidden', flexShrink: 0,
+                    }}
+                  >
+                    {[{ left: '8px', top: '5px', size: 1.5 }, { left: '16px', top: '14px', size: 1 }, { left: '24px', top: '7px', size: 2 }].map((s, i) => (
+                      <span key={i} aria-hidden="true" style={{ position: 'absolute', left: s.left, top: s.top, width: `${s.size}px`, height: `${s.size}px`, borderRadius: '50%', background: '#dcf763', opacity: isDark ? 1 : 0, transition: `opacity 0.3s ease ${i * 0.07}s`, pointerEvents: 'none' }} />
+                    ))}
+                    {[0, 45, 90, 135].map((deg, i) => (
+                      <span key={deg} aria-hidden="true" style={{ position: 'absolute', left: '10px', top: '50%', width: '6px', height: '1.5px', borderRadius: '1px', background: '#848c8e', transformOrigin: 'right center', transform: `translateY(-50%) rotate(${deg}deg) translateX(6px)`, opacity: isDark ? 0 : 0.55, transition: `opacity 0.3s ease ${i * 0.05}s`, pointerEvents: 'none' }} />
+                    ))}
+                    <span aria-hidden="true" style={{ position: 'absolute', width: '20px', height: '20px', borderRadius: '50%', background: isDark ? '#dcf763' : '#435058', transform: `translateX(${isDark ? '29px' : '1px'})`, transition: 'transform 0.45s cubic-bezier(0.34, 1.4, 0.64, 1), background 0.45s ease, box-shadow 0.45s ease', boxShadow: isDark ? '0 0 10px rgba(220,247,99,0.55)' : 'none', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      {isDark ? <FiMoon size={10} style={{ color: '#1c2529', flexShrink: 0 }} /> : <FiSun size={10} style={{ color: '#f1f2ee', flexShrink: 0 }} />}
+                    </span>
+                  </button>
+                  <span style={{ fontFamily: "'Inter', system-ui, sans-serif", fontSize: '0.72rem', color: c.muted }}>
+                    {isDark ? 'Dark' : 'Light'}
+                  </span>
+                </div>
               </div>
             </div>
 
@@ -732,6 +751,13 @@ function ConnectSection() {
 
 // ─── Root ─────────────────────────────────────────────────────────────────────
 export default function HomePage() {
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      history.scrollRestoration = 'manual';
+      window.scrollTo(0, 0);
+    }
+  }, []);
+
   return (
     <main style={{ background: 'var(--background)', transition: 'background 0.5s ease' }}>
       <HeroSection />

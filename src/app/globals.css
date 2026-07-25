@@ -125,7 +125,7 @@ body {
 }
 
 ::selection {
-  background: rgba(123, 64, 224, 0.2);
+  background: rgba(220, 247, 99, 0.35);
   color: var(--foreground);
 }
 

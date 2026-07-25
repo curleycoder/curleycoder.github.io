@@ -5,7 +5,8 @@ import Link from 'next/link';
 import { FiArrowRight, FiArrowLeft, FiExternalLink, FiGithub } from 'react-icons/fi';
 import { projects } from '@/data/projects';
 
-const ACCENT = '#7B40E0';
+const ACCENT = '#435058';
+const LIME   = '#dcf763';
 
 function ArrowBtn({ onClick, disabled, dir }) {
   return (
@@ -22,8 +23,8 @@ function ArrowBtn({ onClick, disabled, dir }) {
         cursor: disabled ? 'default' : 'pointer',
         transition: 'border-color 0.2s, color 0.2s',
       }}
-      onMouseEnter={e => { if (!disabled) { e.currentTarget.style.borderColor = ACCENT; e.currentTarget.style.color = ACCENT; } }}
-      onMouseLeave={e => { if (!disabled) { e.currentTarget.style.borderColor = 'var(--card-border)'; e.currentTarget.style.color = 'var(--foreground)'; } }}
+      onMouseEnter={e => { if (!disabled) { e.currentTarget.style.borderColor = LIME; e.currentTarget.style.background = LIME; e.currentTarget.style.color = ACCENT; } }}
+      onMouseLeave={e => { if (!disabled) { e.currentTarget.style.borderColor = 'var(--card-border)'; e.currentTarget.style.background = 'var(--background)'; e.currentTarget.style.color = 'var(--foreground)'; } }}
     >
       {dir === 'left' ? <FiArrowLeft size={14} /> : <FiArrowRight size={14} />}
     </button>
@@ -108,8 +109,8 @@ export default function ProjectsShowcase() {
                 onClick={() => handleFilter(type)}
                 style={{
                   padding: '0.45rem 1rem',
-                  background: activeType === type ? ACCENT : 'transparent',
-                  color: activeType === type ? '#fff' : 'var(--muted)',
+                  background: activeType === type ? LIME : 'transparent',
+                  color: activeType === type ? ACCENT : 'var(--muted)',
                   border: 'none',
                   borderRight: i < 2 ? '1px solid var(--card-border)' : 'none',
                   fontFamily: "'JetBrains Mono', monospace",
@@ -319,14 +320,14 @@ export default function ProjectsShowcase() {
                   rel="noreferrer"
                   style={{
                     display: 'inline-flex', alignItems: 'center', gap: '0.4rem',
-                    padding: '0.55rem 1.1rem', background: ACCENT, color: '#fff',
+                    padding: '0.55rem 1.1rem', background: ACCENT, color: '#f1f2ee',
                     border: `1.5px solid ${ACCENT}`, borderRadius: '4px',
                     fontFamily: "'JetBrains Mono', monospace", fontSize: '0.72rem',
                     textDecoration: 'none', letterSpacing: '0.06em', textTransform: 'uppercase',
                     transition: 'background 0.2s, border-color 0.2s',
                   }}
-                  onMouseEnter={e => { e.currentTarget.style.background = '#6230C0'; e.currentTarget.style.borderColor = '#6230C0'; }}
-                  onMouseLeave={e => { e.currentTarget.style.background = ACCENT; e.currentTarget.style.borderColor = ACCENT; }}
+                  onMouseEnter={e => { e.currentTarget.style.background = LIME; e.currentTarget.style.borderColor = LIME; e.currentTarget.style.color = ACCENT; }}
+                  onMouseLeave={e => { e.currentTarget.style.background = ACCENT; e.currentTarget.style.borderColor = ACCENT; e.currentTarget.style.color = '#f1f2ee'; }}
                 >
                   Live <FiExternalLink size={11} />
                 </a>
