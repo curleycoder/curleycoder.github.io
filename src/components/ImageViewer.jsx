@@ -18,10 +18,10 @@ export default function ImageViewer({ images, title, type }) {
 
   const arrows = images.length > 1 && (
     <>
-      <button onClick={prev} style={{ position: 'absolute', left: isMobile ? '-2.5rem' : '0.75rem', top: '50%', transform: 'translateY(-50%)', background: 'var(--arrow-bg)', border: '1px solid var(--card-border)', borderRadius: '50%', width: '32px', height: '32px', cursor: 'pointer', color: 'var(--arrow-color)', display: 'flex', alignItems: 'center', justifyContent: 'center', backdropFilter: 'blur(6px)', flexShrink: 0 }}>
+      <button onClick={prev} style={{ position: 'absolute', left: isMobile ? '-2.5rem' : '0.75rem', top: '50%', transform: 'translateY(-50%)', background: 'var(--arrow-bg)', border: '1.5px solid var(--lime)', borderRadius: '50%', width: '32px', height: '32px', cursor: 'pointer', color: 'var(--lime)', display: 'flex', alignItems: 'center', justifyContent: 'center', backdropFilter: 'blur(6px)', flexShrink: 0 }}>
         <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2"><path d="M10 4L6 8l4 4" strokeLinecap="round" strokeLinejoin="round" /></svg>
       </button>
-      <button onClick={next} style={{ position: 'absolute', right: isMobile ? '-2.5rem' : '0.75rem', top: '50%', transform: 'translateY(-50%)', background: 'var(--arrow-bg)', border: '1px solid var(--card-border)', borderRadius: '50%', width: '32px', height: '32px', cursor: 'pointer', color: 'var(--arrow-color)', display: 'flex', alignItems: 'center', justifyContent: 'center', backdropFilter: 'blur(6px)', flexShrink: 0 }}>
+      <button onClick={next} style={{ position: 'absolute', right: isMobile ? '-2.5rem' : '0.75rem', top: '50%', transform: 'translateY(-50%)', background: 'var(--arrow-bg)', border: '1.5px solid var(--lime)', borderRadius: '50%', width: '32px', height: '32px', cursor: 'pointer', color: 'var(--lime)', display: 'flex', alignItems: 'center', justifyContent: 'center', backdropFilter: 'blur(6px)', flexShrink: 0 }}>
         <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 4l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" /></svg>
       </button>
     </>
@@ -66,7 +66,7 @@ export default function ImageViewer({ images, title, type }) {
             </div>
           </div>
           <div style={{ position: 'relative', lineHeight: 0 }}>
-            <img src={src} alt={caption || `${title} screenshot ${active + 1}`} style={{ width: '100%', height: 'auto', display: 'block', maxHeight: '220px', objectFit: 'cover' }} />
+            <img src={src} alt={caption || `${title} screenshot ${active + 1}`} style={{ width: '100%', height: 'auto', display: 'block' }} />
             {arrows}
           </div>
         </div>
