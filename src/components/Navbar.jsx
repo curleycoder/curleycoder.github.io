@@ -134,11 +134,9 @@ export default function Navbar() {
                   transition: 'color 0.2s ease, transform 0.2s ease',
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.color = '#435058';
                   e.currentTarget.style.transform = 'translateY(-3px)';
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.color = isActive ? '#435058' : 'var(--nav-link-color)';
                   e.currentTarget.style.transform = 'translateY(0)';
                 }}
               >

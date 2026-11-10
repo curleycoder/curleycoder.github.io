@@ -140,7 +140,7 @@ export default function ProjectsShowcase() {
                     padding: '0.9rem 0 0.9rem 0.85rem',
                     background: 'none', border: 'none',
                     borderBottom: '1px solid var(--card-border)',
-                    borderLeft: `2px solid ${isActive ? ACCENT : 'transparent'}`,
+                    borderLeft: `2px solid ${isActive ? LIME : 'transparent'}`,
                     cursor: 'pointer', transition: 'border-left-color 0.2s',
                   }}
                   onMouseEnter={e => { if (!isActive) e.currentTarget.style.borderLeftColor = 'var(--card-border)'; }}
@@ -150,7 +150,7 @@ export default function ProjectsShowcase() {
                     display: 'block', fontFamily: "'JetBrains Mono', monospace",
                     fontWeight: 700, fontSize: '0.82rem', letterSpacing: '0.02em',
                     textTransform: 'uppercase',
-                    color: isActive ? ACCENT : 'var(--foreground)',
+                    color: isActive ? LIME : 'var(--foreground)',
                     marginBottom: '0.2rem', transition: 'color 0.2s',
                   }}>
                     {project.title}
@@ -320,14 +320,14 @@ export default function ProjectsShowcase() {
                   rel="noreferrer"
                   style={{
                     display: 'inline-flex', alignItems: 'center', gap: '0.4rem',
-                    padding: '0.55rem 1.1rem', background: ACCENT, color: '#f1f2ee',
-                    border: `1.5px solid ${ACCENT}`, borderRadius: '4px',
+                    padding: '0.55rem 1.1rem', background: LIME, color: ACCENT,
+                    border: `1.5px solid ${LIME}`, borderRadius: '4px',
                     fontFamily: "'JetBrains Mono', monospace", fontSize: '0.72rem',
                     textDecoration: 'none', letterSpacing: '0.06em', textTransform: 'uppercase',
-                    transition: 'background 0.2s, border-color 0.2s',
+                    transition: 'transform 0.2s ease',
                   }}
-                  onMouseEnter={e => { e.currentTarget.style.background = LIME; e.currentTarget.style.borderColor = LIME; e.currentTarget.style.color = ACCENT; }}
-                  onMouseLeave={e => { e.currentTarget.style.background = ACCENT; e.currentTarget.style.borderColor = ACCENT; e.currentTarget.style.color = '#f1f2ee'; }}
+                  onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; }}
+                  onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; }}
                 >
                   Live <FiExternalLink size={11} />
                 </a>
@@ -379,13 +379,13 @@ export default function ProjectsShowcase() {
                 style={{
                   display: 'inline-flex', alignItems: 'center', gap: '0.4rem',
                   padding: '0.55rem 1rem', background: 'transparent',
-                  color: 'var(--foreground)', border: '1.5px solid var(--card-border)',
+                  color: LIME, border: `1.5px solid ${LIME}`,
                   borderRadius: '4px', fontFamily: "'JetBrains Mono', monospace",
                   fontSize: '0.72rem', textDecoration: 'none', letterSpacing: '0.06em',
-                  textTransform: 'uppercase', transition: 'border-color 0.2s, color 0.2s',
+                  textTransform: 'uppercase', transition: 'transform 0.2s ease',
                 }}
-                onMouseEnter={e => { e.currentTarget.style.borderColor = ACCENT; e.currentTarget.style.color = ACCENT; }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--card-border)'; e.currentTarget.style.color = 'var(--foreground)'; }}
+                onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; }}
+                onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; }}
               >
                 Case Study <FiArrowRight size={11} />
               </Link>

@@ -71,11 +71,12 @@ export const projects = [
   },
   {
     slug: 'navly',
-    type: 'mobile',
+    type: 'web',
+    displayType: 'mobile',
     title: 'Navly',
     shortDescription: 'A Canadian PR pathway planner that gives immigrants a personalized CRS score estimate and matching pathways — without asking for sensitive documents.',
     description:
-      'Navly helps prospective immigrants understand their pathway to Canadian permanent residence. Users answer a short profile questionnaire and receive estimated CRS scores, matched pathways (CEC, FSW, FST, PNP, study-to-PR), identified gaps, and province-by-province PNP options — no passport or SIN required. The paid tier adds an AI immigration assistant, permit expiry reminders, and full score breakdowns.',
+      'Navly helps prospective immigrants understand their pathway to Canadian permanent residence. Users answer a short profile questionnaire and receive estimated CRS scores, matched pathways (CEC, FSW, FST, PNP, study-to-PR), identified gaps, and province-by-province PNP options — no passport or SIN required. The paid tier adds an AI immigration assistant, permit expiry reminders, and full score breakdowns. Currently a web app, with a native mobile app planned next.',
     tags: ['Next.js', 'React', 'Tailwind CSS', 'AI', 'Vercel'],
     year: 2025,
     liveUrl: 'https://navly.ca',
@@ -122,6 +123,7 @@ export const projects = [
       'CRS scoring and pathway matching engine',
       'Province-by-province PNP matching',
       'No sensitive documents required',
+      'Web app today — mobile app planned next',
     ],
     images: [
       { src: '/projects/navly.png', caption: 'Landing page — check your PR pathway without uploading any documents.' },

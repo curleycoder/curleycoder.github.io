@@ -106,8 +106,7 @@ const CODE_LINES = [
   [{ t: '    ',        c: 'var(--foreground)' }, { t: '"React"',      c: '#a6e3a1' }, { t: ', ', c: 'var(--muted)' }, { t: '"Next.js"',  c: '#a6e3a1' }, { t: ', ', c: 'var(--muted)' }, { t: '"Node"',      c: '#a6e3a1' }, { t: ',', c: 'var(--muted)' }],
   [{ t: '    ',        c: 'var(--foreground)' }, { t: '"TypeScript"', c: '#a6e3a1' }, { t: ', ', c: 'var(--muted)' }, { t: '"Supabase"', c: '#a6e3a1' }, { t: ',', c: 'var(--muted)' }],
   [{ t: '  ],',        c: 'var(--muted)' }],
-  [{ t: '  ai',        c: 'var(--foreground)' }, { t: ': [',   c: 'var(--muted)' }, { t: '"Groq"',   c: '#89dceb' }, { t: ', ', c: 'var(--muted)' }, { t: '"Gemini"', c: '#89dceb' }, { t: ', ', c: 'var(--muted)' }, { t: '"OpenAI"', c: '#89dceb' }, { t: '],', c: 'var(--muted)' }],
-  [{ t: '  shipped',   c: 'var(--foreground)' }, { t: ': ',    c: 'var(--muted)' }, { t: '5',         c: '#fab387' }, { t: ',  ', c: 'var(--muted)' }, { t: '// production projects', c: '#6c7086' }],
+  [{ t: '  ai',        c: 'var(--foreground)' }, { t: ': [',   c: 'var(--muted)' }, { t: '"Groq"',   c: '#89dceb' }, { t: ', ', c: 'var(--muted)' }, { t: '"Gemini"', c: '#89dceb' }, { t: ', ', c: 'var(--muted)' }, { t: '"OpenAI"', c: '#89dceb' }, { t: ', ', c: 'var(--muted)' }, { t: '"Python"', c: '#89dceb' }, { t: '],', c: 'var(--muted)' }],
   [{ t: '  location',  c: 'var(--foreground)' }, { t: ': ',    c: 'var(--muted)' }, { t: '"Vancouver, BC"',      c: '#dcf763' }, { t: ',', c: 'var(--muted)' }],
   [{ t: '  status',    c: 'var(--foreground)' }, { t: ': ',    c: 'var(--muted)' }, { t: '"open to work"',       c: '#a6e3a1' }, { t: ',', c: 'var(--muted)' }],
   [{ t: '}',           c: 'var(--muted)' }],
@@ -152,7 +151,7 @@ function TerminalCard() {
         {['#ff5f57', '#febc2e', '#28c840'].map(bg => (
           <div key={bg} style={{ width: '11px', height: '11px', borderRadius: '50%', background: bg, flexShrink: 0 }} />
         ))}
-        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.65rem', color: 'rgba(241,242,238,0.5)', marginLeft: '0.45rem', letterSpacing: '0.04em', flex: 1 }}>
+        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.65rem', color: '#f1f2ee', marginLeft: '0.45rem', letterSpacing: '0.04em', flex: 1 }}>
           ~/portfolio/shabnam.js
         </span>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
@@ -205,7 +204,7 @@ function TerminalCard() {
       {/* Status bar */}
       <div style={{ padding: '0.38rem 1rem', background: ACCENT, borderTop: `1px solid ${c.border}`, display: 'flex', gap: '1.5rem', transition: 'background 0.5s ease, border-color 0.5s ease' }}>
         {['JS', 'Node 20', 'UTF-8', 'Prettier'].map(s => (
-          <span key={s} style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.58rem', color: c.muted, letterSpacing: '0.04em' }}>{s}</span>
+          <span key={s} style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.58rem', color: '#f1f2ee', letterSpacing: '0.04em' }}>{s}</span>
         ))}
       </div>
     </div>
@@ -321,7 +320,7 @@ function HeroSection() {
                 Recent work includes a production booking platform, an AI front-desk assistant, and frontend systems for real users.
               </p>
               <p style={{ fontFamily: "'Inter', system-ui, sans-serif", fontSize: '0.85rem', color: c.fg, margin: 0, transition: 'color 0.5s ease' }}>
-                Vancouver, BC · Open to frontend and full-stack roles
+                <span style={{ color: LIME, fontWeight: 700 }}>4 production projects shipped</span> · Open to frontend and full-stack roles
               </p>
             </div>
 
@@ -329,23 +328,23 @@ function HeroSection() {
               <a
                 href="#projects"
                 onClick={e => { e.preventDefault(); document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' }); }}
-                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.6rem', background: ACCENT, color: '#f1f2ee', border: `2px solid ${ACCENT}`, borderRadius: '6px', fontFamily: "'Inter', system-ui, sans-serif", fontWeight: 600, fontSize: '0.9rem', textDecoration: 'none', transition: 'background 0.2s, border-color 0.2s, color 0.2s' }}
-                onMouseEnter={e => { e.currentTarget.style.background = LIME; e.currentTarget.style.borderColor = LIME; e.currentTarget.style.color = ACCENT; }}
-                onMouseLeave={e => { e.currentTarget.style.background = ACCENT; e.currentTarget.style.borderColor = ACCENT; e.currentTarget.style.color = '#f1f2ee'; }}
+                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.6rem', background: LIME, color: ACCENT, border: `2px solid ${LIME}`, borderRadius: '6px', fontFamily: "'Inter', system-ui, sans-serif", fontWeight: 600, fontSize: '0.9rem', textDecoration: 'none', transition: 'transform 0.2s ease' }}
+                onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; }}
+                onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; }}
               >
-                View selected work <FiArrowRight size={13} />
+                View Projects <FiArrowRight size={13} />
               </a>
               <Link
                 href="/resume"
-                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem', color: c.sub, fontFamily: "'Inter', system-ui, sans-serif", fontSize: '0.88rem', textDecoration: 'none', transition: 'color 0.2s' }}
-                onMouseEnter={e => { e.currentTarget.style.color = c.fg; }}
-                onMouseLeave={e => { e.currentTarget.style.color = c.sub; }}
+                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.6rem', background: 'transparent', color: LIME, border: `2px solid ${LIME}`, borderRadius: '6px', fontFamily: "'Inter', system-ui, sans-serif", fontWeight: 600, fontSize: '0.9rem', textDecoration: 'none', transition: 'transform 0.2s ease' }}
+                onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; }}
+                onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; }}
               >
                 Resume <FiArrowRight size={12} />
               </Link>
             </div>
 
-            <div style={{ display: 'flex', gap: '0.5rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.9rem' }}>
               {[
                 { href: 'https://github.com/curleycoder', label: 'GitHub', icon: <FiGithub size={15} /> },
                 { href: 'https://linkedin.com/in/shabnam-beiraghian', label: 'LinkedIn', icon: <FiLinkedin size={15} /> },
@@ -363,6 +362,9 @@ function HeroSection() {
                   {icon}
                 </a>
               ))}
+              <span style={{ fontFamily: "'Inter', system-ui, sans-serif", fontSize: '0.85rem', color: c.sub, transition: 'color 0.5s ease' }}>
+                Vancouver, BC
+              </span>
             </div>
           </motion.div>
         </div>
@@ -370,6 +372,7 @@ function HeroSection() {
         {/* ── Right: Terminal card ── */}
         <motion.div
           className="hero-terminal"
+          aria-hidden="true"
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.45, duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
@@ -378,11 +381,12 @@ function HeroSection() {
         </motion.div>
       </div>
 
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.85, duration: 0.6 }}>
+      <motion.div aria-hidden="true" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.85, duration: 0.6 }}>
         <Marquee />
       </motion.div>
 
       <motion.div
+        aria-hidden="true"
         initial={{ opacity: 0 }}
         animate={{ opacity: scrolled ? 0 : 1 }}
         transition={scrolled ? { duration: 0.3 } : { delay: 1.1, duration: 0.6 }}
@@ -418,7 +422,7 @@ const PROJECTS = [
     stack: ['React', 'OpenAI API', 'Node.js', 'Prompt Design'],
     challenge: 'Reduce repetitive customer messages without making the experience feel robotic or generic.',
     decision: 'Designed structured intent flows with business-specific answer layers and human escalation paths for edge cases the AI cannot resolve.',
-    link: '/projects',
+    link: '/projects/dew',
     linkLabel: 'View project',
   },
   {
@@ -428,7 +432,7 @@ const PROJECTS = [
     stack: ['React', 'Next.js', 'Node.js'],
     challenge: 'Make a complex, stressful process — immigration — feel structured and manageable for users who may not speak the language fluently.',
     decision: 'Built a clear dashboard-style tracker with status timelines and deadline alerts, keeping the UI simple and the data easy to act on.',
-    link: '/projects',
+    link: '/projects/navly',
     linkLabel: 'View project',
   },
 ];
@@ -452,10 +456,22 @@ function ProjectExplorer() {
     <section id="projects" style={{ padding: '5rem max(2rem, 7vw)', background: c.card, color: c.fg, transition: 'background 0.5s ease, color 0.5s ease' }}>
       <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
         <FadeIn>
-          <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.6rem', color: LIME }}>// selected work</p>
-          <h2 style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 800, fontSize: 'clamp(2rem, 5vw, 4rem)', lineHeight: 1.05, color: c.fg, textTransform: 'uppercase', letterSpacing: '-0.02em', margin: '0 0 2.5rem', transition: 'color 0.5s ease' }}>
-            Built for<br /><span style={{ color: '#A0C20A' }}>real users.</span>
-          </h2>
+          <div className="projects-header-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', gap: '2rem', marginBottom: '2.5rem' }}>
+            <div>
+              <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.6rem', color: LIME }}>// selected work</p>
+              <h2 style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 800, fontSize: 'clamp(2rem, 5vw, 4rem)', lineHeight: 1.05, color: c.fg, textTransform: 'uppercase', letterSpacing: '-0.02em', margin: 0, transition: 'color 0.5s ease' }}>
+                Built for<br />real users.
+              </h2>
+            </div>
+            <Link
+              href="/projects"
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.75rem', background: 'transparent', color: LIME, border: `2px solid ${LIME}`, borderRadius: '6px', fontFamily: "'Inter', system-ui, sans-serif", fontWeight: 600, fontSize: '0.9rem', textDecoration: 'none', whiteSpace: 'nowrap', transition: 'transform 0.2s ease' }}
+              onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; }}
+              onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; }}
+            >
+              See more work <FiArrowRight size={13} />
+            </Link>
+          </div>
         </FadeIn>
 
         <div className="project-layout" style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: '3rem', alignItems: 'start' }}>
@@ -473,13 +489,12 @@ function ProjectExplorer() {
                   borderLeft: `3px solid ${selected === index ? LIME : c.border}`,
                   background: selected === index ? `rgba(220,247,99,0.07)` : 'transparent',
                   color: selected === index ? c.fg : c.muted,
-                  fontFamily: "'Inter', system-ui, sans-serif", fontSize: '0.82rem',
+                  fontFamily: "'Inter', system-ui, sans-serif", fontSize: '1rem',
                   cursor: 'pointer', textAlign: 'left', width: '100%',
                   transition: 'color 0.2s, border-color 0.2s, background 0.2s',
                   borderRadius: '0 6px 6px 0',
                 }}
               >
-                <span style={{ fontSize: '0.62rem', opacity: 0.5, flexShrink: 0, fontFamily: "'JetBrains Mono', monospace" }}>0{index + 1}</span>
                 {item.name}
               </button>
             ))}
@@ -527,9 +542,9 @@ function ProjectExplorer() {
 
               <Link
                 href={project.link}
-                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', color: ACCENT, fontFamily: "'Inter', system-ui, sans-serif", fontWeight: 600, fontSize: '0.82rem', textDecoration: 'none', transition: 'color 0.2s' }}
-                onMouseEnter={e => e.currentTarget.style.color = '#848c8e'}
-                onMouseLeave={e => e.currentTarget.style.color = ACCENT}
+                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', color: LIME, fontFamily: "'Inter', system-ui, sans-serif", fontWeight: 600, fontSize: '0.82rem', textDecoration: 'none', transition: 'transform 0.2s ease' }}
+                onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; }}
+                onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; }}
               >
                 {project.linkLabel} <FiArrowRight size={12} />
               </Link>
@@ -580,7 +595,7 @@ function ChatSection() {
         <FadeIn>
           <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.6rem', color: LIME }}>// AI integration</p>
           <h2 style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 800, fontSize: 'clamp(2rem, 5vw, 4rem)', lineHeight: 1.05, color: c.fg, textTransform: 'uppercase', letterSpacing: '-0.02em', margin: '0 0 1.75rem', transition: 'color 0.5s ease' }}>
-            Embedded<br /><span style={{ color: '#B0D50B' }}>AI</span>
+            Embedded<br />AI
           </h2>
           <p style={{ fontFamily: "'Inter', system-ui, sans-serif", fontSize: '1rem', color: c.sub, lineHeight: 1.75, margin: '0 0 1.5rem', transition: 'color 0.5s ease' }}>
             What got me into AI was watching a small business owner spend two hours answering the same five questions over email. I built a system to handle that automatically.
@@ -602,7 +617,7 @@ function ChatSection() {
               <div style={{ display: 'flex', gap: '5px' }}>
                 {['#ff5f57','#febc2e','#28c840'].map(bg => <div key={bg} style={{ width: '10px', height: '10px', borderRadius: '50%', background: bg }} />)}
               </div>
-              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.68rem', color: c.muted, marginLeft: '0.2rem', transition: 'color 0.5s ease' }}>AI assistant · prototype</span>
+              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.68rem', color: c.fg, marginLeft: '0.2rem', transition: 'color 0.5s ease' }}>AI assistant · prototype</span>
               <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
                 <div style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#28c840' }} />
                 <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.6rem', color: '#28c840' }}>online</span>
@@ -629,9 +644,9 @@ function ChatSection() {
             <div style={{ padding: '0.7rem', borderTop: `1px solid ${c.border}`, display: 'flex', gap: '0.4rem', flexWrap: 'wrap', transition: 'border-color 0.5s ease' }}>
               {Object.keys(BOT_QA).map(q => (
                 <button key={q} onClick={() => ask(q)} disabled={typing}
-                  style={{ padding: '0.28rem 0.7rem', borderRadius: '999px', border: `1.5px solid ${c.border}`, background: 'transparent', color: c.muted, fontFamily: "'Inter', system-ui, sans-serif", fontSize: '0.63rem', cursor: typing ? 'not-allowed' : 'pointer', opacity: typing ? 0.4 : 1, letterSpacing: '0.02em', transition: 'border-color 0.2s, color 0.2s, background 0.2s, opacity 0.2s' }}
+                  style={{ padding: '0.28rem 0.7rem', borderRadius: '999px', border: `1.5px solid ${c.border}`, background: 'transparent', color: c.fg, fontFamily: "'Inter', system-ui, sans-serif", fontSize: '0.63rem', cursor: typing ? 'not-allowed' : 'pointer', opacity: typing ? 0.4 : 1, letterSpacing: '0.02em', transition: 'border-color 0.2s, color 0.2s, background 0.2s, opacity 0.2s' }}
                   onMouseEnter={e => { if (!typing) { e.currentTarget.style.borderColor = LIME; e.currentTarget.style.background = LIME; e.currentTarget.style.color = ACCENT; } }}
-                  onMouseLeave={e => { e.currentTarget.style.borderColor = c.border; e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = c.muted; }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = c.border; e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = c.fg; }}
                 >{q}</button>
               ))}
             </div>
@@ -648,13 +663,13 @@ const SKILL_GROUPS = [
     icon: <FiCode size={17} />,
     label: 'Frontend',
     accent: '#89b4fa',
-    skills: ['React', 'Next.js', 'TypeScript', 'React Native', 'Tailwind CSS', 'Framer Motion', 'Accessibility (WCAG)'],
+    skills: ['React', 'Next.js', 'TypeScript', 'React Native', 'Tailwind CSS', 'Framer Motion', 'Accessibility (WCAG)', 'Python'],
   },
   {
     icon: <FiDatabase size={17} />,
     label: 'Backend & Data',
     accent: '#a6e3a1',
-    skills: ['Node.js', 'Express', 'Hono', 'PostgreSQL', 'MongoDB', 'Supabase', 'Redis', 'Drizzle ORM'],
+    skills: ['Node.js', 'Express', 'Hono', 'PostgreSQL', 'MongoDB', 'Supabase', 'Redis', 'Drizzle ORM', 'Python'],
   },
   {
     icon: <FiCpu size={17} />,
@@ -666,7 +681,7 @@ const SKILL_GROUPS = [
     icon: <FiZap size={17} />,
     label: 'DevOps & Tools',
     accent: LIME,
-    skills: ['Git', 'Vercel', 'Render', 'AWS S3', 'CI/CD', 'Figma', 'Bun', 'REST APIs'],
+    skills: ['Git', 'Vercel', 'Render', 'AWS S3', 'CI/CD', 'Figma', 'Bun', 'REST APIs', 'Python'],
   },
 ];
 
@@ -679,7 +694,7 @@ function SkillsSection() {
         <FadeIn>
           <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.6rem', color: LIME }}>// tech stack</p>
           <h2 style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 800, fontSize: 'clamp(2rem, 5vw, 4rem)', lineHeight: 1.05, color: c.fg, textTransform: 'uppercase', letterSpacing: '-0.02em', margin: '0 0 2.5rem', transition: 'color 0.5s ease' }}>
-            Tools I<br /><span style={{ color: '#B0D50B' }}>ship with.</span>
+            Tools I<br />ship with.
           </h2>
         </FadeIn>
 
@@ -696,8 +711,6 @@ function SkillsSection() {
                   height: '100%',
                   transition: 'border-color 0.25s ease, background 0.5s ease',
                 }}
-                onMouseEnter={e => { e.currentTarget.style.borderColor = group.accent + '70'; }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor = c.border; }}
               >
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', marginBottom: '1.15rem' }}>
                   <div style={{ color: group.accent, display: 'flex', alignItems: 'center', flexShrink: 0 }}>{group.icon}</div>
@@ -710,16 +723,13 @@ function SkillsSection() {
                       style={{
                         padding: '0.22rem 0.65rem',
                         borderRadius: '999px',
-                        border: `1px solid ${c.border}`,
-                        color: c.muted,
+                        border: `1px solid color-mix(in srgb, ${c.fg} 25%, transparent)`,
+                        color: `color-mix(in srgb, ${c.fg} 70%, transparent)`,
                         fontFamily: "'JetBrains Mono', monospace",
                         fontSize: '0.7rem',
                         letterSpacing: '0.02em',
                         cursor: 'default',
-                        transition: 'border-color 0.2s, color 0.2s',
                       }}
-                      onMouseEnter={e => { e.currentTarget.style.borderColor = group.accent; e.currentTarget.style.color = group.accent; }}
-                      onMouseLeave={e => { e.currentTarget.style.borderColor = c.border; e.currentTarget.style.color = c.muted; }}
                     >
                       {skill}
                     </span>
@@ -791,7 +801,7 @@ function A11ySection() {
         <FadeIn>
           <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.6rem', color: LIME }}>// accessibility</p>
           <h2 style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 800, fontSize: 'clamp(2rem, 5.5vw, 4.5rem)', lineHeight: 1.05, color: c.fg, textTransform: 'uppercase', letterSpacing: '-0.02em', margin: '0 0 0.85rem', transition: 'color 0.5s ease' }}>
-            Built for<br /><span style={{ color: '#B0D50B' }}>everyone.</span>
+            Built for<br />everyone.
           </h2>
           <p style={{ fontFamily: "'Inter', system-ui, sans-serif", fontSize: '1rem', color: c.sub, maxWidth: '520px', lineHeight: 1.75, margin: '0 0 2.5rem', transition: 'color 0.5s ease' }}>
             I build for everyone — regardless of ability, device, or environment. Each cell below is a live demo.
@@ -936,7 +946,7 @@ function AboutSection() {
         <FadeIn>
           <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.6rem', color: LIME }}>// about</p>
           <h2 style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 800, fontSize: 'clamp(2rem, 5vw, 4rem)', lineHeight: 1.05, color: c.fg, textTransform: 'uppercase', letterSpacing: '-0.02em', margin: '0 0 1.75rem', transition: 'color 0.5s ease' }}>
-            Built to<br /><span style={{ color: '#B0D50B' }}>ship.</span>
+            Built to<br />ship.
           </h2>
           <p style={{ fontFamily: "'Inter', system-ui, sans-serif", fontSize: '1rem', color: c.sub, lineHeight: 1.75, margin: '0 0 1.5rem', transition: 'color 0.5s ease' }}>
             Full-stack developer with a background in architectural engineering. I build production systems — not prototypes.
@@ -964,13 +974,13 @@ function AboutSection() {
                   onClick={() => setOpen(open === i ? -1 : i)}
                   aria-expanded={open === i}
                   aria-controls={`about-panel-${i}`}
-                  style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '1rem 1.25rem', background: open === i ? `${ACCENT}12` : c.card, border: 'none', cursor: 'pointer', textAlign: 'left', transition: 'background 0.2s ease' }}
+                  style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '1rem 1.25rem', background: c.card, border: 'none', cursor: 'pointer', textAlign: 'left' }}
                 >
                   <div>
-                    <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.82rem', fontWeight: 700, color: open === i ? ACCENT : c.fg, margin: 0, letterSpacing: '0.04em', transition: 'color 0.2s' }}>{card.label}</p>
+                    <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.82rem', fontWeight: 700, color: c.fg, margin: 0, letterSpacing: '0.04em', transition: 'color 0.5s ease' }}>{card.label}</p>
                     {open !== i && <p style={{ fontFamily: "'Inter', system-ui, sans-serif", fontSize: '0.78rem', color: c.muted, margin: '0.15rem 0 0', transition: 'color 0.5s ease' }}>{card.hint}</p>}
                   </div>
-                  <span style={{ color: open === i ? ACCENT : c.muted, fontSize: '1rem', lineHeight: 1, transition: 'transform 0.25s, color 0.2s', transform: open === i ? 'rotate(45deg)' : 'rotate(0deg)', flexShrink: 0, marginLeft: '1rem' }}>+</span>
+                  <span style={{ color: c.muted, fontSize: '1rem', lineHeight: 1, transition: 'transform 0.25s ease', transform: open === i ? 'rotate(45deg)' : 'rotate(0deg)', flexShrink: 0, marginLeft: '1rem' }}>+</span>
                 </button>
 
                 <AnimatePresence initial={false}>
@@ -1023,7 +1033,7 @@ function ConnectSection() {
         <FadeIn>
           <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.6rem', color: LIME }}>// let's work</p>
           <h2 style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 800, fontSize: 'clamp(2.5rem, 6vw, 5rem)', lineHeight: 1.05, color: c.fg, textTransform: 'uppercase', letterSpacing: '-0.02em', margin: '0 0 1.25rem', transition: 'color 0.5s ease' }}>
-            Open for<br /><span style={{ color: '#B0D50B' }}>new roles.</span>
+            Open for<br />new roles.
           </h2>
           <p style={{ fontFamily: "'Inter', system-ui, sans-serif", fontSize: '1rem', color: c.sub, maxWidth: '500px', lineHeight: 1.75, margin: '0 0 2.5rem', transition: 'color 0.5s ease' }}>
             Looking for a full-time position where I can build real products with a team that cares. Based in Vancouver — open to remote.
@@ -1034,22 +1044,16 @@ function ConnectSection() {
               <Link
                 key={label}
                 href={href}
-                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.75rem', background: primary ? ACCENT : 'transparent', color: primary ? '#f1f2ee' : c.fg, border: `2px solid ${primary ? ACCENT : c.border}`, borderRadius: '6px', fontFamily: "'Inter', system-ui, sans-serif", fontWeight: 600, fontSize: '0.9rem', textDecoration: 'none', transition: 'background 0.2s, border-color 0.2s, color 0.2s' }}
-                onMouseEnter={e => {
-                  if (primary) { e.currentTarget.style.background = LIME; e.currentTarget.style.borderColor = LIME; e.currentTarget.style.color = ACCENT; }
-                  else { e.currentTarget.style.borderColor = ACCENT; e.currentTarget.style.color = ACCENT; }
-                }}
-                onMouseLeave={e => {
-                  if (primary) { e.currentTarget.style.background = ACCENT; e.currentTarget.style.borderColor = ACCENT; e.currentTarget.style.color = '#f1f2ee'; }
-                  else { e.currentTarget.style.borderColor = c.border; e.currentTarget.style.color = c.fg; }
-                }}
+                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.75rem', background: primary ? 'transparent' : LIME, color: primary ? LIME : ACCENT, border: `2px solid ${LIME}`, borderRadius: '6px', fontFamily: "'Inter', system-ui, sans-serif", fontWeight: 600, fontSize: '0.9rem', textDecoration: 'none', transition: 'transform 0.2s ease' }}
+                onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; }}
+                onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; }}
               >
                 {label} <FiArrowRight size={13} />
               </Link>
             ))}
           </div>
 
-          <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+          {/* <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
             {socials.map(({ label, href, icon }) => (
               <a
                 key={label}
@@ -1063,7 +1067,7 @@ function ConnectSection() {
                 {icon} {label}
               </a>
             ))}
-          </div>
+          </div> */}
         </FadeIn>
       </div>
     </section>

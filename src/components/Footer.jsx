@@ -3,6 +3,7 @@
 import { FiGithub, FiLinkedin } from 'react-icons/fi';
 
 const ACCENT = '#435058';
+const LIME = 'var(--lime)';
 
 const iconLinks = [
   { label: 'GitHub',   href: 'https://github.com/curleycoder',            icon: <FiGithub size={22} /> },
@@ -26,7 +27,7 @@ export default function Footer() {
         style={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', alignItems: 'center', gap: '1rem', paddingLeft: 0, paddingRight: 0 }}
       >
         {/* Left — logo */}
-        <span style={{ fontWeight: 500, fontSize: '1.05rem', fontFamily: "'JetBrains Mono', monospace", color: 'var(--foreground)', letterSpacing: '-0.04em', transition: 'color 0.5s ease' }}>
+        <span style={{ fontWeight: 500, fontSize: '1.05rem', fontFamily: "'JetBrains Mono', monospace", color: LIME, letterSpacing: '-0.04em', transition: 'color 0.5s ease' }}>
           {'{'}<span style={{ letterSpacing: '-0.08em' }}>C</span><sup style={{ fontSize: '0.65em', position: 'relative', top: '-0.7em', marginLeft: '1px' }}>2</sup>{'}'}
         </span>
 
@@ -44,9 +45,9 @@ export default function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={label}
-              style={{ color: 'var(--foreground)', display: 'flex', alignItems: 'center', transition: 'color 0.15s' }}
-              onMouseEnter={e => { e.currentTarget.style.color = ACCENT; }}
-              onMouseLeave={e => { e.currentTarget.style.color = 'var(--foreground)'; }}
+              style={{ color: LIME, display: 'flex', alignItems: 'center', transition: 'transform 0.2s ease' }}
+              onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; }}
+              onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; }}
             >
               {icon}
             </a>
