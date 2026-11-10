@@ -288,34 +288,62 @@ h3 {
 /* ─── Buttons ────────────────────────────────────────────────────────────── */
 
 .btn-primary,
-.btn-cta,
+.btn-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0.55rem 1.1rem;
+  border: 1.5px solid var(--lime);
+  border-radius: 4px;
+  background: var(--lime);
+  color: #435058;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  line-height: 1;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
 .btn-secondary,
 .btn-outline {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.45rem;
-  padding: 0.45rem 1.15rem;
-  border: 2px solid var(--foreground);
-  border-radius: 8px;
+  padding: 0.55rem 1rem;
+  border: 1.5px solid var(--card-border);
+  border-radius: 4px;
   background: transparent;
   color: var(--foreground);
-  font-family: 'Bebas Neue', 'Arial Narrow', sans-serif;
-  font-size: 1.25rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
   line-height: 1;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   cursor: pointer;
-  transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease;
+  transition: border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
 
 .btn-primary:hover,
 .btn-cta:hover,
 .btn-secondary:hover,
 .btn-outline:hover {
-  background: var(--foreground);
-  color: var(--background);
-  transform: translateY(-1px);
+  transform: translateY(-3px);
+}
+
+.btn-secondary:hover,
+.btn-outline:hover {
+  border-color: #435058;
+  color: #435058;
+}
+
+html.dark .btn-secondary:hover,
+html.dark .btn-outline:hover {
+  border-color: var(--lime);
+  color: var(--lime);
 }
 
 /* ─── Tags ───────────────────────────────────────────────────────────────── */
@@ -323,13 +351,17 @@ h3 {
 .tag {
   display: inline-block;
   background: rgba(67, 80, 88, 0.06);
-  color: #435058;
+  color: var(--foreground);
   padding: 0.2rem 0.65rem;
   border-radius: 9999px;
   font-size: 0.75rem;
   font-weight: 500;
-  border: 1px solid #bfb7b6;
+  border: 1px solid var(--card-border);
   font-family: 'JetBrains Mono', monospace;
+}
+
+html.dark .tag {
+  background: rgba(220, 247, 99, 0.06);
 }
 
 /* ─── Section helpers ────────────────────────────────────────────────────── */

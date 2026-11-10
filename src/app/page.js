@@ -328,7 +328,7 @@ function HeroSection() {
               <a
                 href="#projects"
                 onClick={e => { e.preventDefault(); document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' }); }}
-                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.6rem', background: LIME, color: ACCENT, border: `2px solid ${LIME}`, borderRadius: '6px', fontFamily: "'Inter', system-ui, sans-serif", fontWeight: 600, fontSize: '0.9rem', textDecoration: 'none', transition: 'transform 0.2s ease' }}
+                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.6rem', background: LIME, color: ACCENT, border: `2px solid ${LIME}`, borderRadius: '6px', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.72rem', letterSpacing: '0.06em', textTransform: 'uppercase', textDecoration: 'none', transition: 'transform 0.2s ease' }}
                 onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; }}
                 onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; }}
               >
@@ -336,7 +336,7 @@ function HeroSection() {
               </a>
               <Link
                 href="/resume"
-                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.6rem', background: 'transparent', color: LIME, border: `2px solid ${LIME}`, borderRadius: '6px', fontFamily: "'Inter', system-ui, sans-serif", fontWeight: 600, fontSize: '0.9rem', textDecoration: 'none', transition: 'transform 0.2s ease' }}
+                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.6rem', background: 'transparent', color: LIME, border: `2px solid ${LIME}`, borderRadius: '6px', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.72rem', letterSpacing: '0.06em', textTransform: 'uppercase', textDecoration: 'none', transition: 'transform 0.2s ease' }}
                 onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; }}
                 onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; }}
               >
@@ -465,7 +465,7 @@ function ProjectExplorer() {
             </div>
             <Link
               href="/projects"
-              style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.75rem', background: 'transparent', color: LIME, border: `2px solid ${LIME}`, borderRadius: '6px', fontFamily: "'Inter', system-ui, sans-serif", fontWeight: 600, fontSize: '0.9rem', textDecoration: 'none', whiteSpace: 'nowrap', transition: 'transform 0.2s ease' }}
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.75rem', background: 'transparent', color: LIME, border: `2px solid ${LIME}`, borderRadius: '6px', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.72rem', letterSpacing: '0.06em', textTransform: 'uppercase', textDecoration: 'none', whiteSpace: 'nowrap', transition: 'transform 0.2s ease' }}
               onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; }}
               onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; }}
             >
@@ -1044,7 +1044,7 @@ function ConnectSection() {
               <Link
                 key={label}
                 href={href}
-                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.75rem', background: primary ? 'transparent' : LIME, color: primary ? LIME : ACCENT, border: `2px solid ${LIME}`, borderRadius: '6px', fontFamily: "'Inter', system-ui, sans-serif", fontWeight: 600, fontSize: '0.9rem', textDecoration: 'none', transition: 'transform 0.2s ease' }}
+                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.75rem', background: primary ? 'transparent' : LIME, color: primary ? LIME : ACCENT, border: `2px solid ${LIME}`, borderRadius: '6px', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.72rem', letterSpacing: '0.06em', textTransform: 'uppercase', textDecoration: 'none', transition: 'transform 0.2s ease' }}
                 onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; }}
                 onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; }}
               >

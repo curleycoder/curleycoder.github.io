@@ -6,7 +6,7 @@ import { FiArrowRight, FiArrowLeft, FiExternalLink, FiGithub } from 'react-icons
 import { projects } from '@/data/projects';
 
 const ACCENT = '#435058';
-const LIME   = '#dcf763';
+const LIME   = 'var(--lime)';
 
 function ArrowBtn({ onClick, disabled, dir }) {
   return (
@@ -72,7 +72,7 @@ export default function ProjectsShowcase() {
       minHeight: '100vh',
       background: 'var(--background)',
       color: 'var(--foreground)',
-      paddingTop: '8rem',
+      paddingTop: '7rem',
       paddingBottom: '6rem',
     }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 max(2rem, 4vw)' }}>
@@ -80,16 +80,9 @@ export default function ProjectsShowcase() {
         {/* ── Header ── */}
         <div style={{
           display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between',
-          marginBottom: '4rem', gap: '1.5rem', flexWrap: 'wrap',
+          marginBottom: '2rem', gap: '1.5rem', flexWrap: 'wrap',
         }}>
           <div>
-            <p style={{
-              fontFamily: "'JetBrains Mono', monospace", fontSize: '0.7rem',
-              letterSpacing: '0.18em', textTransform: 'uppercase', color: ACCENT,
-              margin: '0 0 0.6rem',
-            }}>
-              Selected Work
-            </p>
             <h1 style={{
               fontFamily: "'JetBrains Mono', monospace", fontWeight: 800,
               fontSize: 'clamp(2.5rem, 5vw, 4.5rem)', lineHeight: 1,
@@ -192,12 +185,12 @@ export default function ProjectsShowcase() {
             ) : (
               /* Web: full-width landscape image with overlaid arrows */
               <div style={{ position: 'relative', marginBottom: '1rem' }}>
-                <div style={{ borderRadius: '8px', overflow: 'hidden', border: '1px solid var(--card-border)', background: 'var(--card)' }}>
+                <div style={{ borderRadius: '8px', overflow: 'hidden', border: '1px solid var(--card-border)', background: 'var(--card)', height: '470px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   {currentImage ? (
                     <img
                       src={currentImage.src}
                       alt={currentImage.caption || activeProject.title}
-                      style={{ width: '100%', height: 'auto', display: 'block' }}
+                      style={{ maxWidth: '100%', maxHeight: '100%', display: 'block', objectFit: 'contain' }}
                     />
                   ) : (
                     <div style={{ height: '360px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -284,7 +277,7 @@ export default function ProjectsShowcase() {
                   letterSpacing: '0.08em', textTransform: 'uppercase',
                   padding: '0.2rem 0.55rem',
                   border: '1px solid var(--card-border)', borderRadius: '3px',
-                  color: 'var(--muted)',
+                  color: 'var(--foreground)',
                 }}>
                   {tag}
                 </span>
@@ -303,7 +296,7 @@ export default function ProjectsShowcase() {
                       fontFamily: "'Inter', system-ui, sans-serif", fontSize: '0.85rem',
                       color: 'var(--dark-text)', display: 'flex', alignItems: 'flex-start', gap: '0.4rem',
                     }}>
-                      <span style={{ color: ACCENT, marginTop: '1px', flexShrink: 0 }}>↗</span>
+                      <span style={{ color: LIME, marginTop: '1px', flexShrink: 0 }}>↗</span>
                       {h}
                     </span>
                   ))}

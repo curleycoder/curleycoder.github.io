@@ -125,6 +125,7 @@ export const projects = [
       'No sensitive documents required',
       'Web app today — mobile app planned next',
     ],
+    caseStudySlug: 'navly',
     images: [
       { src: '/projects/navly.png', caption: 'Landing page — check your PR pathway without uploading any documents.' },
       { src: '/projects/navly-1.png', caption: 'Home dashboard — personalized CRS score, urgent alerts, and next steps at a glance.' },
@@ -255,6 +256,8 @@ export const projects = [
     images: [
       { src: '/projects/dew-home.png', caption: 'Dashboard — manage your AI assistant configuration and business info.' },
       { src: '/projects/dew-chat.png', caption: 'Live chat widget embedded on a client site, handling real inquiries.' },
+      { src: '/projects/dew-admin.png', caption: 'Admin sign-in — password-protected access to the business dashboard.' },
+      { src: '/projects/dew-dashboard.png', caption: 'Dashboard — leads captured, conversations, and CSV export in one place.' },
     ],
   },
   {
@@ -266,10 +269,10 @@ export const projects = [
       'Forge is a mobile application that transforms trade career discovery into a guided, hands-on digital experience. Students simulate real-world workflows in electrical, plumbing, carpentry and more — powered by AI explanations and personalized recommendations.',
     tags: ['React Native', 'TypeScript', 'Hono', 'Drizzle ORM', 'Postgres', 'Clerk', 'Redis', 'Google GenAI SDK', 'TanStack'],
     year: 2025,
-    liveUrl: 'https://www.forgecareers.ca/',
+    liveUrl: '',
     githubUrl: 'https://github.com/Forge-IDSP',
     prototypeUrl: 'https://www.figma.com/design/4bcvUcR7TsEdN3LVpessog/',
-    demoUrl: 'https://www.youtube.com/shorts/_G6BLGK4BmU?themeRefresh=1',
+    demoUrl: '',
     myRole: 'Technical Manager & Full-Stack Developer',
     team: 'Team of 4',
     contribution: 'I acted as the bridge between design and development — translating Figma specs into engineering requirements, reviewing all pull requests, and owning the deployment pipeline. I personally built the My Pathways and Explore Careers screens end-to-end. I also led the final presentation, coordinating across the team to make sure every feature was connected and working before demo day.',
@@ -315,14 +318,15 @@ export const projects = [
   },
   {
     slug: 'lenditout',
-    type: 'mobile',
+    type: 'web',
+    displayType: 'mobile',
     title: 'LendItOut',
     shortDescription: 'A peer-to-peer lending platform for everyday items.',
     description:
       'Full-stack web app that lets users list items to lend and borrow from their community. Built with JavaScript, MongoDB, Sass, and Clerk for authentication.',
     tags: ['JavaScript', 'MongoDB', 'Sass', 'Clerk'],
     year: 2024,
-    liveUrl: 'https://lenditout.onrender.com/',
+    liveUrl: '',
     githubUrl: 'https://github.com/IDSP-LendItOut/LendItOut',
     prototypeUrl: 'https://www.figma.com/proto/BbH0d5NCDlGcSfjOKpvij0/LendItOut?node-id=1-8195&t=y4crY3YEUUnpG4gp-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=1%3A8195&show-proto-sidebar=1',
     wireframeUrl: 'https://www.figma.com/design/BbH0d5NCDlGcSfjOKpvij0/LendItOut?node-id=0-1&t=1FTBWlzQxPZsSiWy-1',

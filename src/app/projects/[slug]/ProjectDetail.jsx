@@ -1,108 +1,10 @@
 'use client';
 
-import { useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { FiExternalLink } from 'react-icons/fi';
 import { FaGithub, FaYoutube, FaFigma } from 'react-icons/fa';
-
-function ImageViewer({ images, title, type }) {
-  const [active, setActive] = useState(0);
-
-  if (!images || images.length === 0) return null;
-
-  const current = images[active];
-  const src = typeof current === 'string' ? current : current.src;
-  const caption = typeof current === 'string' ? null : current.caption;
-
-  const prev = () => setActive((i) => (i - 1 + images.length) % images.length);
-  const next = () => setActive((i) => (i + 1) % images.length);
-
-  const isMobile = type === 'mobile';
-
-  const arrows = images.length > 1 && (
-    <>
-      <button onClick={prev} style={{ position: 'absolute', left: isMobile ? '-2.5rem' : '0.75rem', top: '50%', transform: 'translateY(-50%)', background: 'var(--arrow-bg)', border: '1px solid var(--card-border)', borderRadius: '50%', width: '32px', height: '32px', cursor: 'pointer', color: 'var(--arrow-color)', display: 'flex', alignItems: 'center', justifyContent: 'center', backdropFilter: 'blur(6px)', flexShrink: 0 }}>
-        <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2"><path d="M10 4L6 8l4 4" strokeLinecap="round" strokeLinejoin="round" /></svg>
-      </button>
-      <button onClick={next} style={{ position: 'absolute', right: isMobile ? '-2.5rem' : '0.75rem', top: '50%', transform: 'translateY(-50%)', background: 'var(--arrow-bg)', border: '1px solid var(--card-border)', borderRadius: '50%', width: '32px', height: '32px', cursor: 'pointer', color: 'var(--arrow-color)', display: 'flex', alignItems: 'center', justifyContent: 'center', backdropFilter: 'blur(6px)', flexShrink: 0 }}>
-        <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 4l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" /></svg>
-      </button>
-    </>
-  );
-
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: isMobile ? 'center' : 'stretch' }}>
-
-      {/* Frame */}
-      {isMobile ? (
-        /* Phone frame */
-        <div style={{ position: 'relative', display: 'inline-block' }}>
-          <div
-            style={{
-              width: '240px',
-              borderRadius: '2.6rem',
-              border: '6px solid #2a2a45',
-              boxShadow: '0 0 0 1px rgba(255,255,255,0.06), 0 24px 48px rgba(0,0,0,0.5)',
-              overflow: 'hidden',
-              lineHeight: 0,
-            }}
-          >
-            <img
-              src={src}
-              alt={caption || `${title} screenshot ${active + 1}`}
-              style={{ width: '100%', height: 'auto', display: 'block', maxHeight: '500px', objectFit: 'cover' }}
-            />
-          </div>
-          {arrows}
-        </div>
-      ) : (
-        /* Browser frame */
-        <div style={{ borderRadius: '0.875rem', overflow: 'hidden', border: '1px solid var(--card-border)', background: 'var(--card)', position: 'relative' }}>
-          <div style={{ background: '#1a1a2e', borderBottom: '1px solid var(--card-border)', padding: '0.5rem 1rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            <div style={{ display: 'flex', gap: '0.35rem' }}>
-              <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#ff5f57', display: 'block' }} />
-              <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#ffbd2e', display: 'block' }} />
-              <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#28ca41', display: 'block' }} />
-            </div>
-            <div style={{ flex: 1, background: 'rgba(255,255,255,0.06)', borderRadius: '0.35rem', padding: '0.2rem 0.75rem', fontSize: '0.72rem', color: 'var(--muted)', fontFamily: "'JetBrains Mono', monospace", overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-              {title.toLowerCase().replace(/\s+/g, '')}
-            </div>
-          </div>
-          <div style={{ position: 'relative', lineHeight: 0 }}>
-            <img src={src} alt={caption || `${title} screenshot ${active + 1}`} style={{ width: '100%', height: 'auto', display: 'block', maxHeight: '220px', objectFit: 'cover' }} />
-            {arrows}
-          </div>
-        </div>
-      )}
-
-      {/* Caption */}
-      {caption && (
-        <p style={{ color: 'var(--muted)', fontSize: '0.82rem', lineHeight: 1.5, textAlign: isMobile ? 'center' : 'left' }}>{caption}</p>
-      )}
-
-      {/* Thumbnails */}
-      {images.length > 1 && (
-        <div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-            <span style={{ color: 'var(--muted)', fontSize: '0.7rem', fontWeight: '600', letterSpacing: '0.1em', fontFamily: "'JetBrains Mono', monospace" }}>GALLERY</span>
-            <span style={{ color: 'var(--muted)', fontSize: '0.7rem', fontFamily: "'JetBrains Mono', monospace" }}>{active + 1}/{images.length}</span>
-          </div>
-          <div style={{ display: 'flex', gap: '0.5rem', overflowX: 'auto' }}>
-            {images.map((img, i) => {
-              const thumbSrc = typeof img === 'string' ? img : img.src;
-              return (
-                <button key={i} onClick={() => setActive(i)} style={{ flexShrink: 0, padding: 0, background: 'none', border: 'none', cursor: 'pointer', borderRadius: '0.4rem', overflow: 'hidden', outline: i === active ? '2px solid var(--primary)' : '2px solid transparent', outlineOffset: '2px', transition: 'outline 0.15s' }}>
-                  <img src={thumbSrc} alt={`thumbnail ${i + 1}`} style={{ width: isMobile ? '48px' : '72px', height: isMobile ? '80px' : '48px', objectFit: 'cover', display: 'block' }} />
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
+import ImageViewer from '@/components/ImageViewer';
 
 const label = {
   color: 'var(--accent)',
@@ -122,22 +24,6 @@ export default function ProjectDetail({ project }) {
       {/* Hero: two-column */}
       <section style={{ padding: '0 0 1.5rem' }}>
         <div className="container">
-          <Link
-            href="/projects"
-            style={{
-              display: 'inline-flex', alignItems: 'center', gap: '0.4rem',
-              color: 'var(--muted)', fontSize: '0.82rem', marginBottom: '1.5rem',
-              transition: 'color 0.15s', textDecoration: 'none',
-            }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--accent)')}
-            onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--muted)')}
-          >
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M13 8H3M7 4L3 8l4 4" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-            All projects
-          </Link>
-
           <div
             style={{
               display: 'grid',
@@ -224,7 +110,7 @@ export default function ProjectDetail({ project }) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
             >
-              <ImageViewer images={project.images} title={project.title} type={project.type} />
+              <ImageViewer images={project.images} title={project.title} type={project.displayType || project.type} />
             </motion.div>
           </div>
         </div>
@@ -258,7 +144,7 @@ export default function ProjectDetail({ project }) {
 
             {/* My contribution */}
             {project.contribution && (
-              <div style={{ background: 'rgba(109,40,217,0.06)', borderLeft: '3px solid var(--primary)', borderRadius: '0 0.5rem 0.5rem 0', padding: '1rem 1.25rem' }}>
+              <div style={{ background: 'rgba(220,247,99,0.06)', borderLeft: '3px solid var(--lime)', borderRadius: '0 0.5rem 0.5rem 0', padding: '1rem 1.25rem' }}>
                 <span style={label}>My contribution</span>
                 <p style={{ fontSize: '0.95rem', lineHeight: 1.8, color: 'var(--foreground)' }}>{project.contribution}</p>
               </div>
@@ -301,7 +187,7 @@ export default function ProjectDetail({ project }) {
             {/* Highlights */}
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
               {project.highlights.map((h) => (
-                <span key={h} style={{ background: 'rgba(109,40,217,0.1)', border: '1px solid rgba(109,40,217,0.25)', color: 'var(--accent)', padding: '0.3rem 0.8rem', borderRadius: '9999px', fontSize: '0.8rem', fontWeight: '500' }}>
+                <span key={h} style={{ background: 'rgba(220,247,99,0.1)', border: '1px solid rgba(220,247,99,0.35)', color: 'var(--foreground)', padding: '0.3rem 0.8rem', borderRadius: '9999px', fontSize: '0.8rem', fontWeight: '500' }}>
                   {h}
                 </span>
               ))}

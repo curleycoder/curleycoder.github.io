@@ -125,11 +125,11 @@ export default function CaseStudiesPage() {
                           style={{
                             display: 'inline-block',
                             padding: '0.35rem 0.875rem',
-                            background: 'rgba(109,40,217,0.12)',
-                            border: '1px solid rgba(109,40,217,0.25)',
+                            background: 'rgba(220,247,99,0.1)',
+                            border: '1px solid rgba(220,247,99,0.35)',
                             borderRadius: '9999px',
                             fontSize: '0.75rem',
-                            color: 'var(--accent)',
+                            color: 'var(--foreground)',
                             fontWeight: '500',
                           }}
                         >
