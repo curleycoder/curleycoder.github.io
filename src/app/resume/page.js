@@ -31,13 +31,19 @@ function Section({ title, children, delay = 0 }) {
   );
 }
 
-function ExperienceItem({ title, company, period, bullets }) {
+function ExperienceItem({ title, company, link, period, bullets }) {
   return (
     <div style={{ marginBottom: '1.75rem' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', flexWrap: 'wrap', gap: '0.25rem', marginBottom: '0.6rem' }}>
         <div>
           <span style={{ fontWeight: '700', fontSize: '0.95rem' }}>{title}</span>
-          <span style={{ color: 'var(--accent)', fontSize: '0.9rem' }}> · {company}</span>
+          {company && <span style={{ color: 'var(--accent)', fontSize: '0.9rem' }}> · {company}</span>}
+          {link && (
+            <>
+              {' '}
+              <a href={link.href} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent)', fontSize: '0.85rem', textDecoration: 'underline' }}>{link.label}</a>
+            </>
+          )}
         </div>
         <span style={{ color: 'var(--muted)', fontSize: '0.78rem', fontFamily: "'JetBrains Mono', monospace", flexShrink: 0 }}>{period}</span>
       </div>
@@ -85,21 +91,21 @@ export default function ResumePage() {
                 <a
                   href="/resume.pdf"
                   download
-                  style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.6rem', background: '#435058', color: '#f1f2ee', border: '2px solid #435058', borderRadius: '6px', fontFamily: "'Inter', system-ui, sans-serif", fontWeight: 600, fontSize: '0.9rem', textDecoration: 'none', transition: 'background 0.2s, border-color 0.2s, color 0.2s' }}
-                  onMouseEnter={e => { e.currentTarget.style.background = '#dcf763'; e.currentTarget.style.borderColor = '#dcf763'; e.currentTarget.style.color = '#435058'; }}
-                  onMouseLeave={e => { e.currentTarget.style.background = '#435058'; e.currentTarget.style.borderColor = '#435058'; e.currentTarget.style.color = '#f1f2ee'; }}
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.6rem', background: 'var(--lime)', color: '#435058', border: '2px solid var(--lime)', borderRadius: '6px', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.72rem', letterSpacing: '0.06em', textTransform: 'uppercase', textDecoration: 'none', transition: 'transform 0.2s ease' }}
+                  onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; }}
+                  onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; }}
                 >
-                  <FiDownload size={14} /> Download PDF
+                  <FiDownload size={13} /> Download PDF
                 </a>
                 <a
                   href="https://linkedin.com/in/shabnam-beiraghian"
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.6rem', background: 'transparent', color: 'var(--foreground)', border: '2px solid var(--card-border)', borderRadius: '6px', fontFamily: "'Inter', system-ui, sans-serif", fontWeight: 600, fontSize: '0.9rem', textDecoration: 'none', transition: 'border-color 0.2s, color 0.2s' }}
-                  onMouseEnter={e => { e.currentTarget.style.borderColor = '#435058'; e.currentTarget.style.color = '#435058'; }}
-                  onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--card-border)'; e.currentTarget.style.color = 'var(--foreground)'; }}
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.6rem', background: 'transparent', color: 'var(--lime)', border: '2px solid var(--lime)', borderRadius: '6px', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.72rem', letterSpacing: '0.06em', textTransform: 'uppercase', textDecoration: 'none', transition: 'transform 0.2s ease' }}
+                  onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; }}
+                  onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; }}
                 >
-                  <FiLinkedin size={14} /> LinkedIn
+                  <FiLinkedin size={13} /> LinkedIn
                 </a>
               </div>
             </div>
@@ -107,49 +113,42 @@ export default function ResumePage() {
             {/* Summary */}
             <Section title="Summary" delay={0.1}>
               <p style={{ color: 'var(--muted)', fontSize: '0.9rem', lineHeight: 1.75 }}>
-                Full-stack developer with a background in architectural engineering, applying structured design principles to build reliable, user-focused web applications. Experienced in developing and maintaining production systems.
+                Full-stack developer and AI product builder who ships real products end to end. Built and deployed an embeddable AI chatbot live on a client&apos;s website and a SaaS immigration tracker (navly.ca). Combines strong systems thinking with fast, practical delivery of tools that solve real business problems.
               </p>
             </Section>
 
             {/* Experience */}
             <Section title="Experience" delay={0.15}>
               <ExperienceItem
-                title="Frontend Developer"
-                company="Community of Guardians"
-                period="JAN 2026 – Present"
-                bullets={[
-                  'Deliver UI updates aligned with Figma design system, improving consistency',
-                  'Build reusable responsive components and support Agile team workflows',
-                ]}
-              />
-              <ExperienceItem
                 title="Full Stack Developer"
-                company="Elika Beauty"
+                company="Self Employed (beiraghian.com) · Burnaby"
                 period="JUN 2025 – Present"
                 bullets={[
-                  'Design and deploy a full-stack booking platform used in daily business operations',
-                  'Build REST APIs and scheduling logic with conflict prevention and time-slot validation',
-                  'Develop responsive React frontend optimized for real user interactions',
-                  'Manage deployment (Vercel, Render), ensuring system reliability and performance',
+                  'Re-platformed ELIKA Beauty\'s salon operations onto a custom full-stack booking system (React, Node.js, REST API), owning the full process from architecture to deployment on Vercel and Render',
+                  'Reduced booking errors by ~90% by building a scheduling engine with conflict detection and automated time-slot validation',
+                  'Worked directly with the business owner to gather requirements, iterate on features, and manage the full product lifecycle',
                 ]}
               />
               <ExperienceItem
-                title="Enumerator"
-                company="Statistics Canada"
-                period="JUN 2026 - JUL 2026"
+                title="Census Enumerator"
+                company="Statistics Canada · Burnaby, BC"
+                period="JUN 2026 – AUG 2026"
                 bullets={[
-                  'Conducted door-to-door data collection for the national census across assigned geographic areas',
-                  'Ensured accurate and complete census responses from households within the designated enumeration area',
-                  'Handled sensitive personal data with confidentiality in compliance with Statistics Canada protocols',
+                  'Collected and entered census data accurately for households, meeting daily targets and federal data-quality standards',
+                  'Explained the census process clearly to residents and handled hesitant or upset people calmly and professionally',
+                  'Kept detailed records of every visit and follow-up while working independently with minimal supervision',
                 ]}
               />
               <ExperienceItem
-                title="Customer Operations & Team Lead"
-                company="Lordco Auto Parts"
+                title="Sales Associate / Cashier Team Lead"
+                company="Lordco Auto Parts · Vancouver"
                 period="NOV 2019 – MAR 2025"
                 bullets={[
-                  'Managed high-volume customer interactions (~100/day) in fast-paced environment',
-                  'Coordinated team operations and ensured accuracy in transactions',
+                  'Served about 100 customers a day in a fast-paced team, quickly finding the right auto parts for their vehicles',
+                  'Answered customer phone calls about parts, pricing, and stock, and solved problems on the first call',
+                  'Led the cashier team: trained new staff, managed shift coverage, and kept transactions accurate',
+                  'Handled returns, complaints, and difficult situations calmly, helping keep customers satisfied and coming back',
+                  'Used inventory and point-of-sale systems daily to look up parts, check stock, and process transactions accurately',
                 ]}
               />
             </Section>
@@ -157,39 +156,29 @@ export default function ResumePage() {
             {/* Projects */}
             <Section title="Projects" delay={0.2}>
               <ExperienceItem
-                title="DEW AI Assistant — AI Chatbot"
-                company=""
-                period="December 2025"
+                title="Navly — Canadian Immigration Tracker (SaaS)"
+                link={{ href: 'https://navly.ca', label: 'navly.ca' }}
+                period="APR 2026"
                 bullets={[
-                  'Built and deployed an AI chatbot assistant integrated into business websites',
-                  'Automated customer inquiries with intent-based response flows and human escalation paths',
-                  'Reduced repetitive customer messages and improved response time for service businesses',
+                  'Built and launched a freemium SaaS that helps immigrants track their Canadian PR pathway — CRS score estimator, stage-based checklist, and live IRCC draw notifications',
+                  'Sole founder — owned product design, full-stack build (Next.js, Supabase), pricing, and go-to-market end to end',
                 ]}
               />
               <ExperienceItem
-                title="Navly — Immigration Tracker"
-                company=""
-                period="2025"
+                title="DEW AI Chatbot — Embeddable AI Front-Desk Tool"
+                link={{ href: 'https://dew.beiraghian.com', label: 'dew.beiraghian.com' }}
+                period="DEC 2025"
                 bullets={[
-                  'Designed and launched an immigration tracking app to help users monitor application status, deadlines, and document requirements',
-                  'Built a clear dashboard with status timelines and deadline alerts to simplify a complex, stressful process',
-                  'Owned the full development lifecycle from concept to production deployment',
+                  'Built and deployed an embeddable AI assistant (Next.js, FastAPI, Google Gemini API) now active on ELIKA Beauty\'s website — automating customer inquiries around the clock',
+                  'Designed a prompt engineering system using injected knowledge files to deliver context-aware, business-specific responses without hallucination',
                 ]}
               />
             </Section>
 
-            {/* Technical Skills */}
-            <Section title="Technical Skills" delay={0.25}>
-              <p style={{ color: 'var(--muted)', fontSize: '0.88rem', lineHeight: 1.8, fontFamily: "'JetBrains Mono', monospace" }}>
-                JavaScript · TypeScript · React · Next.js · React Native · Node.js · Express · Hono · Bun · MongoDB · PostgreSQL · Supabase · Drizzle ORM · Redis · Clerk · Auth0 · Tailwind CSS · Framer Motion · Git · Vercel · Render · AWS S3 · CI/CD · Figma · Accessibility (WCAG)
-              </p>
-            </Section>
-
             {/* Education */}
-            <Section title="Education" delay={0.3}>
+            <Section title="Education" delay={0.25}>
               {[
-                { school: 'British Columbia Institute of Technology (BCIT)', program: 'Diploma of Full Stack Development', period: 'APR 2026' },
-                { school: 'Islamic Azad University', program: 'Bachelor of Architectural Engineering', period: 'JAN 2019' },
+                { school: 'British Columbia Institute of Technology (BCIT)', program: 'Full Stack Web Development Diploma — With Distinction', period: 'APR 2026' },
               ].map((edu) => (
                 <div key={edu.school} style={{ marginBottom: '1.25rem' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', flexWrap: 'wrap', gap: '0.25rem', marginBottom: '0.35rem' }}>
@@ -204,10 +193,11 @@ export default function ResumePage() {
             </Section>
 
             {/* Volunteer */}
-            <Section title="Volunteer" delay={0.35}>
+            <Section title="Volunteer" delay={0.3}>
               {[
-                { org: 'BCIT Women In Computing (WiC)', role: 'Social Media Director', period: 'SEP 2025 – Present' },
-                { org: 'Web Summit Vancouver', role: 'Data Collection & Analytics', period: 'MAY 2025' },
+                { org: 'nwPlus', role: 'HackCamp Judge', period: 'NOV 2026' },
+                { org: 'BCIT Women In Computing (WiC)', role: 'Social Media Director', period: 'SEP 2025 – APR 2026' },
+                { org: 'Web Summit Vancouver', role: 'Analytics & Data Collection', period: 'MAY 2026' },
               ].map((v) => (
                 <div key={v.org} style={{ marginBottom: '1.25rem' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', flexWrap: 'wrap', gap: '0.25rem', marginBottom: '0.35rem' }}>
@@ -219,21 +209,6 @@ export default function ResumePage() {
                   </ul>
                 </div>
               ))}
-            </Section>
-
-            {/* Awards */}
-            <Section title="Awards" delay={0.4}>
-              <ul style={{ paddingLeft: '1.1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                {[
-                  { title: 'Pam and Jerry Bastien Bursary — BCIT Special Bursaries', period: 'March 2025' },
-                  { title: 'BCIT Legacy of Leadership Bursary', period: 'March 2026' },
-                ].map((award) => (
-                  <li key={award.title} style={{ color: 'var(--muted)', fontSize: '0.88rem', lineHeight: 1.65, display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.4rem' }}>
-                    <span style={{ color: 'var(--foreground)', fontWeight: '600' }}>{award.title}</span>
-                    <span style={{ color: 'var(--muted)', fontSize: '0.78rem', fontFamily: "'JetBrains Mono', monospace", flexShrink: 0 }}>{award.period}</span>
-                  </li>
-                ))}
-              </ul>
             </Section>
 
           </motion.div>
