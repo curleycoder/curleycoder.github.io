@@ -31,10 +31,17 @@ function ArrowBtn({ onClick, disabled, dir }) {
   );
 }
 
+const sectionLabel = {
+  fontFamily: "'JetBrains Mono', monospace", fontSize: '0.68rem',
+  color: LIME, letterSpacing: '0.12em', textTransform: 'uppercase',
+  marginBottom: '0.5rem', display: 'block',
+};
+
 export default function ProjectsShowcase() {
   const [activeType, setActiveType]             = useState('all');
   const [activeSlug, setActiveSlug]             = useState(projects[0].slug);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [expanded, setExpanded]                 = useState(false);
 
   const filteredProjects = useMemo(() => {
     if (activeType === 'all') return projects;
@@ -57,11 +64,13 @@ export default function ProjectsShowcase() {
     setActiveType(type);
     setActiveSlug(next[0]?.slug || projects[0].slug);
     setActiveImageIndex(0);
+    setExpanded(false);
   }
 
   function handleSelect(slug) {
     setActiveSlug(slug);
     setActiveImageIndex(0);
+    setExpanded(false);
   }
 
   function goPrev() { if (hasPrev) setActiveImageIndex(i => i - 1); }
@@ -363,26 +372,97 @@ export default function ProjectsShowcase() {
                   Demo <FiExternalLink size={11} />
                 </a>
               )}
-              <Link
-                href={
-                  activeProject.caseStudySlug
-                    ? `/case-studies/${activeProject.caseStudySlug}`
-                    : `/projects/${activeProject.slug}`
-                }
-                style={{
-                  display: 'inline-flex', alignItems: 'center', gap: '0.4rem',
-                  padding: '0.55rem 1rem', background: 'transparent',
-                  color: LIME, border: `1.5px solid ${LIME}`,
-                  borderRadius: '4px', fontFamily: "'JetBrains Mono', monospace",
-                  fontSize: '0.72rem', textDecoration: 'none', letterSpacing: '0.06em',
-                  textTransform: 'uppercase', transition: 'transform 0.2s ease',
-                }}
-                onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; }}
-                onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; }}
-              >
-                Case Study <FiArrowRight size={11} />
-              </Link>
+              {activeProject.caseStudySlug ? (
+                <Link
+                  href={`/case-studies/${activeProject.caseStudySlug}`}
+                  style={{
+                    display: 'inline-flex', alignItems: 'center', gap: '0.4rem',
+                    padding: '0.55rem 1rem', background: 'transparent',
+                    color: LIME, border: `1.5px solid ${LIME}`,
+                    borderRadius: '4px', fontFamily: "'JetBrains Mono', monospace",
+                    fontSize: '0.72rem', textDecoration: 'none', letterSpacing: '0.06em',
+                    textTransform: 'uppercase', transition: 'transform 0.2s ease',
+                  }}
+                  onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; }}
+                  onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; }}
+                >
+                  Case Study <FiArrowRight size={11} />
+                </Link>
+              ) : (
+                <button
+                  onClick={() => setExpanded(v => !v)}
+                  style={{
+                    display: 'inline-flex', alignItems: 'center', gap: '0.4rem',
+                    padding: '0.55rem 1rem', background: 'transparent',
+                    color: LIME, border: `1.5px solid ${LIME}`,
+                    borderRadius: '4px', fontFamily: "'JetBrains Mono', monospace",
+                    fontSize: '0.72rem', cursor: 'pointer', letterSpacing: '0.06em',
+                    textTransform: 'uppercase', transition: 'transform 0.2s ease',
+                  }}
+                  onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; }}
+                  onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; }}
+                >
+                  {expanded ? 'Show Less' : 'Read More'}
+                  <FiArrowRight size={11} style={{ transform: expanded ? 'rotate(-90deg)' : 'rotate(90deg)', transition: 'transform 0.2s ease' }} />
+                </button>
+              )}
             </div>
+
+            {/* Expanded narrative — only for projects without a dedicated case study */}
+            {!activeProject.caseStudySlug && expanded && (
+              <div style={{ marginTop: '2rem', paddingTop: '2rem', borderTop: '1px solid var(--card-border)', display: 'flex', flexDirection: 'column', gap: '1.75rem', maxWidth: '640px' }}>
+                {activeProject.rationaleProblem && (
+                  <div>
+                    <span style={sectionLabel}>The Problem</span>
+                    <p style={{ fontFamily: "'Inter', system-ui, sans-serif", fontSize: '0.92rem', lineHeight: 1.75, color: 'var(--foreground)', margin: 0 }}>{activeProject.rationaleProblem}</p>
+                  </div>
+                )}
+                {activeProject.rationaleChallenge && (
+                  <div>
+                    <span style={sectionLabel}>How I Approached It</span>
+                    <p style={{ fontFamily: "'Inter', system-ui, sans-serif", fontSize: '0.92rem', lineHeight: 1.75, color: 'var(--foreground)', margin: 0 }}>{activeProject.rationaleChallenge}</p>
+                  </div>
+                )}
+                {activeProject.contribution && (
+                  <div style={{ background: 'color-mix(in srgb, var(--lime) 6%, transparent)', borderLeft: `3px solid ${LIME}`, borderRadius: '0 0.5rem 0.5rem 0', padding: '1rem 1.25rem' }}>
+                    <span style={sectionLabel}>My Contribution</span>
+                    <p style={{ fontFamily: "'Inter', system-ui, sans-serif", fontSize: '0.92rem', lineHeight: 1.75, color: 'var(--foreground)', margin: 0 }}>{activeProject.contribution}</p>
+                  </div>
+                )}
+                {activeProject.whatItDoes?.length > 0 && (
+                  <div>
+                    <span style={sectionLabel}>What It Does</span>
+                    <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                      {activeProject.whatItDoes.map(item => (
+                        <li key={item} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.6rem', fontFamily: "'Inter', system-ui, sans-serif", fontSize: '0.88rem', lineHeight: 1.65, color: 'var(--foreground)' }}>
+                          <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: LIME, flexShrink: 0, marginTop: '0.55rem' }} />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {(activeProject.technicalDecisions?.length > 0 || activeProject.challenges?.length > 0) && (
+                  <div>
+                    <span style={sectionLabel}>Under the Hood</span>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                      {activeProject.technicalDecisions?.map(d => (
+                        <div key={d.choice} style={{ borderLeft: '2px solid var(--card-border)', paddingLeft: '1rem' }}>
+                          <p style={{ fontWeight: 600, fontSize: '0.88rem', marginBottom: '0.2rem', color: 'var(--foreground)' }}>{d.choice}</p>
+                          <p style={{ color: 'var(--muted)', fontSize: '0.85rem', lineHeight: 1.65, margin: 0 }}>{d.reason}</p>
+                        </div>
+                      ))}
+                      {activeProject.challenges?.map(c => (
+                        <div key={c.problem} style={{ borderLeft: '2px solid var(--card-border)', paddingLeft: '1rem' }}>
+                          <p style={{ fontWeight: 600, fontSize: '0.88rem', marginBottom: '0.2rem', color: 'var(--foreground)' }}>{c.problem}</p>
+                          <p style={{ color: 'var(--muted)', fontSize: '0.85rem', lineHeight: 1.65, margin: 0 }}>{c.solution}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
 
           </article>
         </div>

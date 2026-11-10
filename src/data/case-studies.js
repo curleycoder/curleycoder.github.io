@@ -28,22 +28,22 @@ export const caseStudies = [
         body: 'Audited Fresha, Vagaro, and StyleSeat to understand what salon owners lose on third-party platforms. Interviewed Amina about her workflow, pain points, and what "success" looked like.',
       },
       {
-        title: 'Design',
+        title: 'First Impression',
         body: 'This is the homepage Amina\'s clients land on: a hero section built around a single "Book an appointment" CTA. The gold-on-maroon brand identity — logo, color palette, typography — was designed from scratch and carried through every page, so the first thing a visitor sees looks like a real, owned business, not a third-party listing.',
         image: '/projects/elika-home.png',
       },
       {
-        title: 'Build',
+        title: 'The Booking Flow',
         body: 'This is the first step of the booking flow: service selection, grouped by category with pricing shown upfront. Built on Next.js App Router with Supabase handling the booking database, this screen is where conflict-prevention logic kicks in — each service has a set duration, so the system already knows what time slots to block before the client even picks a date.',
         image: '/projects/elika-booking.png',
       },
       {
-        title: 'Launch',
+        title: 'Running the Business',
         body: 'This is the admin "Today" view I shipped so Amina could run her day without touching code: today\'s appointment count, how many clients have checked out, and estimated revenue at a glance, with reschedule/no-show/cancel actions on each booking. Deployed to Vercel with Google Search Console configured for local SEO alongside it.',
         image: '/projects/elika-today.png',
       },
       {
-        title: 'Results',
+        title: 'Real Numbers',
         body: 'This is the admin Bookings calendar, filtered by status — and the numbers are real production data, not a demo: 369 completed bookings, 93 cancelled, 8 no-shows. Combined with the 40% organic traffic increase in 60 days, this is what "clients now find via Google, not DMs" actually looks like from the owner\'s side.',
         image: '/projects/elika-calendar.png',
       },
@@ -77,27 +77,26 @@ export const caseStudies = [
     logo: '/projects/navly-logo.png',
     sections: [
       {
-        title: 'The CRS Scoring Engine',
-        body: "The Comprehensive Ranking System has dozens of variables — age, education, language scores (primary and secondary), Canadian work experience, arranged employment, and more. Each category has its own formula and they interact. I built the engine as a set of modular, isolated rule functions so each factor can be tested and updated independently. This made it possible to validate accuracy against IRCC's published examples before shipping.",
+        title: 'Your CRS Score',
+        body: "This is the Tracker screen: your estimated CRS score alongside pathway strength and what to improve next. Behind it, the Comprehensive Ranking System has dozens of interacting variables — age, education, language scores, Canadian work experience, arranged employment. I built the engine as modular, isolated rule functions so each factor could be tested and validated against IRCC's published examples independently.",
         image: '/projects/navly-3.png',
       },
       {
-        title: 'Adaptive Intake Flow',
-        body: 'A static form would waste time and confuse users. The intake branches based on current immigration status: a Canadian work permit holder sees different questions than an international applicant. Only relevant questions are shown, and answers feed directly into the scoring engine in real time. This reduced form length by roughly half for most users — the step counter itself changes length depending on which path you take.',
+        title: 'The Adaptive Intake',
+        body: 'This is step one of the intake: "What do you need help with today?" The question set that follows branches from this single answer — someone tracking a permit deadline sees different questions than someone planning their PR options. The step counter in the corner visibly changes length depending on the path, because a static form would waste time and confuse users.',
         image: '/projects/navly-onboard1.png',
       },
       {
-        title: 'Province-by-Province PNP Matching',
+        title: 'Province Matching',
         body: "Canada has 13 provincial and territorial nominee programs, each with their own streams, eligibility thresholds, and occupation lists. Rather than a generic eligibility checker, Navly maps the user's profile against each province's actual criteria and returns ranked matches with plain-language explanations of why they qualify (or what they're missing).",
-        image: '/projects/navly-1.png',
       },
       {
-        title: 'Freemium Architecture',
-        body: 'Free users get a rough CRS estimate and a summary of their top provincial matches. The exact score and a step-by-step action plan sit behind a signup gate — enough value shown upfront to earn trust, enough held back to create a natural upgrade path for users who are serious about applying.',
+        title: 'The Paywall Moment',
+        body: 'This is the end of the intake flow: a rough CRS range is shown immediately, but the exact score is blurred out behind "Sign up to reveal your exact score." That\'s the whole model in one screen — enough value shown upfront to earn trust, the precise number held back to create a natural signup moment for users who are serious about applying.',
         image: '/projects/navly-onboard4.png',
       },
       {
-        title: 'Stack and Infrastructure',
+        title: 'Under the Hood',
         body: 'Built with Next.js App Router and React on the frontend, Tailwind CSS for styling, and deployed on Vercel. The AI assistant is a paid-tier feature integrated via API. No sensitive documents are collected at any point — users provide self-reported profile data only.',
       },
     ],

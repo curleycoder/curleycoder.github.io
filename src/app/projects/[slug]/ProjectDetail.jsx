@@ -22,44 +22,51 @@ export default function ProjectDetail({ project }) {
     <div style={{ paddingTop: '64px' }}>
 
       {/* Hero: two-column */}
-      <section style={{ padding: '0 0 1.5rem' }}>
+      <section style={{ padding: '2rem 0 1.5rem' }}>
         <div className="container">
-          <div
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="pd-hero-grid"
             style={{
               display: 'grid',
               gridTemplateColumns: '1fr 1fr',
               gap: '3rem',
               alignItems: 'start',
+              border: '1px solid var(--card-border)',
+              borderTop: '3px solid var(--lime)',
+              borderRadius: '14px',
+              padding: 'clamp(1.75rem, 4vw, 2.5rem)',
+              background: 'var(--card)',
             }}
           >
             {/* Left: info */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              style={{ paddingTop: '1rem' }}
-            >
-              <span style={{ color: 'var(--muted)', fontSize: '0.85rem', marginBottom: '1rem', display: 'block' }}>
+            <div>
+              <span style={{ fontFamily: "'JetBrains Mono', monospace", color: 'var(--muted)', fontSize: '0.78rem', letterSpacing: '0.04em', marginBottom: '1rem', display: 'block' }}>
                 {project.year}
               </span>
 
               <h1
                 style={{
-                  fontSize: 'clamp(2rem, 4vw, 2.75rem)',
+                  fontFamily: "'JetBrains Mono', monospace",
+                  fontSize: 'clamp(1.8rem, 3.5vw, 2.5rem)',
                   fontWeight: '800',
                   letterSpacing: '-0.02em',
-                  lineHeight: 1.15,
+                  textTransform: 'uppercase',
+                  lineHeight: 1.1,
                   marginBottom: '1.25rem',
+                  color: 'var(--foreground)',
                 }}
               >
                 {project.title}
               </h1>
 
-              <p style={{ color: 'var(--muted)', fontSize: '1rem', lineHeight: 1.7, marginBottom: '1.5rem' }}>
+              <p style={{ color: 'var(--foreground)', fontSize: '1rem', lineHeight: 1.7, marginBottom: '1.5rem' }}>
                 {project.description}
               </p>
 
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', marginBottom: '2rem' }}>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', marginBottom: '1.5rem' }}>
                 {project.tags.map((tag) => (
                   <span key={tag} className="tag">{tag}</span>
                 ))}
@@ -67,8 +74,8 @@ export default function ProjectDetail({ project }) {
 
               {/* Role / team — above buttons */}
               {project.myRole && (
-                <p style={{ color: 'var(--muted)', fontSize: '0.8rem', fontFamily: "'JetBrains Mono', monospace", marginBottom: '1rem' }}>
-                  {project.myRole} · {project.team}
+                <p style={{ color: 'var(--muted)', fontSize: '0.78rem', fontFamily: "'JetBrains Mono', monospace", marginBottom: '1.5rem' }}>
+                  {project.myRole} <span style={{ color: 'var(--lime)', margin: '0 0.5rem' }}>·</span> {project.team}
                 </p>
               )}
 
@@ -102,19 +109,24 @@ export default function ProjectDetail({ project }) {
                   </a>
                 )}
               </div>
-            </motion.div>
+            </div>
 
             {/* Right: image viewer */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-            >
+            <div>
               <ImageViewer images={project.images} title={project.title} type={project.displayType || project.type} />
-            </motion.div>
-          </div>
+            </div>
+          </motion.div>
         </div>
       </section>
+
+      <style jsx>{`
+        @media (max-width: 800px) {
+          .pd-hero-grid {
+            grid-template-columns: 1fr !important;
+            gap: 2rem !important;
+          }
+        }
+      `}</style>
 
       {/* Content */}
       <section style={{ padding: '1rem 0 4rem' }}>
